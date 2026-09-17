@@ -150,6 +150,7 @@ def test_cli_source_and_verify(tmp_path: Path) -> None:
 
 
 def test_build_all_produces_reproducible_distribution_artifacts(tmp_path: Path) -> None:
+    pytest.importorskip("build", reason="install the optional 'release' extra")
     repo = _init_test_git_repo(tmp_path / "repo")
     out_dir_1 = tmp_path / "dist1"
     out_dir_2 = tmp_path / "dist2"

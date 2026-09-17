@@ -27,7 +27,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-test = ["pytest>=8", "pytest-timeout>=2.3"]
+test = ["pytest>=8", "pytest-timeout>=2.3", "build>=1.2"]
 release = ["build>=1.2", "twine>=6"]
 dev = ["pytest>=8", "pytest-timeout>=2.3", "ruff>=0.9", "build>=1.2", "twine>=6"]
 

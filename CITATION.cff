@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: grounded-hyperset-theory
+type: software
+version: 0.2.0
+authors:
+  - family-names: Roost
+    given-names: Tyler
+repository-code: "https://github.com/TimeLordRaps/grounded-hyperset-theory"
+license: Apache-2.0

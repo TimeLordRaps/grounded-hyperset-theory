@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+env:
+  PYTHONUTF8: "1"
+
+
 jobs:
   base:
     runs-on: ${{ matrix.os }}

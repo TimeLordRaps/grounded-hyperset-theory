@@ -1,0 +1,25 @@
+{
+  "creators": [
+    {
+      "name": "Roost, Tyler"
+    }
+  ],
+  "description": "Accessible Pointed Graphs, non-well-founded sets, constructive membership under Aczel's Anti-Foundation Axiom, meta-features, and bridges to formal calculi.",
+  "keywords": [
+    "hyperset",
+    "set-theory",
+    "graph-theory",
+    "aczel",
+    "non-well-founded",
+    "accessible-pointed-graphs",
+    "bisimulation",
+    "meta-calculus",
+    "hyper-calculus",
+    "language-calculus",
+    "real-analysis"
+  ],
+  "license": "Apache-2.0",
+  "title": "Grounded Hyperset Theory",
+  "version": "0.2.0",
+  "upload_type": "software"
+}

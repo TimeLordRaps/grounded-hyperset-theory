@@ -29,8 +29,8 @@ Grounded Hyperset Theory establishes foundations for multiple formal calculi:
    - Coarsest bisimulation refinement (`refine_to_bisimulation`) via signature grouping.
    - Depth-bounded k-horizon abstraction (`depth_abstraction`) and predicate abstraction (`predicate_abstraction`).
    - Strongly Connected Component condensation (`scc_quotient`, `scc_abstract_hyperset`) producing well-founded acyclic DAG projections of non-well-founded sets.
-   - First-class objectification of relations, functions, and APGs (`objectify_relation`, `objectify_function`, `objectify_apg`).
-   - Archetypal fractal hypersets (`fractal_hyperset`, `meta_fractalize`, `unfold_step`).
+   - Objectification of relations, functions and APGs (`objectify_relation`, `objectify_function`, `objectify_apg`). Relations and functions round-trip exactly, and `deobjectify_function` refuses a multivalued relation. `objectify_apg` encodes the graph **up to isomorphism**: node ids become indices and labels are discarded, so the decoded graph is bisimilar to the original, not equal to it. `Abstraction.to_hyperset` is likewise lossy and has no inverse — the variable becomes a childless node, which is $\emptyset$, so nothing records where it occurred and `λx. x` and `λx. ∅` objectify identically.
+   - Archetypal non-well-founded hypersets (`fractal_hyperset`, `meta_fractalize`, `unfold_step`). The four patterns name four **graphs** and denote **three** sets: `"sierpinski"` is the 3-cycle $A\to\{B,C\}$, $B\to\{A,C\}$, $C\to\{A,B\}$, on which the all-pairs relation is a bisimulation, so it quotients to $\Omega=\{\Omega\}$ and is a second drawing of `"quine"`. `"cantor_non_well_founded"` is not binary branching — $\{K,\emptyset\}$ and $\{\emptyset,K\}$ are one set. `meta_fractalize` iterates top-level expansion `depth` times and does not recurse into members.
 
 2. **Meta-Calculus** (`meta_calculus.py`):
    - Symbolic dynamics of representational calculi: rewrite rules (`RewriteRule`) and transition systems (`RewritingSystem`, `RewriteSystem`).
@@ -54,8 +54,8 @@ Grounded Hyperset Theory establishes foundations for multiple formal calculi:
 5. **Real Analysis Bridge** (`real_analysis_bridge.py`, `math_calculus.py`):
    - Grounded signed integers (`GroundedInteger`, `hyperset_integer`) and exact rationals (`GroundedRational`, `hyperset_rational`) with full arithmetic and ordering.
    - Dedekind cuts (`DedekindCut`, `DedekindCutHyperset`) for real constants ($\sqrt{2}$, golden ratio $\phi$, rational cuts) with binary search interval bounding and numerical approximation.
-   - Cauchy sequences (`CauchySequence`, `CauchySequenceHyperset`) for Euler's $e$, Leibniz $\pi$, and geometric series, with Cauchy convergence tests and sequence equivalence (`are_equivalent_cauchy`).
-   - Surreal numbers (`SurrealNumber`, `SurrealHyperset`) and nonstandard infinitesimals (`SurrealNumber.infinitesimal`, `surreal_infinitesimal`, `surreal_omega`).
+   - Cauchy sequences (`CauchySequence`, `CauchySequenceHyperset`) for Euler's $e$, Leibniz $\pi$, and geometric series, with finite searches for a violation of the Cauchy criterion (`cauchy_violation`, `is_cauchy`) and for a difference between two sequences (`are_equivalent_cauchy`). These refute; they do not certify — a returned witness proves the property fails, and finding none over finitely many indices proves nothing.
+   - Surreal numbers (`SurrealNumber`, `SurrealHyperset`) with Conway's order and the simplicity rule, over the dyadic rationals. Options are stored in finite tuples, so every representable value has finite birthday and is a dyadic rational: this does **not** reach the infinitesimals or the transfinite surreals, both of which need infinite option sets. `surreal_infinitesimal(d)` is the finite approximant $1/2^{d+1}$ and `surreal_omega(d)` is the integer $d+1$; `is_infinitesimal()` and `is_infinite()` are correspondingly False throughout.
    - Classical calculus reachability: central difference quotients (`derivative_quotient`, `hyperset_derivative_sequence`), definite Riemann integrals (`riemann_integral`), and exact rational polynomial differentiation and integration (`symbolic_polynomial_derivative`, `symbolic_polynomial_integral`).
 
 ---

@@ -223,17 +223,81 @@ class DedekindCut:
                 hi = mid
         return lo, hi
 
-    def approximate(self, iterations: int = 25) -> float:
-        """Compute floating-point approximation of this Dedekind cut."""
-        # Find initial integer bounds
+    def downward_closure_violation(
+        self,
+        search: Sequence[GroundedRational] | None = None,
+    ) -> tuple[GroundedRational, GroundedRational] | None:
+        """A pair ``(low, high)`` with ``low < high``, ``high`` in the cut and ``low`` not.
+
+        A Dedekind lower cut is downward closed: if ``high`` is in ``L`` and
+        ``low < high`` then ``low`` is in ``L``. Such a pair therefore proves the
+        predicate is not a lower cut and represents no real number.
+
+        As with every check of a black-box predicate, the two answers differ in
+        kind. A returned pair is a **proof** of failure. ``None`` means no
+        violation was found among ``search``, which is not a proof of anything:
+        the predicate is an arbitrary callable and the search is finite.
+
+        This is deliberately not called from ``__init__``. Wiring a search that
+        cannot certify into a constructor would make construction look like
+        certification, which is the mistake this file is being cleaned of.
+        """
+        if search is None:
+            search = [
+                GroundedRational(n, d)
+                for d in (1, 2, 3, 4)
+                for n in range(-4 * d, 4 * d + 1)
+            ]
+        members = [q for q in search if self.contains(q)]
+        outside = [q for q in search if not self.contains(q)]
+        for high in members:
+            for low in outside:
+                if low < high:
+                    return (low, high)
+        return None
+
+    def approximate(self, iterations: int = 25, bracket_limit: int = 64) -> float:
+        """Floating-point approximation of this cut, by bracketing then bisection.
+
+        Brackets the cut between a rational inside ``L`` and one outside it, then
+        bisects. Both searches are bounded: an unbounded search does not
+        terminate on a predicate that is constantly True or constantly False, and
+        neither of those is a real number.
+
+        Raises:
+            ValueError: if no bracket is found within ``bracket_limit`` doublings
+                or steps. The empty cut and the full cut both land here. They
+                previously ran forever -- the first loop doubled ``high`` without
+                end, the second stepped ``low`` down by 2 without end.
+        """
         low = GroundedRational(0)
         high = GroundedRational(1)
+
+        steps = 0
         while self.contains(high):
             low = high
             high = high * 2
+            steps += 1
+            if steps > bracket_limit:
+                raise ValueError(
+                    f"no rational outside the cut found below {high.to_float():g} "
+                    f"after {bracket_limit} doublings; a Dedekind lower cut must "
+                    f"have a non-empty complement, so this predicate is not one "
+                    f"(the constantly-True predicate behaves this way)"
+                )
+
+        steps = 0
         while not self.contains(low):
             high = low
             low = low - 2
+            steps += 1
+            if steps > bracket_limit:
+                raise ValueError(
+                    f"no rational inside the cut found above {low.to_float():g} "
+                    f"after {bracket_limit} steps; a Dedekind lower cut must be "
+                    f"non-empty, so this predicate is not one (the "
+                    f"constantly-False predicate behaves this way)"
+                )
 
         lo, hi = self.binary_search_interval(low, high, iterations=iterations)
         return (lo.to_float() + hi.to_float()) / 2.0
@@ -263,15 +327,65 @@ class CauchySequence:
     def __getitem__(self, n: int) -> GroundedRational:
         return self.term(n)
 
-    def is_cauchy(self, check_terms: int = 15, epsilon: float = 0.05) -> bool:
-        """Empirically test whether the tail of the sequence satisfies |a_m - a_n| < epsilon."""
-        start = max(1, check_terms // 2)
-        for m in range(start, check_terms):
-            for n in range(m + 1, check_terms):
+    def cauchy_violation(
+        self,
+        check_terms: int = 15,
+        epsilon: float = 0.05,
+        reach: int = 4,
+    ) -> tuple[int, int, float] | None:
+        """A triple ``(m, n, |a_m - a_n|)`` with the gap at least ``epsilon``, or None.
+
+        Indices are drawn from two places: the contiguous tail of the first
+        ``check_terms`` terms, and ``reach`` further indices spaced
+        geometrically -- ``check_terms``, ``2 * check_terms``, ``4 *
+        check_terms``, and so on. The geometric part is what makes the check
+        worth running. A contiguous window alone is quiet on any sequence that
+        happens to be quiet there, including sequences that diverge:
+        ``a_n = ln(n)/100`` moves by less than 0.03 across the first fifteen
+        terms and grows without bound afterwards.
+
+        A returned triple is a **proof** that the sequence is not Cauchy at
+        ``epsilon``. ``None`` is not a proof of the converse -- see
+        ``is_cauchy``.
+        """
+        if check_terms < 2:
+            raise ValueError(f"check_terms must be at least 2, got {check_terms}")
+        if epsilon <= 0:
+            raise ValueError(f"epsilon must be positive, got {epsilon}")
+        if reach < 0:
+            raise ValueError(f"reach must be non-negative, got {reach}")
+
+        indices = list(range(max(1, check_terms // 2), check_terms))
+        indices += [check_terms * (2 ** i) for i in range(reach)]
+
+        for i, m in enumerate(indices):
+            for n in indices[i + 1:]:
                 diff = abs((self.term(m) - self.term(n)).to_float())
                 if diff >= epsilon:
-                    return False
-        return True
+                    return (m, n, diff)
+        return None
+
+    def is_cauchy(self, check_terms: int = 15, epsilon: float = 0.05) -> bool:
+        """Whether ``cauchy_violation`` finds no pair of terms at least ``epsilon`` apart.
+
+        The two answers are not worth the same.
+
+        **False is conclusive.** Some pair ``(m, n)`` has ``|a_m - a_n| >=
+        epsilon``, which is incompatible with the Cauchy criterion at that
+        ``epsilon``. ``cauchy_violation`` returns the pair.
+
+        **True is not a proof.** The criterion quantifies over all ``m, n``
+        past some index, and this samples finitely many. Raising ``check_terms``
+        makes a pass mean more; no finite value makes it mean convergence. A
+        sequence that is flat over everything sampled and then moves will pass,
+        and that is not a hypothetical: before the sampling reached past the
+        window, a sequence identically zero until n = 15 and equal to ``n``
+        afterwards was certified Cauchy.
+
+        Use ``cauchy_violation`` when the witness matters, which is whenever the
+        answer is going to be recorded as evidence.
+        """
+        return self.cauchy_violation(check_terms=check_terms, epsilon=epsilon) is None
 
     def limit_approx(self, n: int = 30) -> float:
         """Evaluate floating point approximation at step n."""
@@ -325,9 +439,71 @@ def are_equivalent_cauchy(
     seq2: CauchySequence,
     check_n: int = 20,
     tolerance: float = 1e-3,
+    tail: int = 4,
 ) -> bool:
-    """Check whether two Cauchy sequences represent the same real number (lim |a_n - b_n| = 0)."""
-    return abs(seq1.limit_approx(check_n) - seq2.limit_approx(check_n)) < tolerance
+    """Whether ``|a_n - b_n|`` stays below ``tolerance`` across a spread of indices.
+
+    Equivalence of Cauchy sequences is ``lim |a_n - b_n| = 0``, a statement about
+    a limit. What is checked here is ``|a_n - b_n| < tolerance`` at ``check_n``
+    and at ``tail`` further indices spaced geometrically past it, and that the
+    gap does not grow across them.
+
+    **False is conclusive** at the given tolerance: some sampled index has the
+    two sequences further apart than that. **True is not a proof** of equal
+    limits.
+
+    Comparing a single index, which is what this did, is much weaker than it
+    looks, because two sequences can cross. ``pi_leibniz`` converges slowly
+    enough that its 20th term is 3.18918, and the constant sequence at that value
+    agreed with it exactly at index 20 -- so they were reported to be the same
+    real number, while their limits are 0.0476 apart. Sampling past ``check_n``
+    catches that particular pair; it does not make the True answer a proof.
+    """
+    if tail < 0:
+        raise ValueError(f"tail must be non-negative, got {tail}")
+    indices = [check_n] + [check_n * (2 ** i) for i in range(1, tail + 1)]
+    gaps = [abs(seq1.limit_approx(n) - seq2.limit_approx(n)) for n in indices]
+    if any(gap >= tolerance for gap in gaps):
+        return False
+    # A gap that grows along the tail is evidence against a shared limit even
+    # when every sampled value is still inside the tolerance.
+    return all(later <= earlier + tolerance for earlier, later in zip(gaps, gaps[1:]))
+
+
+def _simplest_between(low: float | None, high: float | None) -> float:
+    """The simplest number strictly between ``low`` and ``high``; None means unbounded.
+
+    "Simplest" is Conway's: the value with the earliest birthday, which is the
+    integer of least absolute value in the interval when there is one, and
+    otherwise the dyadic rational with the smallest denominator.
+    """
+    if low is None and high is None:
+        return 0.0
+    if low is None:
+        # Unbounded below: the simplest number under `high`.
+        return float(math.ceil(high) - 1)
+    if high is None:
+        # Unbounded above: the simplest number over `low`.
+        return float(math.floor(low) + 1)
+    if low < 0.0 < high:
+        return 0.0
+    if high <= 0.0:
+        return -_simplest_between(-high, -low)
+
+    # 0 <= low < high. Try the least integer strictly above `low`, then dyadics
+    # of increasing denominator until one lands inside.
+    candidate = float(math.floor(low) + 1)
+    if candidate < high:
+        return candidate
+    for k in range(1, 64):
+        scale = float(1 << k)
+        candidate = (math.floor(low * scale) + 1) / scale
+        if low < candidate < high:
+            return candidate
+    raise ValueError(
+        f"no dyadic rational found in ({low!r}, {high!r}) within 64 halvings; "
+        f"the interval is narrower than double precision can resolve"
+    )
 
 
 @dataclass(frozen=True)
@@ -363,13 +539,40 @@ class SurrealNumber:
 
     @classmethod
     def infinitesimal(cls) -> SurrealNumber:
-        """Canonical infinitesimal ε = { 0 | 1, 1/2 } (strictly positive, smaller than standard reals)."""
+        """``{ 0 | 1/2, 1 }``, which is the dyadic rational 1/4 -- not an infinitesimal.
+
+        The genuine epsilon is ``{ 0 | 1, 1/2, 1/4, 1/8, ... }`` with an
+        *infinite* right set. ``left`` and ``right`` here are finite tuples and
+        cannot hold one, so no value of this class is infinitesimal (see
+        ``is_infinitesimal``). Truncating the right set to ``{1/2, 1}`` gives the
+        simplest number in ``(0, 1/2)``, which is 1/4 -- as ``to_float`` on the
+        returned value reports.
+
+        The name is released public API and is kept, and what it returns is
+        unchanged. This docstring no longer claims it is "smaller than standard
+        reals", which the module's own arithmetic contradicts.
+        """
         return cls((cls.zero(),), (cls.half(), cls.one()))
 
     def is_infinitesimal(self) -> bool:
-        """Return True if this surreal is non-zero and strictly bounded by all standard integers."""
-        # 0 < x < 1/2
-        return self.left == (SurrealNumber.zero(),) and len(self.right) > 0
+        """Always False. No value this class can represent is infinitesimal.
+
+        ``x`` is infinitesimal when ``0 < |x| < 1/n`` for *every* positive
+        integer ``n``. ``left`` and ``right`` are finite tuples of values built
+        the same way, so every representable value has a finite birthday, and a
+        surreal of finite birthday is a dyadic rational ``p/2**k``; a non-zero
+        one is at least ``1/2**k`` in absolute value. Reaching an infinitesimal
+        needs an infinite option set.
+
+        That is a proof about the representation rather than an unfinished
+        search, which is why a constant is the honest answer here.
+
+        It previously tested ``left == (0,) and right != ()``, which is a
+        statement about the *shape* of the expression and not about its value:
+        ``half()`` is ``{0 | 1}``, matches that shape, and was reported
+        infinitesimal.
+        """
+        return False
 
     def to_hyperset(self) -> Hyperset:
         """Ground this surreal number into a Kuratowski pair of left and right hypersets."""
@@ -380,16 +583,28 @@ class SurrealNumber:
         return pair(l_set, r_set)
 
     def to_float(self) -> float:
-        """Compute approximate numeric value for simple surreals."""
-        if not self.left and not self.right:
-            return 0.0
-        if self.left and not self.right:
-            return max(s.to_float() for s in self.left) + 1.0
-        if not self.left and self.right:
-            return min(s.to_float() for s in self.right) - 1.0
-        l_max = max(s.to_float() for s in self.left)
-        r_min = min(s.to_float() for s in self.right)
-        return (l_max + r_min) / 2.0
+        """The value of this surreal, by Conway's simplicity rule.
+
+        ``{L | R}`` is the *simplest* number strictly between ``max(L)`` and
+        ``min(R)`` -- the one born earliest -- which is not the midpoint. The two
+        agree on ``{0 | 1} = 1/2`` and disagree as soon as the interval is not
+        centred on a simpler value: ``{0 | 4}`` is 1 and the midpoint is 2,
+        ``{1/2 | }`` is 1 and the midpoint rule gave 1.5.
+
+        Raises:
+            ValueError: if ``max(L) >= min(R)``. Such a form is a *game* and not
+                a number, and it has no value to return. ``{1 | 0}`` previously
+                returned 0.5.
+        """
+        l_max = max((s.to_float() for s in self.left), default=None)
+        r_min = min((s.to_float() for s in self.right), default=None)
+
+        if l_max is not None and r_min is not None and l_max >= r_min:
+            raise ValueError(
+                f"max(L) = {l_max:g} is not below min(R) = {r_min:g}, so this "
+                f"form is a game rather than a number and has no value"
+            )
+        return _simplest_between(l_max, r_min)
 
     def __repr__(self) -> str:
         return f"Surreal({self.to_float()})"

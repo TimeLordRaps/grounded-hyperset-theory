@@ -100,12 +100,52 @@ class CauchySequenceHyperset:
         ]
         return Hyperset.from_elements(*elements)
 
-    def is_cauchy(self, modulus_fn: Callable[[int], int], samples: int = 10) -> bool:
-        """Verify the Cauchy convergence criterion up to sample precision."""
+    def is_cauchy(
+        self,
+        modulus_fn: Callable[[int], int],
+        samples: int = 10,
+        window: int = 5,
+    ) -> bool:
+        """Search for a violation of the Cauchy criterion; True if none is found.
+
+        The two answers are not worth the same, and the caller needs to know
+        which one they are holding.
+
+        **False is conclusive.** A concrete pair ``(n_k, m)`` was found with
+        ``|a_n_k - a_m| >= 1/k``, so ``modulus_fn`` is not a modulus of
+        convergence for this sequence. That is a witness and it settles the
+        question.
+
+        **True is not a proof.** The criterion quantifies over *all* ``m >=
+        n_k``; this checks ``window`` of them for ``samples`` values of ``k``. A
+        sequence that is quiet across the sampled indices and then moves will
+        pass. Raising ``samples`` and ``window`` makes passing mean more, and no
+        finite choice makes it mean convergence.
+
+        Args:
+            modulus_fn: candidate modulus -- maps ``k`` to an index past which
+                terms should stay within ``1/k`` of each other.
+            samples: how many values of ``k`` to test, from 1 upward.
+            window: how many terms past each ``modulus_fn(k)`` to compare.
+
+        Raises:
+            ValueError: if ``samples`` or ``window`` is not positive, or if
+                ``modulus_fn`` returns a negative index. Each of those made the
+                loop vacuous, and a vacuous loop returned True.
+        """
+        if samples < 1:
+            raise ValueError(f"samples must be positive, got {samples}")
+        if window < 1:
+            raise ValueError(f"window must be positive, got {window}")
         for k in range(1, samples + 1):
             n_k = modulus_fn(k)
+            if n_k < 0:
+                raise ValueError(
+                    f"modulus_fn({k}) returned {n_k}; a modulus must give a "
+                    f"non-negative term index"
+                )
             p_nk, q_nk = self.term(n_k)
-            for m in range(n_k, n_k + 5):
+            for m in range(n_k, n_k + window):
                 p_m, q_m = self.term(m)
                 # Check |p_nk/q_nk - p_m/q_m| < 1/k
                 diff_num = abs(p_nk * q_m - p_m * q_nk)
@@ -202,22 +242,50 @@ class SurrealHyperset:
         zero = SurrealHyperset()
         return self == zero
 
+    def birthday_bound(self) -> int:
+        """An upper bound on this value's birthday: the depth of its construction.
+
+        Every value here is built from finite ``left`` and ``right`` tuples of
+        values built the same way, so the recursion is finite and this
+        terminates. A surreal of finite birthday is a dyadic rational, which is
+        the fact the two predicates below rest on.
+        """
+        options = self.left + self.right
+        return 1 + max((x.birthday_bound() for x in options), default=-1)
+
     def is_infinitesimal(self) -> bool:
-        """Return True if strictly between -1/n and 1/n for all finite n > 0, and non-zero."""
-        if self.is_zero():
-            return False
-        # Compare with 1/2, 1/4, 1/8
-        half = SurrealHyperset(left=(SurrealHyperset(),), right=(SurrealHyperset(left=(SurrealHyperset(),)),))
-        zero = SurrealHyperset()
-        neg_half = SurrealHyperset(left=(), right=(zero,))
-        return (neg_half < self) and (self < half)
+        """Always False. No value this class can represent is infinitesimal.
+
+        ``x`` is infinitesimal when ``0 < |x| < 1/n`` for *every* positive
+        integer ``n``. ``left`` and ``right`` are finite tuples of values built
+        the same way, so every representable value has a finite birthday, and a
+        surreal of finite birthday is a dyadic rational ``p/2**k``. A non-zero
+        one satisfies ``|x| >= 1/2**k``, so it is not below ``1/n`` once
+        ``n > 2**k``. Reaching a genuine infinitesimal needs an infinite right
+        set, which finite tuples cannot hold.
+
+        This is a proof about the representation rather than a sampling budget,
+        which is why it can return a constant without concealing anything.
+
+        It previously compared against 1/2 alone and returned True for everything
+        in ``(-1/2, 1/2)`` -- so 1/4 was reported infinitesimal -- while claiming
+        the "for all n" quantifier in its own docstring. See
+        ``surreal_infinitesimal``, which builds the finite approximants.
+        """
+        return False
 
     def is_infinite(self) -> bool:
-        """Return True if strictly greater than any finite natural number."""
-        one = SurrealHyperset(left=(SurrealHyperset(),))
-        two = SurrealHyperset(left=(one,))
-        three = SurrealHyperset(left=(two,))
-        return three < self
+        """Always False. No value this class can represent is infinite.
+
+        By the same argument as ``is_infinitesimal``: a finite birthday forces a
+        dyadic rational ``p/2**k``, which the integer ``abs(p) + 1`` exceeds. An
+        infinite surreal such as omega needs an infinite left set.
+
+        It previously tested ``3 < self``, so the integer 4 was reported
+        infinite -- and ``surreal_omega(3)`` *is* the integer 4, so the
+        truncation and the threshold cancelled and the answer looked right.
+        """
+        return False
 
     def to_hyperset(self) -> Hyperset:
         """Compile surreal number into a first-class Hyperset pair ({X_L}, {X_R})."""
@@ -245,7 +313,21 @@ def surreal_minus_one() -> SurrealHyperset:
 
 
 def surreal_infinitesimal(depth: int = 3) -> SurrealHyperset:
-    """Construct an infinitesimal surreal epsilon = { 0 | 1, 1/2, 1/4, ... }."""
+    """The ``depth``-th finite approximant to epsilon: the dyadic ``1/2**(depth+1)``.
+
+    Epsilon is ``{ 0 | 1, 1/2, 1/4, ... }`` with an *infinite* right set. Cutting
+    that set off at ``depth`` does not give a small infinitesimal, it gives an
+    ordinary dyadic rational::
+
+        surreal_infinitesimal(0) == 1/2      surreal_infinitesimal(3) == 1/16
+        surreal_infinitesimal(1) == 1/4      surreal_infinitesimal(4) == 1/32
+
+    so ``surreal_infinitesimal(d).is_infinitesimal()`` is False, correctly. Each
+    term is below the last and none of them is infinitesimal; the limit is not a
+    member of the sequence and is not representable here.
+
+    The name is released public API and is kept; what it returns is unchanged.
+    """
     z = surreal_zero()
     rights: list[SurrealHyperset] = [surreal_one()]
     curr = surreal_one()
@@ -256,7 +338,17 @@ def surreal_infinitesimal(depth: int = 3) -> SurrealHyperset:
 
 
 def surreal_omega(depth: int = 3) -> SurrealHyperset:
-    """Construct the first transfinite surreal omega = { 0, 1, 2, ... | }."""
+    """The ``depth``-th finite approximant to omega: the integer ``depth + 1``.
+
+    Omega is ``{ 0, 1, 2, ... | }`` with an *infinite* left set. Cutting that set
+    off at ``depth`` gives ``{0, 1, ..., depth | }``, and by the simplicity rule
+    that is the integer ``depth + 1``. ``surreal_omega(3)`` is 4, not a
+    transfinite value, so ``surreal_omega(d).is_infinite()`` is False, correctly;
+    it used to be True for ``d >= 3`` only because the value it was compared
+    against was the integer 3.
+
+    The name is released public API and is kept; what it returns is unchanged.
+    """
     lefts: list[SurrealHyperset] = [surreal_zero()]
     curr = surreal_zero()
     for _ in range(depth):

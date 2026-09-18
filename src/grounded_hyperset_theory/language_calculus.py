@@ -367,9 +367,35 @@ def grammar_bisimilar(g1: Grammar, g2: Grammar) -> bool:
 
 # Regular language calculus with Brzozowski derivatives
 
+def _union_operands(regex: Regex) -> tuple[Regex, ...]:
+    """The operands of a union, flattened through nesting; a non-union alone."""
+    if regex.kind == "union" and regex.left is not None and regex.right is not None:
+        return _union_operands(regex.left) + _union_operands(regex.right)
+    return (regex,)
+
+
+def _regex_sort_key(regex: Regex) -> tuple:
+    """A total order on expressions, so a union has one canonical arrangement.
+
+    Structural rather than textual: ``repr`` on an unnormalised expression can be
+    thousands of levels deep, which is how ``dfa_apg`` used to raise
+    RecursionError while labelling a node.
+    """
+    return (
+        regex.kind,
+        regex.val or "",
+        _regex_sort_key(regex.left) if regex.left is not None else (),
+        _regex_sort_key(regex.right) if regex.right is not None else (),
+    )
+
+
 @dataclass(frozen=True)
 class Regex:
-    """Algebraic regular expression for Brzozowski language calculus."""
+    """Algebraic regular expression for Brzozowski language calculus.
+
+    Unions are kept in a canonical ACI-normalised form -- see ``union`` -- which
+    is what makes the set of derivatives finite and ``dfa_apg`` terminate.
+    """
 
     kind: str  # 'empty', 'eps', 'lit', 'union', 'concat', 'star'
     val: str | None = None
@@ -389,13 +415,31 @@ class Regex:
         return cls("lit", val=ch)
 
     def union(self, other: Regex) -> Regex:
-        if self.kind == "empty":
-            return other
-        if other.kind == "empty":
-            return self
-        if self == other:
-            return self
-        return Regex("union", left=self, right=other)
+        """Union, normalised modulo associativity, commutativity and idempotence.
+
+        Brzozowski's theorem gives a *finite* set of derivatives only modulo
+        these three. Keeping ``a|b`` and ``b|a`` apart, or ``(a|b)|c`` and
+        ``a|(b|c)``, makes the derivative set infinite and ``dfa_apg`` diverge:
+        ``(a|b)*ab(a|b)*`` has a three-state minimal DFA and used to produce 65
+        states at a budget of 64, 257 at 256, without ever settling.
+
+        Operands are flattened out of nested unions, ``empty`` operands dropped,
+        duplicates removed and the remainder sorted, so two unions of the same
+        operand set are the same object and become the same DFA state.
+        """
+        operands: list[Regex] = []
+        for operand in _union_operands(self) + _union_operands(other):
+            if operand.kind == "empty":
+                continue
+            if operand not in operands:
+                operands.append(operand)
+        if not operands:
+            return Regex.empty()
+        operands.sort(key=_regex_sort_key)
+        result = operands[-1]
+        for operand in reversed(operands[:-1]):
+            result = Regex("union", left=operand, right=result)
+        return result
 
     def concat(self, other: Regex) -> Regex:
         if self.kind == "empty" or other.kind == "empty":
@@ -461,7 +505,31 @@ class Regex:
 
 
 def dfa_apg(regex: Regex, alphabet: Iterable[str], max_states: int = 64) -> AccessiblePointedGraph:
-    """Build the minimal Deterministic Finite Automaton (DFA) state APG via Brzozowski derivatives."""
+    """The derivative automaton of ``regex`` over ``alphabet``, as an APG.
+
+    States are derivatives of ``regex`` under ACI normalisation, which by
+    Brzozowski's theorem is a finite set, and only reachable states are built.
+    That is **not** the same as minimal: two reachable states can denote the same
+    language and stay distinct. Measured, ``(a*b*)*`` produces three states for a
+    language whose minimal DFA has one, and ``(a|b)*ab(a|b)*`` produces six where
+    three suffice. Minimisation is a separate pass and is not done here; this
+    docstring used to claim "minimal" and that was wrong.
+
+    Every state gets a transition for every letter, so the result is a complete
+    automaton or there is no result at all.
+
+    Raises:
+        ValueError: if the automaton needs more than ``max_states`` states.
+            Truncating instead would return something that is not an automaton:
+            the states still queued would have no outgoing transitions, which
+            reads exactly like states that reject every continuation. That is
+            what it used to do, silently -- and because the budget was tested
+            once per dequeued state while the inner loop inserted freely, the
+            count came back over the cap as well, 65 states for ``max_states=64``.
+    """
+    if max_states < 1:
+        raise ValueError(f"max_states must be at least 1, got {max_states}")
+
     alpha = list(alphabet)
     root_node = Node(0, label=str(regex))
     state_map: dict[Regex, Node] = {regex: root_node}
@@ -469,13 +537,21 @@ def dfa_apg(regex: Regex, alphabet: Iterable[str], max_states: int = 64) -> Acce
     queue: deque[Regex] = deque([regex])
     next_id = 1
 
-    while queue and len(state_map) < max_states:
+    while queue:
         curr_reg = queue.popleft()
         curr_node = state_map[curr_reg]
 
         for a in alpha:
             deriv = curr_reg.derivative(a)
             if deriv not in state_map:
+                if len(state_map) >= max_states:
+                    raise ValueError(
+                        f"the derivative automaton of {regex!r} over "
+                        f"{sorted(alpha)} needs more than max_states="
+                        f"{max_states} states; raise the budget rather than "
+                        f"accepting a partial automaton, which would be missing "
+                        f"transitions and so would reject words in the language"
+                    )
                 deriv_node = Node(next_id, label=str(deriv))
                 next_id += 1
                 state_map[deriv] = deriv_node
@@ -487,5 +563,9 @@ def dfa_apg(regex: Regex, alphabet: Iterable[str], max_states: int = 64) -> Acce
 
 
 def dfa_hyperset(regex: Regex, alphabet: Iterable[str], max_states: int = 64) -> Hyperset:
-    """Ground a regular language DFA directly into a Hyperset."""
+    """Ground the derivative automaton of ``regex`` into a Hyperset.
+
+    See ``dfa_apg``: reachable states only, complete transitions, and a refusal
+    rather than a truncation when the budget is not enough.
+    """
     return Hyperset(dfa_apg(regex, alphabet, max_states=max_states))

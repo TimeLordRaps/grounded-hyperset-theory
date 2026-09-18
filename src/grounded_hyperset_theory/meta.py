@@ -70,7 +70,24 @@ class Abstraction:
         return self.instantiate(argument)
 
     def to_hyperset(self) -> Hyperset:
-        """Objectify this abstraction into a first-class Hyperset tag pair."""
+        """Objectify this abstraction as the tagged pair (1, (variable, body)).
+
+        The encoding is lossy and there is no inverse. The variable is built as
+        a node with no children, and a childless node is the empty set, so the
+        first component of the inner pair is 0 for every abstraction whatever
+        the variable is named. The body is likewise a bisimulation class, which
+        keeps no record of *where* the variable occurs in it -- and where the
+        variable occurs is the entire content of an abstraction.
+
+        Measured: ``lambda x. x`` and ``lambda x. 0`` objectify to the same
+        hyperset, although the first is the identity and the second is constant
+        (instantiating both at 2 gives 2 and 0). Objectification is therefore
+        not injective on abstractions that are distinguishable as functions.
+
+        Making it injective needs the variable encoded as something no ordinary
+        set is -- a tagged marker substituted at each occurrence -- which is a
+        different encoding, not a repair of this one.
+        """
         # Tag 1 represents an abstraction: (1, (var, body))
         var_node = Node(f"var:{self.variable.id}", label=str(self.variable))
         var_hyperset = Hyperset(AccessiblePointedGraph(root=var_node, edges={var_node: ()}))
@@ -192,7 +209,16 @@ def deobjectify_function(hyperset: Hyperset) -> dict[Hyperset, Hyperset]:
 
 
 def objectify_apg(apg: AccessiblePointedGraph) -> Hyperset:
-    """Encode an entire AccessiblePointedGraph (V, E, r) as a first-class Hyperset."""
+    """Encode an APG's shape as the hyperset (root_index, edge_relation).
+
+    Nodes are replaced by their positions in the ``str(id)``-sorted order, so
+    what is encoded is the graph up to isomorphism: node ids and labels are
+    both discarded and neither is recoverable. ``deobjectify_apg`` therefore
+    returns a graph bisimilar to the original with freshly numbered, unlabelled
+    nodes -- not a graph equal to it. ``Node`` is a frozen dataclass whose
+    equality includes the label, so round-tripped nodes do not compare equal to
+    the originals even where the index happens to match.
+    """
     nodes_list = sorted(list(apg.nodes), key=lambda n: str(n.id))
     node_to_idx = {n: i for i, n in enumerate(nodes_list)}
     root_idx = node_to_idx[apg.root]
@@ -210,7 +236,11 @@ def objectify_apg(apg: AccessiblePointedGraph) -> Hyperset:
 
 
 def deobjectify_apg(hyperset: Hyperset) -> AccessiblePointedGraph:
-    """Decode an objectified APG hyperset back into an AccessiblePointedGraph."""
+    """Decode an objectified APG back into an AccessiblePointedGraph.
+
+    The result is bisimilar to the graph that was encoded, with integer node
+    ids and no labels. See ``objectify_apg`` for what is not preserved.
+    """
     root_h, edges_h = _unpack_pair(hyperset)
     root_idx = root_h.to_int()
     raw_pairs = deobjectify_relation(edges_h)
@@ -232,7 +262,30 @@ def deobjectify_apg(hyperset: Hyperset) -> AccessiblePointedGraph:
 
 
 def fractal_hyperset(pattern: str = "quine_nested") -> Hyperset:
-    """Generate archetypal non-well-founded fractal hypersets under Aczel's AFA."""
+    """Generate archetypal non-well-founded hypersets under Aczel's AFA.
+
+    The four names select four *graphs*. They do not select four sets: a
+    hyperset is a bisimulation class, and two of these graphs collapse further
+    than their names suggest. Measured, the four patterns denote three distinct
+    hypersets.
+
+    - ``"quine"`` -- the Quine atom, Omega = {Omega}.
+    - ``"quine_nested"`` -- Phi = {Phi, {Phi, 0}}. Genuinely distinct from
+      Omega, because Phi has a member that is not bisimilar to Phi.
+    - ``"sierpinski"`` -- the 3-cycle A -> {B, C}, B -> {A, C}, C -> {A, B}.
+      **This denotes Omega.** The all-pairs relation on {A, B, C} satisfies the
+      bisimulation condition, so A ~ B ~ C and the graph quotients to a single
+      self-looping node. It is a second drawing of ``"quine"``, not a second
+      set.
+    - ``"cantor_non_well_founded"`` -- K -> {KL, KR}, KL -> {K, 0},
+      KR -> {0, K}. **Not binary branching.** ``{K, 0}`` and ``{0, K}`` are the
+      same set, so KL ~ KR and K has one member, not two: K = {{K, 0}}.
+
+    Neither collapse is a defect in the quotient; both are what the graphs mean.
+    They are recorded because the names promise variety the sets do not have,
+    and because ``members()`` returns one entry per child *node*, so
+    ``len(sierpinski.members())`` is 2 while ``len(sierpinski)`` is 1.
+    """
     if pattern == "quine":
         return QuineAtom()
     elif pattern == "quine_nested":
@@ -267,7 +320,19 @@ def meta_fractalize(
     rule: Callable[[Hyperset], Iterable[Hyperset]] | Mapping[Hyperset, Iterable[Hyperset]],
     depth: int = 2,
 ) -> Hyperset:
-    """Recursively expand a hyperset into a self-similar fractal hyperset up to depth."""
+    """Expand the top-level members of a hyperset, ``depth`` times over.
+
+    Not recursive, despite the name: each pass rewrites the members of the root
+    and leaves everything below them untouched. Measured on the seed {{0}} with
+    the rule h |-> [h, {h}], the top level grows 1, 2, 3, 4 across depths 0..3
+    while every member stays a one-element set at every depth. So ``depth`` is
+    an iteration count, not a nesting depth, and the result is self-similar only
+    where the rule happens to make it so.
+
+    ``rule`` is tested with ``callable`` before ``Mapping``, and a mapping is
+    looked up by hyperset equality, which is bisimulation -- a key built a
+    different way still matches.
+    """
     if depth <= 0:
         return seed
 
@@ -287,21 +352,37 @@ def meta_fractalize(
 
 
 def unfold_step(hyperset: Hyperset) -> Hyperset:
-    """Unfold one level of membership without altering the AFA bisimulation class."""
+    """Unfold one level of membership without altering the AFA bisimulation class.
+
+    Each child of the root is given its own private copy of the whole graph, so
+    siblings that shared structure no longer do. The result denotes the same
+    hyperset: the copy map is a bisimulation by construction.
+
+    Node identities in the copies are built as tuples, ``("copy", c.id, n.id)``,
+    rather than by interpolating the two ids into one string. String
+    concatenation is not injective on pairs and the collision was reachable:
+    with children ``a`` and ``a_b`` where ``a -> b -> z``, the copy of the
+    sibling ``a_b`` and the copy of ``b`` inside ``a`` were both named
+    ``copy_a_b``, so they merged and the empty sibling acquired ``z``. Measured,
+    member sizes went from {0, 1} to {1, 1} -- a different set, out of a
+    function documented not to change the set. Renaming the sibling to ``W``
+    made the same shape correct again, which is how a naming defect announces
+    itself. Tuples cannot collide: two of different length are never equal.
+    """
     # Each child c of root is replaced with a fresh copy of c's children
     root = hyperset.apg.root
-    new_root = Node(f"unfolded_{root.id}")
+    new_root = Node(("unfolded", root.id))
     new_edges: dict[Node, set[Node]] = {new_root: set()}
 
     for c in hyperset.apg.children(root):
-        c_copy = Node(f"copy_{c.id}")
+        c_copy = Node(("copy", c.id))
         new_edges[new_root].add(c_copy)
         for n in hyperset.apg.nodes:
-            mapped_n = c_copy if n == c else Node(f"copy_{c.id}_{n.id}")
+            mapped_n = c_copy if n == c else Node(("copy", c.id, n.id))
             if mapped_n not in new_edges:
                 new_edges[mapped_n] = set()
             for child in hyperset.apg.children(n):
-                mapped_child = c_copy if child == c else Node(f"copy_{c.id}_{child.id}")
+                mapped_child = c_copy if child == c else Node(("copy", c.id, child.id))
                 new_edges[mapped_n].add(mapped_child)
 
     unfolded_apg = AccessiblePointedGraph(root=new_root, edges=new_edges)

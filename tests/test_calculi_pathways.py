@@ -373,6 +373,26 @@ def test_dedekind_cuts():
     assert isinstance(cut_h, Hyperset)
 
 
+def _dyadic_reciprocal(k: int):
+    """The surreal 1/2**k, built as {0 | 1/2**(k-1)}."""
+    from grounded_hyperset_theory.math_calculus import SurrealHyperset
+
+    current = surreal_one()
+    for _ in range(k):
+        current = SurrealHyperset(left=(surreal_zero(),), right=(current,))
+    return current
+
+
+def _surreal_integer(n: int):
+    """The surreal integer n, built as {n-1 | }."""
+    from grounded_hyperset_theory.math_calculus import SurrealHyperset
+
+    current = surreal_zero()
+    for _ in range(n):
+        current = SurrealHyperset(left=(current,))
+    return current
+
+
 def test_surreal_numbers_and_infinitesimals():
     zero = surreal_zero()
     one = surreal_one()
@@ -384,13 +404,26 @@ def test_surreal_numbers_and_infinitesimals():
     assert minus_one < zero
     assert zero < one
 
+    # surreal_infinitesimal truncates eps = {0 | 1, 1/2, 1/4, ...} at `depth`,
+    # and a truncated eps is an ordinary dyadic: depth=3 gives exactly 1/16.
+    # This used to assert `eps.is_infinitesimal()`, which held only because that
+    # predicate tested "inside (-1/2, 1/2)". Pinning the value is stronger: it
+    # identifies eps uniquely, where the predicate only bounded it.
     eps = surreal_infinitesimal(depth=3)
-    assert eps.is_infinitesimal()
+    one_sixteenth = _dyadic_reciprocal(4)
+    assert eps == one_sixteenth
+    assert not eps.is_infinitesimal(), "1/16 is a dyadic rational, not an infinitesimal"
     assert not eps.is_zero()
     assert zero < eps
+    assert eps < _dyadic_reciprocal(3), "1/16 < 1/8"
 
+    # Likewise surreal_omega(depth) is {0, 1, ..., depth | }, which by the
+    # simplicity rule is the integer depth + 1. depth=3 gives 4, not a
+    # transfinite value; `om.is_infinite()` held only because that predicate
+    # tested "greater than 3".
     om = surreal_omega(depth=3)
-    assert om.is_infinite()
+    assert om == _surreal_integer(4)
+    assert not om.is_infinite(), "the integer 4 is not an infinite surreal"
     assert one < om
 
     # Hyperset reification

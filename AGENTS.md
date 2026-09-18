@@ -24,11 +24,11 @@ python scripts/check_presentation.py
 
 Grounded Hyperset Theory is a **verification-grade reference implementation of non-well-founded set theory** based on Accessible Pointed Graphs (APGs), bisimulation equivalence, and constructive membership under Aczel's Anti-Foundation Axiom (AFA). It bridges non-well-founded sets into foundational formal calculi:
 
-1. **Abstraction & Quotienting:** Equivalence partitions (`NodePartition`), APG quotienting (`quotient_apg`), Paige-Tarjan coarsest bisimulation refinement, and Tarjan Strongly Connected Component DAG condensation (`scc_quotient`).
+1. **Abstraction & Quotienting:** Equivalence partitions (`NodePartition`), APG quotienting (`quotient_apg`), coarsest bisimulation refinement by iterated signature grouping (`refine_to_bisimulation`), and Tarjan Strongly Connected Component DAG condensation (`scc_quotient`).
 2. **Meta-Calculus:** Rewrite systems (`RewriteSystem`), transition trajectories as APGs, confluence verification, dynamical bisimulation, and periodic orbit detection.
 3. **Hyper-Calculus:** Permutation groups, APG and hyperset automorphisms (`find_apg_automorphisms`), symmetry orbits, and discrete difference derivatives.
 4. **Language Calculus:** Formal grammars, self-referential liar sentences (`liar_sentence`), quotation trees, AST quotation, and regular language derivatives.
-5. **Real Analysis Bridge:** Grounded signed integers, exact rationals, Dedekind cuts (`DedekindCut.sqrt_two`), Cauchy sequences, and Surreal numbers with infinitesimals.
+5. **Real Analysis Bridge:** Grounded signed integers, exact rationals, Dedekind cuts (`DedekindCut.sqrt_two`), Cauchy sequences, and Surreal numbers under Conway's order and simplicity rule. The surreals here are the **dyadic rationals only**: options live in finite tuples, so every value has finite birthday. Infinitesimals and transfinite surreals need infinite option sets and are out of reach — `surreal_infinitesimal(d)` is $1/2^{d+1}$ and `surreal_omega(d)` is the integer $d+1$. Do not reintroduce a claim that either is reached.
 
 ### 1.1 Ecosystem Relations
 

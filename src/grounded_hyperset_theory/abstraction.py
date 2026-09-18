@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
-from typing import Callable, Hashable, Iterable, Mapping, Set
+from typing import Callable, Hashable, Iterable, Iterator, Mapping, Set
 
 from .graph import AccessiblePointedGraph, Node
 from .hyperset import Hyperset
@@ -383,7 +383,12 @@ def scc_quotient(apg: AccessiblePointedGraph) -> AccessiblePointedGraph:
     ZFC-compatible skeleton where every cyclic cluster is contracted into an atomic point.
     Guarantees that the resulting quotient APG has no cycles.
     """
-    # Tarjan's SCC algorithm
+    # Tarjan's SCC algorithm, driven by an explicit stack rather than Python
+    # frames: a cyclic hyperset may be arbitrarily deep, and a recursive walk
+    # raises RecursionError past roughly a thousand links instead of condensing.
+    # Nodes and children are visited in a sorted order so the component
+    # numbering, and hence the quotient, is reproducible across runs rather than
+    # dependent on set iteration order.
     index = 0
     indices: dict[Node, int] = {}
     lowlinks: dict[Node, int] = {}
@@ -391,34 +396,48 @@ def scc_quotient(apg: AccessiblePointedGraph) -> AccessiblePointedGraph:
     stack: list[Node] = []
     sccs: list[set[Node]] = []
 
-    def strongconnect(v: Node) -> None:
-        nonlocal index
-        indices[v] = index
-        lowlinks[v] = index
+    def _sorted_children(v: Node) -> Iterator[Node]:
+        return iter(sorted(apg.children(v), key=lambda n: str(n.id)))
+
+    for start in sorted(apg.nodes, key=lambda n: str(n.id)):
+        if start in indices:
+            continue
+        indices[start] = lowlinks[start] = index
         index += 1
-        stack.append(v)
-        on_stack.add(v)
+        stack.append(start)
+        on_stack.add(start)
+        work: list[tuple[Node, Iterator[Node]]] = [(start, _sorted_children(start))]
 
-        for w in apg.children(v):
-            if w not in indices:
-                strongconnect(w)
-                lowlinks[v] = min(lowlinks[v], lowlinks[w])
-            elif w in on_stack:
-                lowlinks[v] = min(lowlinks[v], indices[w])
-
-        if lowlinks[v] == indices[v]:
-            scc: set[Node] = set()
-            while True:
-                w = stack.pop()
-                on_stack.remove(w)
-                scc.add(w)
-                if w == v:
+        while work:
+            v, remaining = work[-1]
+            descended = False
+            for w in remaining:
+                if w not in indices:
+                    indices[w] = lowlinks[w] = index
+                    index += 1
+                    stack.append(w)
+                    on_stack.add(w)
+                    work.append((w, _sorted_children(w)))
+                    descended = True
                     break
-            sccs.append(scc)
+                if w in on_stack:
+                    lowlinks[v] = min(lowlinks[v], indices[w])
+            if descended:
+                continue
 
-    for n in apg.nodes:
-        if n not in indices:
-            strongconnect(n)
+            work.pop()
+            if work:
+                parent = work[-1][0]
+                lowlinks[parent] = min(lowlinks[parent], lowlinks[v])
+            if lowlinks[v] == indices[v]:
+                scc: set[Node] = set()
+                while True:
+                    w = stack.pop()
+                    on_stack.remove(w)
+                    scc.add(w)
+                    if w == v:
+                        break
+                sccs.append(scc)
 
     partition_map: dict[Node, int] = {}
     for scc_id, scc in enumerate(sccs):

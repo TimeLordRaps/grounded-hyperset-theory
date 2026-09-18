@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
-from typing import Hashable, Iterable, Mapping, Set
+from typing import Hashable, Iterable, Iterator, Mapping, Set
 
 
 @dataclass(frozen=True)
@@ -83,23 +83,40 @@ class AccessiblePointedGraph:
         return self._edges[n]
 
     def has_cycles(self) -> bool:
-        """Return True if the accessible graph contains any directed cycles."""
+        """Return True if the accessible graph contains any directed cycles.
+
+        Iterative depth-first search over an explicit stack. A hyperset is not
+        bounded by CPython's frame limit, so neither is its cycle check: a
+        membership chain a few thousand links long is an ordinary graph here,
+        and a recursive walk would raise RecursionError on it rather than
+        answer.
+        """
         visited: set[Node] = set()
-        rec_stack: set[Node] = set()
+        on_path: set[Node] = set()
+        # (node, iterator over its remaining children) -- the explicit stack
+        # frame. Suspending an iterator is what replaces the Python frame.
+        stack: list[tuple[Node, Iterator[Node]]] = []
 
-        def dfs(curr: Node) -> bool:
-            visited.add(curr)
-            rec_stack.add(curr)
-            for neighbor in self._edges.get(curr, ()):
-                if neighbor not in visited:
-                    if dfs(neighbor):
-                        return True
-                elif neighbor in rec_stack:
+        visited.add(self.root)
+        on_path.add(self.root)
+        stack.append((self.root, iter(self._edges.get(self.root, ()))))
+
+        while stack:
+            curr, remaining = stack[-1]
+            descended = False
+            for neighbor in remaining:
+                if neighbor in on_path:
                     return True
-            rec_stack.remove(curr)
-            return False
-
-        return dfs(self.root)
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    on_path.add(neighbor)
+                    stack.append((neighbor, iter(self._edges.get(neighbor, ()))))
+                    descended = True
+                    break
+            if not descended:
+                on_path.discard(curr)
+                stack.pop()
+        return False
 
     def topological_sort(self) -> list[Node]:
         """Return a topological sort of nodes if acyclic.
@@ -111,14 +128,25 @@ class AccessiblePointedGraph:
         visited: set[Node] = set()
         order: list[Node] = []
 
-        def dfs(curr: Node) -> None:
-            visited.add(curr)
-            for child in sorted(self._edges.get(curr, ()), key=lambda x: str(x.id)):
-                if child not in visited:
-                    dfs(child)
-            order.append(curr)
+        def _children(node: Node) -> Iterator[Node]:
+            return iter(sorted(self._edges.get(node, ()), key=lambda x: str(x.id)))
 
-        dfs(self.root)
+        # Same post-order as the recursive walk, over an explicit stack so that
+        # deep membership chains sort rather than raise RecursionError.
+        visited.add(self.root)
+        stack: list[tuple[Node, Iterator[Node]]] = [(self.root, _children(self.root))]
+        while stack:
+            curr, remaining = stack[-1]
+            descended = False
+            for child in remaining:
+                if child not in visited:
+                    visited.add(child)
+                    stack.append((child, _children(child)))
+                    descended = True
+                    break
+            if not descended:
+                order.append(curr)
+                stack.pop()
         return order[::-1]
 
     def subgraph_from(self, new_root: Node | Hashable) -> AccessiblePointedGraph:

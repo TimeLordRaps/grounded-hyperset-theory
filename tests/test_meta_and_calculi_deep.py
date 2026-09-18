@@ -419,7 +419,13 @@ def test_surreal_numbers_and_infinitesimals():
     assert minus_one.to_float() == -1.0
     assert half.to_float() == 0.5
 
-    assert eps.is_infinitesimal()
+    # SurrealNumber.infinitesimal() is {0 | 1/2, 1}. The simplest number in
+    # (0, 1/2) is 1/4, so that is what it equals -- as to_float now reports.
+    # This used to assert `eps.is_infinitesimal()`, which held because that
+    # predicate inspected the *shape* of the expression rather than its value.
+    # Pinning the value is stronger.
+    assert eps.to_float() == 0.25
+    assert not eps.is_infinitesimal(), "1/4 is a dyadic rational, not an infinitesimal"
     h_eps = eps.to_hyperset()
     assert isinstance(h_eps, Hyperset)
 

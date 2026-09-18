@@ -113,7 +113,20 @@ class Hyperset:
         return self.cardinality()
 
     def members(self) -> list[Hyperset]:
-        """Return the immediate member hypersets of this set."""
+        """Return one hyperset per child *node* of the root.
+
+        This is the graph-level view, not the set-level one, and the two
+        differ. Two sibling nodes that are bisimilar are one member of the set
+        but two entries in this list, so ``len(self.members())`` can exceed
+        ``len(self)``: ``cardinality`` deduplicates under bisimulation and this
+        does not. Measured on a root with two distinct childless children, this
+        returns 2 and ``len`` returns 1, and the set is {0}.
+
+        Deduplicating here would make the two agree and would match what
+        "member" means, but it would change released behaviour and the result
+        of every consumer that counts this list, so the disagreement is
+        recorded rather than resolved.
+        """
         result: list[Hyperset] = []
         for child in self.apg.children(self.apg.root):
             sub_apg = self.apg.subgraph_from(child)

@@ -8,48 +8,19 @@ from .graph import AccessiblePointedGraph, Node
 
 
 def bisimilar(g1: AccessiblePointedGraph, g2: AccessiblePointedGraph) -> bool:
-    """Determine whether two Accessible Pointed Graphs are bisimilar.
+    """Determine whether two Accessible Pointed Graphs (APGs) are bisimilar.
 
     Under Aczel's Anti-Foundation Axiom (AFA), two hypersets are identical
     if and only if their underlying APGs are bisimilar.
     """
-    # Candidate bisimulation relation initialized to Cartesian product of nodes
-    # We refine by iteratively eliminating pairs (u, v) that fail the forward or backward condition.
-    nodes1 = list(g1.nodes)
-    nodes2 = list(g2.nodes)
+    if g1 is g2:
+        return True
+    if g1.is_empty != g2.is_empty:
+        return False
+    # Canonical quotient signatures provide a deterministic O(|V| log |V|)
+    # decision under partition refinement.
+    return g1.canonical_signature() == g2.canonical_signature()
 
-    # R is a set of valid pairs (u, v)
-    r_set: set[tuple[Node, Node]] = {(u, v) for u in nodes1 for v in nodes2}
-
-    changed = True
-    while changed:
-        changed = False
-        to_remove: set[tuple[Node, Node]] = set()
-
-        for u, v in r_set:
-            u_children = g1.children(u)
-            v_children = g2.children(v)
-
-            # Condition 1: For each u' in children(u), exists v' in children(v) with (u', v') in R
-            fwd_ok = all(
-                any((u_prime, v_prime) in r_set for v_prime in v_children)
-                for u_prime in u_children
-            )
-
-            # Condition 2: For each v' in children(v), exists u' in children(u) with (u', v') in R
-            bwd_ok = all(
-                any((u_prime, v_prime) in r_set for u_prime in u_children)
-                for v_prime in v_children
-            )
-
-            if not (fwd_ok and bwd_ok):
-                to_remove.add((u, v))
-
-        if to_remove:
-            r_set -= to_remove
-            changed = True
-
-    return (g1.root, g2.root) in r_set
 
 
 class Hyperset:
@@ -379,29 +350,57 @@ def von_neumann_ordinal(n: int) -> Hyperset:
     return Hyperset(AccessiblePointedGraph(root=nodes[n], edges=edges))
 
 
-def solve_system(equations: Mapping[Hashable, Iterable[Hashable]]) -> dict[Hashable, Hyperset]:
+def solve_system(
+    equations: Mapping[Hashable, Iterable[Hashable | Hyperset]],
+) -> dict[Hashable, Hyperset]:
     """Solve a system of set equations under Aczel's Anti-Foundation Axiom (AFA).
 
+    Supports indeterminate variables and embedded Hyperset constants (parameters).
     For example: `solve_system({"x": ["y"], "y": ["x"]})` returns the unique hypersets
     for variables 'x' and 'y' (both equal to the Quine atom Ω).
+    Embedding constants such as `solve_system({"x": ["x", EmptyHyperset().successor()]})`
+    yields the unique hyperset satisfying x = {x, 1}.
     """
     raw_edges: dict[Node, set[Node]] = {}
+    const_idx = 0
+
     for var, children in equations.items():
         v_node = Node(var)
-        c_nodes = {Node(c) for c in children}
-        raw_edges[v_node] = c_nodes
+        if v_node not in raw_edges:
+            raw_edges[v_node] = set()
+
+        for c in children:
+            if isinstance(c, Hyperset):
+                # Splice constant hyperset's APG into the system with unique node namespaces
+                prefix = f"c{const_idx}_"
+                const_idx += 1
+                const_map: dict[Node, Node] = {
+                    n: Node(f"{prefix}{n.id}", label=n.label) for n in c.apg.nodes
+                }
+                for n in c.apg.nodes:
+                    mapped_n = const_map[n]
+                    if mapped_n not in raw_edges:
+                        raw_edges[mapped_n] = set()
+                    for ch in c.apg.children(n):
+                        mapped_ch = const_map[ch]
+                        raw_edges[mapped_n].add(mapped_ch)
+                raw_edges[v_node].add(const_map[c.apg.root])
+            else:
+                c_node = Node(c)
+                raw_edges[v_node].add(c_node)
 
     # Ensure all referenced children have an entry in raw_edges
     for c_set in list(raw_edges.values()):
-        for c in c_set:
-            if c not in raw_edges:
-                raw_edges[c] = set()
+        for c_node in c_set:
+            if c_node not in raw_edges:
+                raw_edges[c_node] = set()
 
     results: dict[Hashable, Hyperset] = {}
     for var in equations:
         apg = AccessiblePointedGraph(root=var, edges=raw_edges)
         results[var] = Hyperset(apg)
     return results
+
 
 
 def ordinal_add(alpha: Hyperset, beta: Hyperset) -> Hyperset:

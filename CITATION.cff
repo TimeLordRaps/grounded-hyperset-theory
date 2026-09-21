@@ -6,5 +6,15 @@ version: 0.2.0
 authors:
   - family-names: Roost
     given-names: Tyler
+    orcid: "https://orcid.org/0009-0007-7850-489X"
 repository-code: "https://github.com/TimeLordRaps/grounded-hyperset-theory"
 license: Apache-2.0
+preferred-citation:
+  type: manuscript
+  title: "Constructive Grounded Hyperset Theory: Anti-Foundation, Bisimulation Quotients, and SCC Condensation for Hypercomputational Oracles"
+  authors:
+    - family-names: Roost
+      given-names: Tyler
+      orcid: "https://orcid.org/0009-0007-7850-489X"
+  year: 2026
+  url: "https://github.com/TimeLordRaps/grounded-hyperset-theory/blob/main/paper/paper.pdf"

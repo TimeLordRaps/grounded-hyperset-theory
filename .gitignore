@@ -23,3 +23,13 @@ wheels/
 .venv/
 venv/
 ENV/
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+paper/render/

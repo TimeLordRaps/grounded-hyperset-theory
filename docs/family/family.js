@@ -133,7 +133,91 @@
     return comps;
   }
 
+  /* A ring is an ellipse, not a circle. The canvas is landscape and a layered
+     stack of components is tall and narrow, so height is the scarce dimension
+     and width is free: widening the ring costs nothing and pulls the labels that
+     actually collide -- the ones beside each other -- further apart. */
+  var RING_ASPECT = 1.55;
   function ringRadius(size) { return size < 2 ? 0 : Math.max(58, 16 * size); }
+
+  function countLabel(n) {
+    return n.counts.symbols ? n.counts.symbols + " symbols"
+         : (n.reserved ? "reserved" : "no package");
+  }
+
+  /* How far a node's drawing reaches past its own centre, in fixed pixels.
+     Over-estimated on purpose: this feeds a fit solver, and the cost of being
+     generous is a slightly smaller picture, while the cost of being tight is a
+     clipped label. */
+  var MAXR = 18;          /* the largest radiusOf can return */
+  var HULL_PAD = 34;      /* hull circle beyond the ring it encloses */
+  var HULL_CAP = 76;      /* and its caption above that, clear of the top node's
+                             own label -- a ring always has a node at its top,
+                             and the caption used to be set on the same line */
+
+  function extents(n, p) {
+    var wide = Math.max(n.id.length * 6.5, countLabel(n).length * 5.4) + 4;
+    if (p.place === "right") return { l: MAXR, r: MAXR + 9 + wide, t: MAXR, b: 18 };
+    if (p.place === "left") return { l: MAXR + 9 + wide, r: MAXR, t: MAXR, b: 18 };
+    var half = Math.max(MAXR, wide / 2);
+    if (p.place === "up") return { l: half, r: half, t: MAXR + 34, b: MAXR };
+    return { l: half, r: half, t: MAXR, b: MAXR + 32 };
+  }
+
+  /* Scale the finished drawing to the canvas.
+   *
+   * Component sizes come from the graph, not from the space available, so the
+   * published view -- four parts in a ring and one source above them -- was laid
+   * out correctly and then drawn in a quarter of the canvas. Text does not scale
+   * with the geometry, so the factor is solved against each node's own label
+   * extent rather than applied to a bounding box: the largest scale at which
+   * every node, ring and label still clears the margin. That subsumes the
+   * downward squeeze this used to do, and works in both directions.
+   */
+  function fit(pos, groups) {
+    var ids = Object.keys(pos);
+    if (!ids.length) return 1;
+    var M = 10, s = 4;
+    var xs = ids.map(function (i) { return pos[i].x; });
+    var ys = ids.map(function (i) { return pos[i].y; });
+    var cx0 = (Math.min.apply(null, xs) + Math.max.apply(null, xs)) / 2;
+    var cy0 = (Math.min.apply(null, ys) + Math.max.apply(null, ys)) / 2;
+
+    /* A node sitting on the centre line is unaffected by the scale, so it
+       constrains nothing; one already past the margin at any scale is left to
+       the clamp below rather than collapsing the whole picture. */
+    function cap(reach, room) {
+      if (reach > 0.01) s = Math.min(s, room / reach);
+    }
+
+    ids.forEach(function (id) {
+      var q = pos[id], e = extents(byId[id], q);
+      cap(q.x - cx0, W / 2 - M - e.r);
+      cap(cx0 - q.x, W / 2 - M - e.l);
+      cap(q.y - cy0, H / 2 - M - e.b);
+      cap(cy0 - q.y, H / 2 - M - e.t);
+    });
+    groups.forEach(function (g) {
+      var dx = Math.abs(g.x - cx0), dy = g.y - cy0;
+      cap(dx + g.rx, W / 2 - M - HULL_PAD);
+      cap(dx, W / 2 - M - 94);
+      cap(dy + g.ry, H / 2 - M - HULL_PAD);
+      cap(g.ry - dy, H / 2 - M - HULL_CAP);
+    });
+
+    s = Math.max(0.3, Math.min(s, 2.6));
+    ids.forEach(function (id) {
+      pos[id].x = W / 2 + (pos[id].x - cx0) * s;
+      pos[id].y = H / 2 + (pos[id].y - cy0) * s;
+    });
+    groups.forEach(function (g) {
+      g.x = W / 2 + (g.x - cx0) * s;
+      g.y = H / 2 + (g.y - cy0) * s;
+      g.rx *= s;
+      g.ry *= s;
+    });
+    return s;
+  }
 
   /* Layered layout over the component condensation.
    *
@@ -185,7 +269,7 @@
     var ABOVE = 54, BELOW = 40, GAP = 24, AVAIL = W - 24;
 
     function widthOf(i) {
-      if (comps[i].length > 1) return 2 * ringRadius(comps[i].length) + 40;
+      if (comps[i].length > 1) return 2 * ringRadius(comps[i].length) * RING_ASPECT + 40;
       return Math.max(96, comps[i][0].length * 6.8 + 26);
     }
 
@@ -214,12 +298,9 @@
       centres.push(cursor);
       cursor += bandR[bi] + BELOW + (bi < bands.length - 1 ? GAP : 0);
     });
-    var squeeze = cursor > H ? H / cursor : 1;
-    var top = Math.max(0, (H - cursor * squeeze) / 2);
-
     var pos = {}, groups = [];
     bands.forEach(function (row, bi) {
-      var y = top + centres[bi] * squeeze;
+      var y = centres[bi];
       var total = row.reduce(function (s, i) { return s + widthOf(i); }, 0);
       var x = (W - total) / 2;
       row.forEach(function (i) {
@@ -229,7 +310,9 @@
     });
 
 
-    return { pos: pos, groups: groups, levels: levels.length, rows: bands.length };
+    var scale = fit(pos, groups);
+    return { pos: pos, groups: groups, levels: levels.length,
+             rows: bands.length, scale: scale };
   }
 
   function placeComponent(ids, cx, cy, pos, groups) {
@@ -238,11 +321,13 @@
       pos[members[0].id] = { x: cx, y: cy, place: "down" };
       return;
     }
-    var r = ringRadius(members.length);
+    var ry = ringRadius(members.length), rx = ry * RING_ASPECT;
     var stepA = (Math.PI * 2) / members.length;
     members.forEach(function (n, i) {
       var a = -Math.PI / 2 + i * stepA;
-      var cos = Math.cos(a), sin = Math.sin(a);
+      var dx = rx * Math.cos(a), dy = ry * Math.sin(a);
+      var len = Math.sqrt(dx * dx + dy * dy) || 1;
+      var cos = dx / len, sin = dy / len;
       /* Labels go on the outward side of the ring. Hanging every one below its
          node puts the top node's label inside the ring, over the very cycle the
          ring exists to show, and leaves the two bottom nodes' labels -- which on
@@ -251,9 +336,9 @@
          where there is room to run outward. */
       var place = Math.abs(cos) > 0.55 ? (cos > 0 ? "right" : "left")
                 : (sin < 0 ? "up" : "down");
-      pos[n.id] = { x: cx + r * cos, y: cy + r * sin, place: place };
+      pos[n.id] = { x: cx + dx, y: cy + dy, place: place };
     });
-    groups.push({ x: cx, y: cy, r: r, size: members.length });
+    groups.push({ x: cx, y: cy, rx: rx, ry: ry, size: members.length });
   }
 
   function control(a, b, bow) {
@@ -330,11 +415,12 @@
     root.appendChild(gNodes);
 
     placed.groups.forEach(function (g) {
-      gHulls.appendChild(svg("circle", {
-        class: "scc-hull", cx: g.x.toFixed(1), cy: g.y.toFixed(1), r: (g.r + 34).toFixed(1)
+      gHulls.appendChild(svg("ellipse", {
+        class: "scc-hull", cx: g.x.toFixed(1), cy: g.y.toFixed(1),
+        rx: (g.rx + 34).toFixed(1), ry: (g.ry + 34).toFixed(1)
       }));
       gHulls.appendChild(svg("text", {
-        class: "scc-label", x: g.x.toFixed(1), y: (g.y - g.r - 42).toFixed(1),
+        class: "scc-label", x: g.x.toFixed(1), y: (g.y - g.ry - 64).toFixed(1),
         text: g.size + " parts, each reaching every other"
       }));
     });
@@ -369,9 +455,7 @@
       if (!p) return;
       var related = n.id === focusId || near[n.id];
       var r = radiusOf(n);
-      var count = n.counts.symbols
-        ? n.counts.symbols + " symbols"
-        : (n.reserved ? "reserved" : "no package");
+      var count = countLabel(n);
       var side = p.place === "left" || p.place === "right";
       var dx = side ? (p.place === "right" ? r + 9 : -(r + 9)) : 0;
       var nameY = side ? -2 : (p.place === "up" ? -(r + 23) : r + 14);

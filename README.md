@@ -5,6 +5,10 @@
 
 **Grounded Hyperset Theory** provides a Python reference implementation of non-well-founded set theory using Accessible Pointed Graphs (APGs), bisimulation equivalence, and constructive membership. It builds on the foundational graph structures and ordinal progressions formalized in [Hypermath](https://github.com/TimeLordRaps/hypermath) and [Ordinatics](https://github.com/TimeLordRaps/ordinatics), expanding into meta-features and bridges to formal calculi (meta-calculus, hyper-calculus, language calculus, and real analysis).
 
+**Preprint:** *Constructive Grounded Hyperset Theory: Anti-Foundation, Bisimulation Quotients, and SCC Condensation for Hypercomputational Oracles* ([PDF](paper/paper.pdf), [source](paper/paper.tex)) --- version 0.2.0.
+
+Section 8 of the paper is an **Evidential Boundary** that states what the work does and does not establish: four theorems with prose proofs resting on established algorithmic results, no machine-checked theorem, no proof assistant in this repository, and VSTD receipt emission described as an intended interface rather than implemented. No result in the paper rests on receipt evidence.
+
 ---
 
 ## 1. Overview

@@ -229,6 +229,37 @@ def test_aczel_solution_lemma_systems():
     assert s4["0"] in a
     assert s4["1"] in b
 
+    # System 5: Aczel's Parameterized Solution Lemma with embedded Hyperset constants
+    # x = {x, 1}
+    one = von_neumann_ordinal(1)
+    s5 = solve_system({"x": ["x", one]})
+    x = s5["x"]
+    assert not x.is_well_founded
+    assert x in x
+    assert one in x
+    assert von_neumann_ordinal(0) not in x
+    assert len(x) == 2
+    assert bisimilar(x.apg, x.apg)
+
+    # System 6: Multiple variables with mixed QuineAtom and ordinal constants
+    # p = {q, Ω}, q = {p, 2}
+    two = von_neumann_ordinal(2)
+    s6 = solve_system({
+        "p": ["q", omega],
+        "q": ["p", two],
+    })
+    p = s6["p"]
+    q = s6["q"]
+    assert not p.is_well_founded
+    assert not q.is_well_founded
+    assert q in p
+    assert omega in p
+    assert p in q
+    assert two in q
+    assert len(p) == 2
+    assert len(q) == 2
+
+
 
 def test_non_well_founded_set_operations():
     omega = QuineAtom()

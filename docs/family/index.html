@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grounded-hyperset-theory &middot; hyper-* family explorer</title>
+<meta name="description" content="Interaction graph and combined API reference for the hyper-* family, centred on grounded-hyperset-theory.">
+<link rel="stylesheet" href="family.css">
+</head>
+<body data-focus="grounded-hyperset-theory">
+
+<header>
+  <h1>grounded-hyperset-theory <span class="sub">&middot; family explorer</span></h1>
+  <a id="back" href="../">&larr; grounded-hyperset-theory</a>
+  <div class="spacer"></div>
+  <span class="digest" id="digest">graph &hellip;</span>
+</header>
+
+<main>
+  <section id="graph-panel">
+    <h2>Interaction graph</h2>
+    <svg id="graph" viewBox="0 0 760 560" role="img"
+         aria-label="Interaction graph of the hyper-* family, centred on grounded-hyperset-theory"></svg>
+    <div class="legend" id="legend"></div>
+    <p class="hint">
+      This repository is at the centre. Every part of the family is drawn; edges touching
+      the centre are held at full strength and the rest are faded. Click any node to
+      re-centre the whole page on it &mdash; the graph, the panel beside it and the API
+      index below all follow. Toggle an edge kind to see the family without it.
+    </p>
+  </section>
+
+  <section id="detail" aria-live="polite"></section>
+
+  <section id="api">
+    <h2>API reference, whole family</h2>
+    <label class="visually-hidden" for="search">Search symbols</label>
+    <input id="search" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Search every public symbol in the family by name, module or docstring">
+    <p id="count"></p>
+    <div id="api-body"></div>
+  </section>
+</main>
+
+<footer>
+  <p>
+    Generated from the repositories by <code>tools/build_family_graph.py</code>, which reads
+    only git-tracked files. <strong>dependency</strong> edges are declared in
+    <code>pyproject.toml</code>; <strong>import</strong> edges are real Python imports;
+    <strong>citation</strong> edges are tracked prose naming another part. A citation edge is
+    a cross-reference, not a proof, a derivation or an implemented interface &mdash; it records
+    only that one repository names another.
+  </p>
+  <p>
+    The digest above is the SHA-256 of the canonical graph payload. Every repository in the
+    family ships the same <code>family-graph.json</code>; if two pages show different digests,
+    one of them is stale.
+  </p>
+</footer>
+
+<script src="family.js"></script>
+</body>
+</html>

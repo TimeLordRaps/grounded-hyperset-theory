@@ -1,0 +1,2877 @@
+{
+  "digest": "271d1ae0ec72b2f79938d1524c57d9dc64374b0d49f7907c12fa36d133e8943a",
+  "edges": [
+    {
+      "evidence": [
+        "README.md",
+        "AGENTS.md",
+        "GOVERNANCE.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hypercalculi",
+      "target": "grounded-hyperset-theory",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "README.md",
+        "AGENTS.md",
+        "GOVERNANCE.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hypercalculi",
+      "target": "hypermath",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "README.md",
+        "AGENTS.md",
+        "GOVERNANCE.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hypercalculi",
+      "target": "ordinatics",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hyperset-theory",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hyperset-theory",
+      "target": "hypermath",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "grounded-hyperset-theory",
+      "target": "ordinatics",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L0_triangle.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "grounded-hypercalculi",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "DESIGN.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "grounded-hyperset-theory",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L0_triangle.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "hypermath",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "DESIGN.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "ordinatics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "hypermath",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "AGENTS.md",
+        "docs/research/CONSTRUCTIVE_QUINE_SELF_CLOSURE.md"
+      ],
+      "kind": "citation",
+      "source": "hypermath",
+      "target": "grounded-hyperset-theory",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "paper/paper.tex",
+        "L1_relations.hm",
+        "L2_operations.hm",
+        "L3_ordinatics.hm",
+        "AGENTS.md",
+        "docs/research/HYPERSET_THEORY_ORDINATICS.md",
+        "docs/research/SOURCE_MAP.md"
+      ],
+      "kind": "citation",
+      "source": "hypermath",
+      "target": "ordinatics",
+      "weight": 8
+    },
+    {
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "ordinatics",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "ordinatics",
+      "target": "grounded-hyperset-theory",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "AGENTS.md"
+      ],
+      "kind": "citation",
+      "source": "ordinatics",
+      "target": "hypermath",
+      "weight": 1
+    }
+  ],
+  "nodes": [
+    {
+      "api": [
+        {
+          "doc": "Quadrilateral Filtration and Transitive Abstraction Layer (~=).",
+          "module": "hypermath_foundations.abstraction",
+          "path": "src/hypermath_foundations/abstraction.py",
+          "symbols": [
+            {
+              "doc": "The four nodes in the quadrilateral filtration diagram.",
+              "kind": "class",
+              "line": 44,
+              "name": "FiltrationTier"
+            },
+            {
+              "doc": "Raised when an abstraction cannot retrace to semantics due to invalid substance witness.",
+              "kind": "class",
+              "line": 53,
+              "name": "FiltrationRetraceError"
+            },
+            {
+              "doc": "Foundational term representation in the Hypermath term algebra.",
+              "kind": "class",
+              "line": 58,
+              "methods": [
+                "ground",
+                "f2f",
+                "box",
+                "compose",
+                "var",
+                "is_variable",
+                "depth",
+                "size",
+                "digest",
+                "to_dict",
+                "from_dict"
+              ],
+              "name": "FormTerm"
+            },
+            {
+              "doc": "Certification that an abstract identity is physically or operationally realizable.",
+              "kind": "class",
+              "line": 120,
+              "methods": [
+                "verify_conservation"
+              ],
+              "name": "SubstanceWitness"
+            },
+            {
+              "doc": "Formal proof of transitive abstraction equivalence (lhs ~= rhs).",
+              "kind": "class",
+              "line": 147,
+              "methods": [
+                "verify"
+              ],
+              "name": "AbstractionProof"
+            },
+            {
+              "doc": "Result of conditional retrace: full mutual simulation semantics (lhs == rhs).",
+              "kind": "class",
+              "line": 191,
+              "methods": [
+                "is_sound"
+              ],
+              "name": "SemanticEquivalence"
+            },
+            {
+              "doc": "Engine executing the quadrilateral filtration and abstraction layer.",
+              "kind": "class",
+              "line": 210,
+              "methods": [
+                "syntax_similarity",
+                "syntax_to_abstraction",
+                "abstraction_reflexive",
+                "abstraction_symmetric",
+                "abstraction_transitive",
+                "conditional_retrace"
+              ],
+              "name": "QuadrilateralFiltration"
+            },
+            {
+              "doc": "Downstream compositionality: chaining transitive abstraction steps.",
+              "kind": "class",
+              "line": 306,
+              "methods": [
+                "extend",
+                "collapse",
+                "length"
+              ],
+              "name": "AbstractionChain"
+            }
+          ]
+        },
+        {
+          "doc": "Fresh, bounded Lean evidence collection for the current repository contents.",
+          "module": "hypermath_foundations.audit",
+          "path": "src/hypermath_foundations/audit.py",
+          "symbols": [
+            {
+              "doc": "Observe a checkout and freshly run Lean, with seconds bounded per process.",
+              "kind": "function",
+              "line": 167,
+              "name": "run_audit",
+              "signature": "(root, timeout=60, *, inventory_only=False, lake=None)"
+            }
+          ]
+        },
+        {
+          "doc": "Metamath & Formal Calculus Bridge.",
+          "module": "hypermath_foundations.calculus_bridge",
+          "path": "src/hypermath_foundations/calculus_bridge.py",
+          "symbols": [
+            {
+              "doc": "A verified, self-contained Metamath database generator and checker.",
+              "kind": "class",
+              "line": 39,
+              "methods": [
+                "add_constant",
+                "add_variable",
+                "add_floating",
+                "add_essential",
+                "add_disjoint",
+                "add_axiom",
+                "add_theorem",
+                "emit",
+                "verify_proof"
+              ],
+              "name": "MetamathDatabase"
+            },
+            {
+              "doc": "Functorial mapping: translate a Hypermath FormTerm into Metamath tokens.",
+              "kind": "function",
+              "line": 180,
+              "name": "form_to_metamath",
+              "signature": "(term: FormTerm, db: MetamathDatabase)"
+            },
+            {
+              "doc": "Production rule for formal language syntax: Head -> Body.",
+              "kind": "class",
+              "line": 204,
+              "methods": [
+                "matches"
+              ],
+              "name": "GrammarProduction"
+            },
+            {
+              "doc": "Language Calculus: operational semantics and grammar rewriting lattice.",
+              "kind": "class",
+              "line": 217,
+              "methods": [
+                "add_production",
+                "parse_step",
+                "reduce"
+              ],
+              "name": "LanguageCalculus"
+            },
+            {
+              "doc": "Meta-Calculus: symbolic dynamics of symbolic representational calculi.",
+              "kind": "class",
+              "line": 252,
+              "methods": [
+                "add_rewrite_rule",
+                "rewrite_step",
+                "compute_orbit",
+                "detect_cycle"
+              ],
+              "name": "MetaCalculus"
+            },
+            {
+              "doc": "Hyper-Calculus: group-theoretical and Lie-algebraic approach to calculus.",
+              "kind": "class",
+              "line": 300,
+              "methods": [
+                "leibniz_product",
+                "lie_bracket",
+                "translation_group_action",
+                "dilation_group_action"
+              ],
+              "name": "HyperCalculus"
+            },
+            {
+              "doc": "Ordinal Calculus: transfinite differences, limit derivatives, and ordinal sums.",
+              "kind": "class",
+              "line": 352,
+              "methods": [
+                "transfinite_difference",
+                "limit_derivative"
+              ],
+              "name": "OrdinalCalculus"
+            },
+            {
+              "doc": "Normal Math Calculus: standard continuous differential and integral analysis.",
+              "kind": "class",
+              "line": 383,
+              "methods": [
+                "derivative",
+                "definite_integral",
+                "verify_leibniz_rule",
+                "verify_fundamental_theorem"
+              ],
+              "name": "MathCalculus"
+            }
+          ]
+        },
+        {
+          "doc": "Conservative report consistency checks, not report authentication.",
+          "module": "hypermath_foundations.gate",
+          "path": "src/hypermath_foundations/gate.py",
+          "symbols": [
+            {
+              "doc": "Check whether report fields consistently support the requested gate.",
+              "kind": "function",
+              "line": 23,
+              "name": "evaluate_gate",
+              "signature": "(report, claim='self_derivation', *, require_clean=True)"
+            }
+          ]
+        },
+        {
+          "doc": "Verifier Standard evidence for finite layer lifting and composition.",
+          "module": "hypermath_foundations.layer_graph",
+          "path": "src/hypermath_foundations/layer_graph.py",
+          "symbols": [
+            {
+              "doc": "Recompute an exact finite graph edge using the audited Lean definitions.",
+              "kind": "class",
+              "line": 59,
+              "methods": [
+                "evaluate"
+              ],
+              "name": "LayerSupportMechanism"
+            },
+            {
+              "doc": "Build checked finite surfaces, then freeze their graph and earn edge support.",
+              "kind": "class",
+              "line": 153,
+              "methods": [
+                "primitive",
+                "add_surface",
+                "lift",
+                "compose",
+                "finalize"
+              ],
+              "name": "LayerGraph"
+            }
+          ]
+        },
+        {
+          "doc": "Meta-Fractalization: Self-Referential Feedback Loops and Terminal Self-Derivation.",
+          "module": "hypermath_foundations.meta_fractal",
+          "path": "src/hypermath_foundations/meta_fractal.py",
+          "symbols": [
+            {
+              "doc": "Ordinal below omega^omega represented as polynomial coefficients in omega.",
+              "kind": "class",
+              "line": 33,
+              "methods": [
+                "zero",
+                "one",
+                "omega",
+                "from_int",
+                "degree",
+                "natural_add",
+                "natural_mul",
+                "wrap_map",
+                "to_form"
+              ],
+              "name": "OrdinalPolynomial"
+            },
+            {
+              "doc": "Constructive membership relation (in_O) derived from structural sub-form decomposition.",
+              "kind": "class",
+              "line": 127,
+              "methods": [
+                "is_member"
+              ],
+              "name": "ConstructiveMembership"
+            },
+            {
+              "doc": "The non-well-founded Quine atom Omega = {Omega}.",
+              "kind": "class",
+              "line": 149,
+              "methods": [
+                "to_form",
+                "satisfies_self_membership"
+              ],
+              "name": "QuineAtom"
+            },
+            {
+              "doc": "Accessible Pointed Graph (APG) for Non-Well-Founded Hyperset Equations.",
+              "kind": "class",
+              "line": 167,
+              "methods": [
+                "outgoing",
+                "solve_decoration",
+                "are_bisimilar"
+              ],
+              "name": "AccessiblePointedGraph"
+            },
+            {
+              "doc": "The Terminal Self-Derivation Kernel (Self-Meta Kernel).",
+              "kind": "class",
+              "line": 275,
+              "methods": [
+                "step",
+                "verify_state",
+                "cyclical_completion"
+              ],
+              "name": "Hyperkernel"
+            }
+          ]
+        },
+        {
+          "doc": "Objectification: Lifting Equivalence Classes and Proof Trajectories into First-Class Algebra.",
+          "module": "hypermath_foundations.objectification",
+          "path": "src/hypermath_foundations/objectification.py",
+          "symbols": [
+            {
+              "doc": "Raised when an objectification or trajectory operation is invalid.",
+              "kind": "class",
+              "line": 38,
+              "name": "ObjectificationError"
+            },
+            {
+              "doc": "An equivalence class lifted into a first-class mathematical object.",
+              "kind": "class",
+              "line": 43,
+              "methods": [
+                "contains",
+                "add_member",
+                "direct_product",
+                "factor_morphism",
+                "digest"
+              ],
+              "name": "ObjectifiedClass"
+            },
+            {
+              "doc": "An individual atomic transition within a proof trajectory.",
+              "kind": "class",
+              "line": 113,
+              "methods": [
+                "digest"
+              ],
+              "name": "TrajectoryStep"
+            },
+            {
+              "doc": "A formal derivation path lifted into a first-class 1-cell.",
+              "kind": "class",
+              "line": 137,
+              "methods": [
+                "identity",
+                "single_step",
+                "length",
+                "compose",
+                "invert",
+                "digest",
+                "intermediate_states"
+              ],
+              "name": "ProofTrajectory"
+            },
+            {
+              "doc": "A 2-cell relating two proof trajectories tau_1 and tau_2 with identical boundaries.",
+              "kind": "class",
+              "line": 254,
+              "methods": [
+                "are_homotopic"
+              ],
+              "name": "TrajectoryHomotopy"
+            }
+          ]
+        },
+        {
+          "doc": "Verifier Standard (VSTD) bindings for bounded Hypermath audit evidence.",
+          "module": "hypermath_foundations.vstd",
+          "path": "src/hypermath_foundations/vstd.py",
+          "symbols": [
+            {
+              "doc": "Execute native VSTD bound propositions and retain their exact evidence.",
+              "kind": "function",
+              "line": 285,
+              "name": "evaluate_audit_report",
+              "signature": "(report: Mapping[str, Any], *, foundation_root: Path | str | None=None, timeout: int=60)"
+            },
+            {
+              "doc": "Write an actual VSTD-1 receipt over the audit/session evidence package.",
+              "kind": "function",
+              "line": 332,
+              "name": "write_verification_receipt",
+              "signature": "(report: Mapping[str, Any], output_directory: Path | str, *, foundation_root: Path | str | None=None, timeout: int=60)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 16,
+        "modules": 8,
+        "symbols": 32,
+        "tracked_files": 178
+      },
+      "docs": [
+        "docs/research/COMPOSED_GROUND_DERIVATIONS.md",
+        "docs/research/CONSTRUCTIVE_QUINE_SELF_CLOSURE.md",
+        "docs/research/CONTEXTUAL_COMPOSITION.md",
+        "docs/research/CYCLE_BOUNDARY.md",
+        "docs/research/CYCLE_WITNESSES.md",
+        "docs/research/FINITE_ARITHMETIC.md",
+        "docs/research/FINITE_TRACES.md",
+        "docs/research/FRACTAL_COMPLETENESS.md",
+        "docs/research/GROUND_SYNTAX.md",
+        "docs/research/HYPERKERNEL_SELF_DERIVATION.md",
+        "docs/research/HYPERSET_THEORY_ORDINATICS.md",
+        "docs/research/LAYER_GRAPH.md",
+        "docs/research/LAYER_PRESERVATION.md",
+        "docs/research/NATIVE_ACCEPTANCE.md",
+        "docs/research/NATIVE_TRANSPORT_OBLIGATION.md",
+        "docs/research/OPERATIONAL_CORRESPONDENCE.md",
+        "docs/research/PATH_LAYERS.md",
+        "docs/research/PATH_TRANSPORT.md",
+        "docs/research/PROOF_AUDIT.md",
+        "docs/research/QUADRILATERAL_FILTRATION.md",
+        "docs/research/RECORD_ENCODING.md",
+        "docs/research/RECORD_MACHINE.md",
+        "docs/research/RETAINED_EXECUTION.md",
+        "docs/research/RULE_SUBSTITUTION.md",
+        "docs/research/SEQUENCING_LAWS.md",
+        "docs/research/SOURCE_MAP.md",
+        "docs/research/TERMINAL_RETENTION.md",
+        "docs/research/UNARY_FORMATION.md",
+        "docs/terms/FRAME.md",
+        "docs/terms/Form.md",
+        "docs/terms/Prop.md",
+        "docs/terms/__template__.md",
+        "docs/terms/apply.md",
+        "docs/terms/congruent.md",
+        "docs/terms/definition.md",
+        "docs/terms/derives.md",
+        "docs/terms/discharge.md",
+        "docs/terms/form-closure.md",
+        "docs/terms/graduation.md",
+        "docs/terms/ground.md",
+        "docs/terms/layer.md",
+        "docs/terms/orbital.md",
+        "docs/terms/semantics.md",
+        "docs/terms/similar.md",
+        "docs/terms/simulation.md",
+        "docs/terms/struct-continues.md",
+        "docs/terms/struct-distinct.md",
+        "docs/terms/struct-orbits.md",
+        "docs/terms/substance.md",
+        "docs/terms/syntax.md",
+        "docs/verification.md"
+      ],
+      "had_pages_before": true,
+      "id": "hypermath",
+      "layers": [
+        "L0_ground.hm",
+        "L1_relations.hm",
+        "L2_operations.hm",
+        "L3_ordinatics.hm",
+        "references/seed-ai/hypermath/spec/axioms.hm",
+        "references/seed-ai/hypermath/spec/casting.hm",
+        "references/seed-ai/hypermath/spec/links.hm",
+        "references/seed-ai/hypermath/spec/verify.hm",
+        "references/seed-ai/hypermath_form/ground.hm",
+        "references/seed-ai/hypermath_form/kernel.hm",
+        "references/seed-ai/hypermath_form/operations.hm",
+        "references/seed-ai/hypermath_form/ordinatics.hm",
+        "references/seed-ai/hypermath_form/relations.hm",
+        "references/seed-ai/hypermath_frame/spec/kernel.hm",
+        "references/seed-ai/hypermath_frame/spec/ordinatics.hm",
+        "references/seed-ai/hypermath_frame/spec/stdlib/hyperordinal.hm"
+      ],
+      "module": "hypermath_foundations",
+      "package": "hypermath-foundations",
+      "pages_url": "https://timelordraps.github.io/hypermath/",
+      "papers": [
+        "paper/paper.pdf",
+        "paper/paper.tex"
+      ],
+      "repo_url": "https://github.com/TimeLordRaps/hypermath",
+      "root_docs": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GOVERNANCE.md",
+        "RELEASING.md",
+        "SECURITY.md"
+      ],
+      "tagline": "A self-derivational mathematical framework built around the operation \u25a1, ordinal",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Exact rational functions and a chosen value map for ordinal polynomials.",
+          "module": "ordinatics.algebra",
+          "path": "src/ordinatics/algebra.py",
+          "symbols": [
+            {
+              "doc": "The reduced rational function has a pole at the requested value.",
+              "kind": "class",
+              "line": 23,
+              "name": "PoleError"
+            },
+            {
+              "doc": "Validate and reduce an exact element of Q(``symbol``).",
+              "kind": "function",
+              "line": 57,
+              "name": "rational_function",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
+            },
+            {
+              "doc": "Evaluate the reduced rational function at an exact rational value.",
+              "kind": "function",
+              "line": 85,
+              "name": "specialize",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X, at: Any)"
+            },
+            {
+              "doc": "Specialize at X = -1/2, with exact arithmetic and explicit pole errors.",
+              "kind": "function",
+              "line": 104,
+              "name": "wrap",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
+            },
+            {
+              "doc": "Return exp(r * (-log(2) + I*pi)) for an exact rational exponent r.",
+              "kind": "function",
+              "line": 113,
+              "name": "rational_power_image",
+              "signature": "(exponent: Any)"
+            },
+            {
+              "doc": "Return 2*pi*I/(-log(2) + I*pi), a period of the complex exponent map.",
+              "kind": "function",
+              "line": 125,
+              "name": "complex_period",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "Ordinal Calculus: difference operators, normal functions, derivatives, and Veblen hierarchy.",
+          "module": "ordinatics.calculus",
+          "path": "src/ordinatics/calculus.py",
+          "symbols": [
+            {
+              "doc": "Raised when an ordinal value exceeds the bounded Ordinal representation (< omega**omega).",
+              "kind": "class",
+              "line": 21,
+              "name": "DomainError"
+            },
+            {
+              "doc": "Return the supremum of an iterable of ordinals.",
+              "kind": "function",
+              "line": 88,
+              "name": "ordinal_supremum",
+              "signature": "(ordinals: Iterable[Ordinal | int], *, infer_limit: bool | None=None)"
+            },
+            {
+              "doc": "Ordinal difference operator: Delta F(alpha) = F(alpha + 1) - F(alpha).",
+              "kind": "function",
+              "line": 133,
+              "name": "delta",
+              "signature": "(func: Callable[[Ordinal], Ordinal], alpha: Ordinal | int)"
+            },
+            {
+              "doc": "Difference operator on ordinal functions.",
+              "kind": "class",
+              "line": 150,
+              "name": "DifferenceOperator"
+            },
+            {
+              "doc": "Compute the least fixed point gamma >= start of an ordinal function func.",
+              "kind": "function",
+              "line": 191,
+              "name": "least_fixed_point",
+              "signature": "(func: Callable[[Ordinal], Ordinal], start: Ordinal | int=0, max_iter: int=100)"
+            },
+            {
+              "doc": "A normal ordinal function: strictly increasing and continuous at limit ordinals.",
+              "kind": "class",
+              "line": 243,
+              "methods": [
+                "is_strictly_increasing",
+                "is_continuous_at_limit",
+                "is_normal",
+                "derivative",
+                "add_left",
+                "multiply_left",
+                "omega_power"
+              ],
+              "name": "NormalFunction"
+            },
+            {
+              "doc": "Ordinal derivative F' enumerating the fixed points of a normal function F.",
+              "kind": "class",
+              "line": 415,
+              "name": "OrdinalDerivative"
+            },
+            {
+              "doc": "Return the ordinal derivative of a normal function.",
+              "kind": "function",
+              "line": 472,
+              "name": "derivative",
+              "signature": "(func: NormalFunction | Callable[[Ordinal], Ordinal])"
+            },
+            {
+              "doc": "Symbolic representation of the Veblen hierarchy value phi_alpha(beta).",
+              "kind": "class",
+              "line": 480,
+              "methods": [
+                "is_epsilon",
+                "is_zeta",
+                "is_finite",
+                "is_limit",
+                "is_successor",
+                "eval"
+              ],
+              "name": "VeblenTerm"
+            },
+            {
+              "doc": "The Veblen hierarchy of normal ordinal functions phi_alpha(beta).",
+              "kind": "class",
+              "line": 608,
+              "methods": [
+                "phi",
+                "level"
+              ],
+              "name": "VeblenHierarchy"
+            },
+            {
+              "doc": "Evaluate or construct phi_alpha(beta) in the Veblen hierarchy.",
+              "kind": "function",
+              "line": 632,
+              "name": "veblen",
+              "signature": "(alpha: Ordinal | VeblenTerm | int, beta: Ordinal | VeblenTerm | int, symbolic: bool=False)"
+            }
+          ]
+        },
+        {
+          "doc": "Discrete and ordinal dynamical systems over ordinals.",
+          "module": "ordinatics.dynamics",
+          "path": "src/ordinatics/dynamics.py",
+          "symbols": [
+            {
+              "doc": "An attractor of an ordinal dynamical system.",
+              "kind": "class",
+              "line": 25,
+              "methods": [
+                "is_fixed_point",
+                "is_periodic",
+                "is_limit_stage"
+              ],
+              "name": "OrdinalAttractor"
+            },
+            {
+              "doc": "An ordinal state transformation T: On -> On.",
+              "kind": "class",
+              "line": 52,
+              "methods": [
+                "step",
+                "is_monotone"
+              ],
+              "name": "OrdinalTransformation"
+            },
+            {
+              "doc": "An orbit of an ordinal dynamical system indexed by ordinal stages.",
+              "kind": "class",
+              "line": 97,
+              "methods": [
+                "is_converged"
+              ],
+              "name": "OrdinalOrbit"
+            },
+            {
+              "doc": "A dynamical system evolving over ordinal stages.",
+              "kind": "class",
+              "line": 164,
+              "methods": [
+                "step",
+                "orbit",
+                "find_attractor",
+                "find_fixed_point"
+              ],
+              "name": "OrdinalDynamicalSystem"
+            },
+            {
+              "doc": "Compute the orbit under transformation starting at initial_state.",
+              "kind": "function",
+              "line": 370,
+              "name": "orbit",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_stage: Ordinal | int=20)"
+            },
+            {
+              "doc": "Find the attractor reached under transformation from initial_state.",
+              "kind": "function",
+              "line": 380,
+              "name": "find_attractor",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
+            },
+            {
+              "doc": "Find the fixed point reached under transformation from initial_state.",
+              "kind": "function",
+              "line": 390,
+              "name": "find_fixed_point",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
+            }
+          ]
+        },
+        {
+          "doc": "Exact, bounded ordinal arithmetic below ``omega ** omega``.",
+          "module": "ordinatics.ordinals",
+          "path": "src/ordinatics/ordinals.py",
+          "symbols": [
+            {
+              "doc": "An immutable ordinal strictly below ``omega ** omega``.",
+              "kind": "class",
+              "line": 47,
+              "methods": [
+                "from_int",
+                "omega_power",
+                "is_finite",
+                "to_int",
+                "is_limit",
+                "is_successor",
+                "predecessor",
+                "fundamental_sequence",
+                "left_sub",
+                "natural_add",
+                "natural_mul",
+                "to_sympy",
+                "from_sympy"
+              ],
+              "name": "Ordinal"
+            }
+          ]
+        },
+        {
+          "doc": "Explicit syntax and finite evaluation for an ordinal-indexed truth hierarchy.",
+          "module": "ordinatics.semantics",
+          "path": "src/ordinatics/semantics.py",
+          "symbols": [
+            {
+              "doc": "Base exception for rejected syntax or an incomplete evaluation.",
+              "kind": "class",
+              "line": 31,
+              "name": "OrdinaticsSemanticsError"
+            },
+            {
+              "doc": "The supplied object is outside the supported, typed syntax.",
+              "kind": "class",
+              "line": 35,
+              "name": "MalformedSyntaxError"
+            },
+            {
+              "doc": "A formula or quotation exceeds its declared language stage.",
+              "kind": "class",
+              "line": 39,
+              "name": "LanguageMembershipError"
+            },
+            {
+              "doc": "A quotation is open, or evaluation lacks a variable assignment.",
+              "kind": "class",
+              "line": 43,
+              "name": "FreeVariableError"
+            },
+            {
+              "doc": "The step budget was exhausted; no truth value has been established.",
+              "kind": "class",
+              "line": 47,
+              "name": "EvaluationLimitError"
+            },
+            {
+              "doc": "Marker for the supported immutable natural-number term nodes.",
+              "kind": "class",
+              "line": 51,
+              "name": "Term"
+            },
+            {
+              "doc": "Marker for the supported immutable bounded-arithmetic formula nodes.",
+              "kind": "class",
+              "line": 57,
+              "name": "Formula"
+            },
+            {
+              "doc": "An exact natural-number constant, canonicalized to a Python ``int``.",
+              "kind": "class",
+              "line": 107,
+              "name": "Nat"
+            },
+            {
+              "doc": "A named natural-number variable.",
+              "kind": "class",
+              "line": 121,
+              "name": "Var"
+            },
+            {
+              "doc": "Addition of natural-number terms, not ordinal addition.",
+              "kind": "class",
+              "line": 131,
+              "name": "Add"
+            },
+            {
+              "doc": "Multiplication of natural-number terms, not ordinal multiplication.",
+              "kind": "class",
+              "line": 143,
+              "name": "Mul"
+            },
+            {
+              "doc": "Equality of natural-number terms.",
+              "kind": "class",
+              "line": 155,
+              "name": "Eq"
+            },
+            {
+              "doc": "Strict less-than comparison of natural-number terms.",
+              "kind": "class",
+              "line": 167,
+              "name": "Lt"
+            },
+            {
+              "doc": "Logical negation.",
+              "kind": "class",
+              "line": 179,
+              "name": "Not"
+            },
+            {
+              "doc": "Logical conjunction, evaluated left to right with short-circuiting.",
+              "kind": "class",
+              "line": 189,
+              "name": "And"
+            },
+            {
+              "doc": "Existence of ``variable`` among natural numbers below ``bound``.",
+              "kind": "class",
+              "line": 201,
+              "name": "Exists"
+            },
+            {
+              "doc": "Universality for natural numbers below an exclusive natural bound.",
+              "kind": "class",
+              "line": 219,
+              "name": "ForAll"
+            },
+            {
+              "doc": "A typed quotation of a closed formula of rank at most ``level``.",
+              "kind": "class",
+              "line": 236,
+              "name": "Truth"
+            },
+            {
+              "doc": "Validate syntax and return its least ordinal language stage.",
+              "kind": "function",
+              "line": 353,
+              "name": "rank",
+              "signature": "(formula: Formula, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "Validate syntax and return unbound variable names outside quotation.",
+              "kind": "function",
+              "line": 363,
+              "name": "free_variables",
+              "signature": "(formula: Formula, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "Evaluate bounded syntax in the standard natural numbers.",
+              "kind": "function",
+              "line": 368,
+              "name": "evaluate",
+              "signature": "(formula: Formula, assignment: Mapping[str, int] | None=None, *, stage: Ordinal | None=None, max_steps: int=10000)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 0,
+        "modules": 5,
+        "symbols": 46,
+        "tracked_files": 54
+      },
+      "docs": [
+        "docs/api.md",
+        "docs/interoperability.md",
+        "docs/mathematical_scope.md",
+        "docs/releasing.md",
+        "docs/semantics.md",
+        "docs/validation.md"
+      ],
+      "had_pages_before": true,
+      "id": "ordinatics",
+      "layers": [],
+      "module": "ordinatics",
+      "package": "ordinatics",
+      "pages_url": "https://timelordraps.github.io/ordinatics/",
+      "papers": [
+        "paper/REVIEW.md",
+        "paper/ordinal_arithmetic.md",
+        "paper/ordinal_arithmetic.pdf",
+        "paper/ordinal_arithmetic.tex"
+      ],
+      "repo_url": "https://github.com/TimeLordRaps/ordinatics",
+      "root_docs": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GOVERNANCE.md",
+        "SECURITY.md"
+      ],
+      "tagline": "Exact ordinal arithmetic, symbolic value operations, and bounded typed satisfaction for Python.",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Abstraction mappings, congruences, and quotienting on APGs and Hypersets.",
+          "module": "grounded_hyperset_theory.abstraction",
+          "path": "src/grounded_hyperset_theory/abstraction.py",
+          "symbols": [
+            {
+              "doc": "An equivalence relation on vertices of an Accessible Pointed Graph.",
+              "kind": "class",
+              "line": 13,
+              "methods": [
+                "from_mapping",
+                "from_blocks",
+                "from_relation",
+                "block_of",
+                "block_members",
+                "blocks",
+                "block_ids",
+                "nodes",
+                "is_equivalent",
+                "refine"
+              ],
+              "name": "NodePartition"
+            },
+            {
+              "doc": "A Galois connection abstraction mapping between concrete and abstract states.",
+              "kind": "class",
+              "line": 115,
+              "methods": [
+                "abstract",
+                "to_partition"
+              ],
+              "name": "AbstractionMapping"
+            },
+            {
+              "doc": "Construct the quotient Accessible Pointed Graph G / ~ under an equivalence partition.",
+              "kind": "function",
+              "line": 131,
+              "name": "quotient_apg",
+              "signature": "(apg: AccessiblePointedGraph, partition: NodePartition | Mapping[Node | Hashable, Hashable])"
+            },
+            {
+              "doc": "Construct the quotient Hyperset of a given hyperset under an equivalence partition.",
+              "kind": "function",
+              "line": 188,
+              "name": "quotient_hyperset",
+              "signature": "(hyperset: Hyperset, partition: NodePartition | Mapping[Node | Hashable, Hashable])"
+            },
+            {
+              "doc": "Check if a partition is a forward simulation congruence on an APG.",
+              "kind": "function",
+              "line": 196,
+              "name": "is_congruence",
+              "signature": "(apg: AccessiblePointedGraph, partition: NodePartition | Mapping[Node | Hashable, Hashable])"
+            },
+            {
+              "doc": "Check if an equivalence partition satisfies the full bisimulation conditions on an APG.",
+              "kind": "function",
+              "line": 225,
+              "name": "is_bisimulation_congruence",
+              "signature": "(apg: AccessiblePointedGraph, partition: NodePartition | Mapping[Node | Hashable, Hashable])"
+            },
+            {
+              "doc": "Refine a partition to the coarsest bisimulation compatible with initial_partition.",
+              "kind": "function",
+              "line": 256,
+              "name": "refine_to_bisimulation",
+              "signature": "(apg: AccessiblePointedGraph, initial_partition: NodePartition | Mapping[Node | Hashable, Hashable] | None=None)"
+            },
+            {
+              "doc": "Compute depth-bounded (k-horizon) abstraction of an APG.",
+              "kind": "function",
+              "line": 309,
+              "name": "depth_abstraction",
+              "signature": "(apg: AccessiblePointedGraph, max_depth: int, truncate_horizon: bool=True)"
+            },
+            {
+              "doc": "Depth-abstract a hyperset, truncating or summarizing structure beyond max_depth.",
+              "kind": "function",
+              "line": 353,
+              "name": "depth_abstract_hyperset",
+              "signature": "(hyperset: Hyperset, max_depth: int, truncate_horizon: bool=True)"
+            },
+            {
+              "doc": "Predicate abstraction of an APG: merges nodes satisfying identical truth-value vectors.",
+              "kind": "function",
+              "line": 358,
+              "name": "predicate_abstraction",
+              "signature": "(apg: AccessiblePointedGraph, predicates: Iterable[Callable[[Node], bool]])"
+            },
+            {
+              "doc": "Predicate-abstract a hyperset using an ensemble of node predicates.",
+              "kind": "function",
+              "line": 371,
+              "name": "predicate_abstract_hyperset",
+              "signature": "(hyperset: Hyperset, predicates: Iterable[Callable[[Node], bool]])"
+            },
+            {
+              "doc": "Contract Strongly Connected Components (SCCs) to yield an acyclic DAG condensation.",
+              "kind": "function",
+              "line": 379,
+              "name": "scc_quotient",
+              "signature": "(apg: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Abstract a hyperset by collapsing all cyclic SCCs into well-founded points.",
+              "kind": "function",
+              "line": 458,
+              "name": "scc_abstract_hyperset",
+              "signature": "(hyperset: Hyperset)"
+            }
+          ]
+        },
+        {
+          "doc": "Accessible Pointed Graphs (APGs) for modeling hyperset topologies.",
+          "module": "grounded_hyperset_theory.graph",
+          "path": "src/grounded_hyperset_theory/graph.py",
+          "symbols": [
+            {
+              "doc": "A discrete vertex in an Accessible Pointed Graph.",
+              "kind": "class",
+              "line": 11,
+              "name": "Node"
+            },
+            {
+              "doc": "An Accessible Pointed Graph (APG): a directed graph (G, r) where all nodes are reachable from r.",
+              "kind": "class",
+              "line": 20,
+              "methods": [
+                "nodes",
+                "edge_count",
+                "is_empty",
+                "children",
+                "has_cycles",
+                "topological_sort",
+                "subgraph_from",
+                "bisimulation_quotient",
+                "canonical_signature"
+              ],
+              "name": "AccessiblePointedGraph"
+            }
+          ]
+        },
+        {
+          "doc": "Group-theoretic transformations, symmetries, and automorphism groups on APGs and Hypersets.",
+          "module": "grounded_hyperset_theory.hyper_calculus",
+          "path": "src/grounded_hyperset_theory/hyper_calculus.py",
+          "symbols": [
+            {
+              "doc": "A bijective permutation on a finite domain of APG nodes or discrete elements.",
+              "kind": "class",
+              "line": 13,
+              "methods": [
+                "mapping",
+                "identity",
+                "from_mapping",
+                "from_cycle",
+                "domain",
+                "apply",
+                "inverse",
+                "compose",
+                "order",
+                "cycles",
+                "fixed_points",
+                "is_identity"
+              ],
+              "name": "Permutation"
+            },
+            {
+              "doc": "An automorphism on an AccessiblePointedGraph.",
+              "kind": "class",
+              "line": 143,
+              "methods": [
+                "inverse",
+                "compose"
+              ],
+              "name": "APGAutomorphism"
+            },
+            {
+              "doc": "A finite group of permutations closed under composition and inversion.",
+              "kind": "class",
+              "line": 162,
+              "methods": [
+                "domain",
+                "order",
+                "elements",
+                "contains",
+                "is_abelian",
+                "orbits",
+                "stabilizer"
+              ],
+              "name": "PermutationGroup"
+            },
+            {
+              "doc": "The trivial group {id} acting on domain.",
+              "kind": "function",
+              "line": 260,
+              "name": "trivial_group",
+              "signature": "(domain: Iterable[Node])"
+            },
+            {
+              "doc": "The cyclic group C_n acting on an ordered sequence of nodes.",
+              "kind": "function",
+              "line": 266,
+              "name": "cyclic_group",
+              "signature": "(domain: Sequence[Node])"
+            },
+            {
+              "doc": "Check if a permutation is an automorphism of the Accessible Pointed Graph.",
+              "kind": "function",
+              "line": 275,
+              "name": "is_apg_automorphism",
+              "signature": "(apg: AccessiblePointedGraph, perm: Permutation, pointed: bool=True)"
+            },
+            {
+              "doc": "Check if aut is a symmetry of apg.",
+              "kind": "function",
+              "line": 302,
+              "name": "is_symmetric",
+              "signature": "(apg: AccessiblePointedGraph, aut: Permutation)"
+            },
+            {
+              "doc": "Compute the automorphism group Aut_r(G) (pointed) or Aut(G) of an APG.",
+              "kind": "function",
+              "line": 307,
+              "name": "find_apg_automorphisms",
+              "signature": "(apg: AccessiblePointedGraph, pointed: bool=True)"
+            },
+            {
+              "doc": "Compute all automorphisms of the given APG.",
+              "kind": "function",
+              "line": 316,
+              "name": "automorphism_group",
+              "signature": "(apg: AccessiblePointedGraph, pointed: bool=True)"
+            },
+            {
+              "doc": "The orbit of ``node`` under the group generated by ``group``.",
+              "kind": "function",
+              "line": 391,
+              "name": "orbit",
+              "signature": "(node: Node | Hashable, group: Iterable[Permutation])"
+            },
+            {
+              "doc": "The orbits of ``apg``'s nodes under ``group``, as a partition.",
+              "kind": "function",
+              "line": 404,
+              "name": "all_orbits",
+              "signature": "(apg: AccessiblePointedGraph, group: Iterable[Permutation])"
+            },
+            {
+              "doc": "Quotient an APG by symmetry orbits.",
+              "kind": "function",
+              "line": 429,
+              "name": "quotient_by_symmetry",
+              "signature": "(apg: AccessiblePointedGraph, group: Iterable[Permutation] | PermutationGroup)"
+            },
+            {
+              "doc": "Return the order of the automorphism group of an APG or Hyperset.",
+              "kind": "function",
+              "line": 487,
+              "name": "symmetry_group_order",
+              "signature": "(target: AccessiblePointedGraph | Hyperset)"
+            },
+            {
+              "doc": "Compute the automorphism group of the underlying APG of a hyperset.",
+              "kind": "function",
+              "line": 493,
+              "name": "find_hyperset_automorphisms",
+              "signature": "(hyperset: Hyperset, pointed: bool=True)"
+            },
+            {
+              "doc": "Quotient an APG by group orbits.",
+              "kind": "function",
+              "line": 498,
+              "name": "orbit_quotient_apg",
+              "signature": "(apg: AccessiblePointedGraph, group: PermutationGroup)"
+            },
+            {
+              "doc": "Construct the orbit-quotient hyperset under a group of symmetries.",
+              "kind": "function",
+              "line": 506,
+              "name": "orbit_quotient_hyperset",
+              "signature": "(hyperset: Hyperset, group: PermutationGroup)"
+            },
+            {
+              "doc": "Check if a hyperset is invariant under every transformation in the group.",
+              "kind": "function",
+              "line": 514,
+              "name": "is_invariant_under",
+              "signature": "(hyperset: Hyperset, group: PermutationGroup)"
+            },
+            {
+              "doc": "Discrete transformation derivative: Delta_g(H) = (g(H) \\ H) U (H \\ g(H)).",
+              "kind": "function",
+              "line": 528,
+              "name": "discrete_derivative",
+              "signature": "(hyperset: Hyperset, transformation: Permutation)"
+            }
+          ]
+        },
+        {
+          "doc": "Hyperset definitions, bisimulation equivalence, and constructive membership.",
+          "module": "grounded_hyperset_theory.hyperset",
+          "path": "src/grounded_hyperset_theory/hyperset.py",
+          "symbols": [
+            {
+              "doc": "Determine whether two Accessible Pointed Graphs (APGs) are bisimilar.",
+              "kind": "function",
+              "line": 10,
+              "name": "bisimilar",
+              "signature": "(g1: AccessiblePointedGraph, g2: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "A non-well-founded set represented by an Accessible Pointed Graph.",
+              "kind": "class",
+              "line": 26,
+              "methods": [
+                "from_elements",
+                "is_well_founded",
+                "is_empty",
+                "cardinality",
+                "members",
+                "contains",
+                "union",
+                "intersection",
+                "difference",
+                "is_subset",
+                "is_proper_subset",
+                "is_superset",
+                "successor",
+                "canonical",
+                "is_transitive",
+                "is_ordinal",
+                "powerset",
+                "big_union",
+                "big_intersection",
+                "cartesian_product",
+                "transitive_closure",
+                "to_int",
+                "canonical_signature"
+              ],
+              "name": "Hyperset"
+            },
+            {
+              "doc": "The empty set \u2205.",
+              "kind": "function",
+              "line": 313,
+              "name": "EmptyHyperset",
+              "signature": "()"
+            },
+            {
+              "doc": "The canonical Quine atom \u03a9 = {\u03a9}, satisfying \u03a9 \u2208 \u03a9.",
+              "kind": "function",
+              "line": 319,
+              "name": "QuineAtom",
+              "signature": "()"
+            },
+            {
+              "doc": "Construct the Kuratowski ordered pair (a, b) = {{a}, {a, b}}.",
+              "kind": "function",
+              "line": 325,
+              "name": "pair",
+              "signature": "(a: Hyperset, b: Hyperset)"
+            },
+            {
+              "doc": "Construct the nth von Neumann ordinal: 0 = \u2205, n+1 = S(n) = n \u222a {n}.",
+              "kind": "function",
+              "line": 335,
+              "name": "von_neumann_ordinal",
+              "signature": "(n: int)"
+            },
+            {
+              "doc": "Solve a system of set equations under Aczel's Anti-Foundation Axiom (AFA).",
+              "kind": "function",
+              "line": 353,
+              "name": "solve_system",
+              "signature": "(equations: Mapping[Hashable, Iterable[Hashable | Hyperset]])"
+            },
+            {
+              "doc": "Ordinal addition for finite von Neumann ordinals: alpha + beta.",
+              "kind": "function",
+              "line": 406,
+              "name": "ordinal_add",
+              "signature": "(alpha: Hyperset, beta: Hyperset)"
+            },
+            {
+              "doc": "Ordinal multiplication for finite von Neumann ordinals: alpha * beta.",
+              "kind": "function",
+              "line": 413,
+              "name": "ordinal_mul",
+              "signature": "(alpha: Hyperset, beta: Hyperset)"
+            },
+            {
+              "doc": "Ordinal exponentiation for finite von Neumann ordinals: alpha ** exponent.",
+              "kind": "function",
+              "line": 420,
+              "name": "ordinal_pow",
+              "signature": "(alpha: Hyperset, exponent: int | Hyperset)"
+            }
+          ]
+        },
+        {
+          "doc": "Formal syntax, terms, alphabets, productions, and quotation trees as grounded hypersets.",
+          "module": "grounded_hyperset_theory.language_calculus",
+          "path": "src/grounded_hyperset_theory/language_calculus.py",
+          "symbols": [
+            {
+              "doc": "A grammar symbol (terminal or nonterminal).",
+              "kind": "class",
+              "line": 15,
+              "methods": [
+                "to_hyperset"
+              ],
+              "name": "Symbol"
+            },
+            {
+              "doc": "A finite collection of language symbols.",
+              "kind": "class",
+              "line": 35,
+              "methods": [
+                "to_hyperset"
+              ],
+              "name": "Alphabet"
+            },
+            {
+              "doc": "A finite sequence of symbols forming a string or sentence.",
+              "kind": "class",
+              "line": 70,
+              "methods": [
+                "from_str",
+                "to_hyperset"
+              ],
+              "name": "Word"
+            },
+            {
+              "doc": "A grammar production rule: lhs -> rhs.",
+              "kind": "class",
+              "line": 99,
+              "methods": [
+                "head",
+                "body",
+                "to_hyperset"
+              ],
+              "name": "ProductionRule"
+            },
+            {
+              "doc": "A formal grammar with variables, terminals, productions, and a start symbol.",
+              "kind": "class",
+              "line": 144,
+              "methods": [
+                "to_hyperset",
+                "grammar_apg",
+                "is_recursive"
+              ],
+              "name": "Grammar"
+            },
+            {
+              "doc": "An abstract syntax tree with node label and children trees.",
+              "kind": "class",
+              "line": 194,
+              "methods": [
+                "to_hyperset"
+              ],
+              "name": "SyntaxTree"
+            },
+            {
+              "doc": "Perform one derivation step on a syntax tree matching rule.",
+              "kind": "function",
+              "line": 226,
+              "name": "derivation_step",
+              "signature": "(tree: SyntaxTree, rule: ProductionRule)"
+            },
+            {
+              "doc": "Quote arbitrary nested Python syntax (tuples, ints, strings) into a grounded Hyperset.",
+              "kind": "function",
+              "line": 243,
+              "name": "quote_syntax",
+              "signature": "(expr: Any)"
+            },
+            {
+              "doc": "Unquote a grounded Hyperset back into native Python syntax structures.",
+              "kind": "function",
+              "line": 266,
+              "name": "unquote_syntax",
+              "signature": "(h: Hyperset)"
+            },
+            {
+              "doc": "Encode a discrete alphabet symbol into a canonical grounded Hyperset.",
+              "kind": "function",
+              "line": 303,
+              "name": "symbol_to_hyperset",
+              "signature": "(sym: str | Hashable)"
+            },
+            {
+              "doc": "Encode a finite string as an ordered nested Kuratowski list of character ordinals.",
+              "kind": "function",
+              "line": 309,
+              "name": "string_to_hyperset",
+              "signature": "(s: str)"
+            },
+            {
+              "doc": "Construct a self-referential / circular syntax quotation tree under Aczel's AFA.",
+              "kind": "function",
+              "line": 320,
+              "name": "self_referential_term",
+              "signature": "(root_id: str, rules: Mapping[str, tuple[str, Iterable[str]]])"
+            },
+            {
+              "doc": "The canonical Liar sentence: L = not(L).",
+              "kind": "function",
+              "line": 340,
+              "name": "liar_sentence",
+              "signature": "()"
+            },
+            {
+              "doc": "The canonical Truth-teller sentence: T = true(T).",
+              "kind": "function",
+              "line": 346,
+              "name": "truth_teller_sentence",
+              "signature": "()"
+            },
+            {
+              "doc": "The canonical Quine quotation sentence: Q = quote(Q).",
+              "kind": "function",
+              "line": 352,
+              "name": "quine_syntax_term",
+              "signature": "()"
+            },
+            {
+              "doc": "Determine whether two quotation trees / syntax hypersets are bisimilar under Aczel's AFA.",
+              "kind": "function",
+              "line": 358,
+              "name": "syntax_bisimilar",
+              "signature": "(term1: Hyperset, term2: Hyperset)"
+            },
+            {
+              "doc": "Check whether two grammars have bisimilar structural production dependencies under Aczel's AFA.",
+              "kind": "function",
+              "line": 363,
+              "name": "grammar_bisimilar",
+              "signature": "(g1: Grammar, g2: Grammar)"
+            },
+            {
+              "doc": "Algebraic regular expression for Brzozowski language calculus.",
+              "kind": "class",
+              "line": 393,
+              "methods": [
+                "empty",
+                "eps",
+                "lit",
+                "union",
+                "concat",
+                "star",
+                "is_nullable",
+                "derivative"
+              ],
+              "name": "Regex"
+            },
+            {
+              "doc": "The derivative automaton of ``regex`` over ``alphabet``, as an APG.",
+              "kind": "function",
+              "line": 507,
+              "name": "dfa_apg",
+              "signature": "(regex: Regex, alphabet: Iterable[str], max_states: int=64)"
+            },
+            {
+              "doc": "Ground the derivative automaton of ``regex`` into a Hyperset.",
+              "kind": "function",
+              "line": 565,
+              "name": "dfa_hyperset",
+              "signature": "(regex: Regex, alphabet: Iterable[str], max_states: int=64)"
+            }
+          ]
+        },
+        {
+          "doc": "Normal math calculus: Dedekind cuts, Cauchy sequences, and nonstandard analysis infinitesimals grounded in hyperset ordinals.",
+          "module": "grounded_hyperset_theory.math_calculus",
+          "path": "src/grounded_hyperset_theory/math_calculus.py",
+          "symbols": [
+            {
+              "doc": "Encode an integer as a Grothendieck equivalence pair of von Neumann ordinals.",
+              "kind": "function",
+              "line": 12,
+              "name": "hyperset_integer",
+              "signature": "(n: int)"
+            },
+            {
+              "doc": "Decode a hyperset integer into a signed Python int.",
+              "kind": "function",
+              "line": 22,
+              "name": "hyperset_to_integer",
+              "signature": "(h: Hyperset)"
+            },
+            {
+              "doc": "Encode a rational number p/q in lowest terms with q > 0 as a Hyperset.",
+              "kind": "function",
+              "line": 28,
+              "name": "hyperset_rational",
+              "signature": "(p: int, q: int)"
+            },
+            {
+              "doc": "Decode a hyperset rational into an irreducible tuple (p, q) with q > 0.",
+              "kind": "function",
+              "line": 42,
+              "name": "hyperset_to_rational",
+              "signature": "(h: Hyperset)"
+            },
+            {
+              "doc": "Rational addition on hypersets: r1 + r2.",
+              "kind": "function",
+              "line": 52,
+              "name": "rational_add",
+              "signature": "(r1: Hyperset, r2: Hyperset)"
+            },
+            {
+              "doc": "Rational multiplication on hypersets: r1 * r2.",
+              "kind": "function",
+              "line": 59,
+              "name": "rational_mul",
+              "signature": "(r1: Hyperset, r2: Hyperset)"
+            },
+            {
+              "doc": "Strict ordering on hyperset rationals: r1 < r2.",
+              "kind": "function",
+              "line": 66,
+              "name": "rational_lt",
+              "signature": "(r1: Hyperset, r2: Hyperset)"
+            },
+            {
+              "doc": "A Cauchy sequence of rational numbers grounded in hyperset ordinals.",
+              "kind": "class",
+              "line": 73,
+              "methods": [
+                "term",
+                "term_hyperset",
+                "to_hyperset",
+                "is_cauchy"
+              ],
+              "name": "CauchySequenceHyperset"
+            },
+            {
+              "doc": "A real number represented as a Dedekind cut (L, R) of hyperset rationals.",
+              "kind": "class",
+              "line": 158,
+              "methods": [
+                "contains_rational",
+                "from_rational",
+                "sqrt2",
+                "to_hyperset"
+              ],
+              "name": "DedekindCutHyperset"
+            },
+            {
+              "doc": "A Conway surreal number { X_L | X_R } grounded in hyperset ordinals.",
+              "kind": "class",
+              "line": 208,
+              "methods": [
+                "is_zero",
+                "birthday_bound",
+                "is_infinitesimal",
+                "is_infinite",
+                "to_hyperset"
+              ],
+              "name": "SurrealHyperset"
+            },
+            {
+              "doc": "The surreal zero: { | }.",
+              "kind": "function",
+              "line": 300,
+              "name": "surreal_zero",
+              "signature": "()"
+            },
+            {
+              "doc": "The surreal one: { 0 | }.",
+              "kind": "function",
+              "line": 305,
+              "name": "surreal_one",
+              "signature": "()"
+            },
+            {
+              "doc": "The surreal minus one: { | 0 }.",
+              "kind": "function",
+              "line": 310,
+              "name": "surreal_minus_one",
+              "signature": "()"
+            },
+            {
+              "doc": "The ``depth``-th finite approximant to epsilon: the dyadic ``1/2**(depth+1)``.",
+              "kind": "function",
+              "line": 315,
+              "name": "surreal_infinitesimal",
+              "signature": "(depth: int=3)"
+            },
+            {
+              "doc": "The ``depth``-th finite approximant to omega: the integer ``depth + 1``.",
+              "kind": "function",
+              "line": 340,
+              "name": "surreal_omega",
+              "signature": "(depth: int=3)"
+            },
+            {
+              "doc": "Construct the Cauchy sequence of difference quotients [f(x+h_k) - f(x)] / h_k where h_k = 1/2^(k+1).",
+              "kind": "function",
+              "line": 360,
+              "name": "hyperset_derivative_sequence",
+              "signature": "(f: Callable[[tuple[int, int]], tuple[int, int]], x: tuple[int, int])"
+            }
+          ]
+        },
+        {
+          "doc": "Meta-features for Grounded Hyperset Theory: Abstraction, Objectification, and Meta-Fractalization.",
+          "module": "grounded_hyperset_theory.meta",
+          "path": "src/grounded_hyperset_theory/meta.py",
+          "symbols": [
+            {
+              "doc": "A formal abstraction lambda x. M over a Hyperset or APG body.",
+              "kind": "class",
+              "line": 11,
+              "methods": [
+                "instantiate",
+                "to_hyperset"
+              ],
+              "name": "Abstraction"
+            },
+            {
+              "doc": "Abstract a sub-hyperset or node within target into a formal parameter variable.",
+              "kind": "function",
+              "line": 101,
+              "name": "abstract",
+              "signature": "(target: Hyperset, parameter: Node | Hashable, var_name: str | Hashable='x')"
+            },
+            {
+              "doc": "Objectify an iterable of Hyperset pairs (a, b) into a first-class Hyperset relation.",
+              "kind": "function",
+              "line": 128,
+              "name": "objectify_relation",
+              "signature": "(pairs: Iterable[tuple[Hyperset, Hyperset]])"
+            },
+            {
+              "doc": "Decode a relation hyperset into a list of constituent (domain, codomain) pairs.",
+              "kind": "function",
+              "line": 184,
+              "name": "deobjectify_relation",
+              "signature": "(hyperset: Hyperset)"
+            },
+            {
+              "doc": "Reify a function mapping into a first-class Hyperset object.",
+              "kind": "function",
+              "line": 193,
+              "name": "objectify_function",
+              "signature": "(mapping: Mapping[Hyperset, Hyperset])"
+            },
+            {
+              "doc": "Decode a hyperset function, verifying single-valued functionality.",
+              "kind": "function",
+              "line": 198,
+              "name": "deobjectify_function",
+              "signature": "(hyperset: Hyperset)"
+            },
+            {
+              "doc": "Encode an APG's shape as the hyperset (root_index, edge_relation).",
+              "kind": "function",
+              "line": 211,
+              "name": "objectify_apg",
+              "signature": "(apg: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Decode an objectified APG back into an AccessiblePointedGraph.",
+              "kind": "function",
+              "line": 238,
+              "name": "deobjectify_apg",
+              "signature": "(hyperset: Hyperset)"
+            },
+            {
+              "doc": "Generate archetypal non-well-founded hypersets under Aczel's AFA.",
+              "kind": "function",
+              "line": 264,
+              "name": "fractal_hyperset",
+              "signature": "(pattern: str='quine_nested')"
+            },
+            {
+              "doc": "Expand the top-level members of a hyperset, ``depth`` times over.",
+              "kind": "function",
+              "line": 318,
+              "name": "meta_fractalize",
+              "signature": "(seed: Hyperset, rule: Callable[[Hyperset], Iterable[Hyperset]] | Mapping[Hyperset, Iterable[Hyperset]], depth: int=2)"
+            },
+            {
+              "doc": "Unfold one level of membership without altering the AFA bisimulation class.",
+              "kind": "function",
+              "line": 354,
+              "name": "unfold_step",
+              "signature": "(hyperset: Hyperset)"
+            }
+          ]
+        },
+        {
+          "doc": "Symbolic dynamics of symbolic representational calculi, rewriting systems, and bisimulation on trajectories.",
+          "module": "grounded_hyperset_theory.meta_calculus",
+          "path": "src/grounded_hyperset_theory/meta_calculus.py",
+          "symbols": [
+            {
+              "doc": "A rewrite or state transition rule operating on Hypersets or symbolic states.",
+              "kind": "class",
+              "line": 14,
+              "methods": [
+                "apply",
+                "matches"
+              ],
+              "name": "RewriteRule"
+            },
+            {
+              "doc": "A symbolic rewriting system defining discrete state transition dynamics.",
+              "kind": "class",
+              "line": 49,
+              "methods": [
+                "step",
+                "step_deterministic",
+                "trace",
+                "reduction_apg",
+                "find_attractors",
+                "is_confluent"
+              ],
+              "name": "RewritingSystem"
+            },
+            {
+              "doc": "A trajectory of sequential state transitions in a representational calculus.",
+              "kind": "class",
+              "line": 281,
+              "methods": [
+                "to_apg"
+              ],
+              "name": "RewriteTrajectory"
+            },
+            {
+              "doc": "Whether two trajectories, or two systems from given starts, are bisimilar.",
+              "kind": "function",
+              "line": 311,
+              "name": "trajectory_bisimilar",
+              "signature": "(traj1: RewriteTrajectory | RewritingSystem, traj2: RewriteTrajectory | RewritingSystem, init1: Hyperset | None=None, init2: Hyperset | None=None, max_states: int=100, max_depth: int=10)"
+            },
+            {
+              "doc": "Compute the canonical strongly extensional bisimulation quotient of a rewrite trajectory.",
+              "kind": "function",
+              "line": 349,
+              "name": "trajectory_quotient",
+              "signature": "(traj: RewriteTrajectory)"
+            },
+            {
+              "doc": "Generate the state-transition trajectory APG of a calculus from an initial state.",
+              "kind": "function",
+              "line": 354,
+              "name": "build_trajectory_apg",
+              "signature": "(initial_state: Hyperset, system: RewritingSystem, max_states: int=100, max_depth: int=10)"
+            },
+            {
+              "doc": "Ground the execution trajectory of a calculus into a first-class Hyperset.",
+              "kind": "function",
+              "line": 364,
+              "name": "trajectory_hyperset",
+              "signature": "(initial_state: Hyperset, system: RewritingSystem, max_states: int=100, max_depth: int=10)"
+            },
+            {
+              "doc": "The states of `trajectory` with no transition out.",
+              "kind": "function",
+              "line": 374,
+              "name": "normal_forms",
+              "signature": "(trajectory: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Whether `trajectory` is acyclic.",
+              "kind": "function",
+              "line": 387,
+              "name": "is_terminating",
+              "signature": "(trajectory: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Every simple cycle in `trajectory`, each listed once, starting at its",
+              "kind": "function",
+              "line": 416,
+              "name": "find_periodic_orbits",
+              "signature": "(trajectory: AccessiblePointedGraph, max_cycles: int=1000)"
+            },
+            {
+              "doc": "The terminal strongly connected components of `trajectory`.",
+              "kind": "function",
+              "line": 479,
+              "name": "terminal_sccs",
+              "signature": "(trajectory: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Whether every one-step fork in `trajectory` rejoins somewhere.",
+              "kind": "function",
+              "line": 510,
+              "name": "is_locally_confluent",
+              "signature": "(trajectory: AccessiblePointedGraph)"
+            },
+            {
+              "doc": "Construct a canonical rewrite system operating directly over Hypersets.",
+              "kind": "function",
+              "line": 550,
+              "name": "create_hyperset_rewrite_system",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "Reachability of classical calculus: Dedekind cuts, Cauchy sequences, and surreals grounded in hyperset ordinals.",
+          "module": "grounded_hyperset_theory.real_analysis_bridge",
+          "path": "src/grounded_hyperset_theory/real_analysis_bridge.py",
+          "symbols": [
+            {
+              "doc": "An exact signed integer grounded as a Kuratowski pair of von Neumann ordinals.",
+              "kind": "class",
+              "line": 13,
+              "methods": [
+                "to_hyperset"
+              ],
+              "name": "GroundedInteger"
+            },
+            {
+              "doc": "An exact rational number p/q grounded as a Kuratowski pair of GroundedIntegers.",
+              "kind": "class",
+              "line": 67,
+              "methods": [
+                "to_hyperset",
+                "to_float"
+              ],
+              "name": "GroundedRational"
+            },
+            {
+              "doc": "A real number represented as a Dedekind lower cut L = {q in Q : q < x}.",
+              "kind": "class",
+              "line": 166,
+              "methods": [
+                "contains",
+                "from_rational",
+                "sqrt_two",
+                "golden_ratio",
+                "binary_search_interval",
+                "downward_closure_violation",
+                "approximate",
+                "to_hyperset"
+              ],
+              "name": "DedekindCut"
+            },
+            {
+              "doc": "A Cauchy sequence of grounded rationals defining a real number.",
+              "kind": "class",
+              "line": 315,
+              "methods": [
+                "term",
+                "cauchy_violation",
+                "is_cauchy",
+                "limit_approx",
+                "to_hyperset",
+                "euler_e",
+                "pi_leibniz",
+                "geometric"
+              ],
+              "name": "CauchySequence"
+            },
+            {
+              "doc": "Whether ``|a_n - b_n|`` stays below ``tolerance`` across a spread of indices.",
+              "kind": "function",
+              "line": 437,
+              "name": "are_equivalent_cauchy",
+              "signature": "(seq1: CauchySequence, seq2: CauchySequence, check_n: int=20, tolerance: float=0.001, tail: int=4)"
+            },
+            {
+              "doc": "A surreal number x = { L | R } where L, R are sets of already-constructed surreals.",
+              "kind": "class",
+              "line": 510,
+              "methods": [
+                "zero",
+                "one",
+                "minus_one",
+                "half",
+                "infinitesimal",
+                "is_infinitesimal",
+                "to_hyperset",
+                "to_float"
+              ],
+              "name": "SurrealNumber"
+            },
+            {
+              "doc": "Compute classical derivative f'(x) using central differential quotient.",
+              "kind": "function",
+              "line": 615,
+              "name": "derivative_quotient",
+              "signature": "(f: Callable[[float], float], x: float, h: float=1e-07)"
+            },
+            {
+              "doc": "Compute classical definite Riemann integral int_a^b f(x) dx using uniform partition.",
+              "kind": "function",
+              "line": 620,
+              "name": "riemann_integral",
+              "signature": "(f: Callable[[float], float], a: float, b: float, subdivisions: int=100)"
+            },
+            {
+              "doc": "Exact rational derivative of polynomial P(x) = sum c_k x^k.",
+              "kind": "function",
+              "line": 637,
+              "name": "symbolic_polynomial_derivative",
+              "signature": "(coeffs: Sequence[GroundedRational])"
+            },
+            {
+              "doc": "Exact rational antiderivative int P(x) dx = C + sum (c_k / (k+1)) x^{k+1}.",
+              "kind": "function",
+              "line": 648,
+              "name": "symbolic_polynomial_integral",
+              "signature": "(coeffs: Sequence[GroundedRational], constant: GroundedRational | None=None)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 0,
+        "modules": 9,
+        "symbols": 113,
+        "tracked_files": 53
+      },
+      "docs": [],
+      "had_pages_before": true,
+      "id": "grounded-hyperset-theory",
+      "layers": [],
+      "module": "grounded_hyperset_theory",
+      "package": "grounded-hyperset-theory",
+      "pages_url": "https://timelordraps.github.io/grounded-hyperset-theory/",
+      "papers": [
+        "paper/paper.pdf",
+        "paper/paper.tex"
+      ],
+      "repo_url": "https://github.com/TimeLordRaps/grounded-hyperset-theory",
+      "root_docs": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GOVERNANCE.md",
+        "SECURITY.md"
+      ],
+      "tagline": "Grounded Hyperset Theory provides a Python reference implementation of non-well-founded set theory using Accessible Pointed Graphs (APGs), bisimulation equivalence, and constructive membership. It builds on the foundational graph structures and ordinal progres",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Hyper-Calculus: permutation groups, derivation operators, and Lie brackets.",
+          "module": "grounded_hypercalculi.hyper_calculus",
+          "path": "src/grounded_hypercalculi/hyper_calculus.py",
+          "symbols": [
+            {
+              "doc": "A permutation over an integer or string coordinate set.",
+              "kind": "class",
+              "line": 23,
+              "methods": [
+                "apply"
+              ],
+              "name": "Permutation"
+            },
+            {
+              "doc": "A permutation group generated by a set of permutations.",
+              "kind": "class",
+              "line": 90,
+              "methods": [
+                "contains_identity",
+                "generate",
+                "order",
+                "orbit"
+              ],
+              "name": "PermutationGroup"
+            },
+            {
+              "doc": "A linear derivation operator D on a functional space satisfying the Leibniz rule.",
+              "kind": "class",
+              "line": 184,
+              "methods": [
+                "apply",
+                "leibniz_check"
+              ],
+              "name": "DerivationOperator"
+            },
+            {
+              "doc": "Lie commutator bracket [D1, D2] = D1 o D2 - D2 o D1.",
+              "kind": "function",
+              "line": 206,
+              "name": "commutator_bracket",
+              "signature": "(d1: DerivationOperator, d2: DerivationOperator)"
+            }
+          ]
+        },
+        {
+          "doc": "Language Calculus: syntax trees, alphabets, productions, quotations, and proof checking.",
+          "module": "grounded_hypercalculi.language_calculus",
+          "path": "src/grounded_hypercalculi/language_calculus.py",
+          "symbols": [
+            {
+              "doc": "A terminal or non-terminal symbol in a formal language.",
+              "kind": "class",
+              "line": 23,
+              "name": "Symbol"
+            },
+            {
+              "doc": "A set of formal symbols defining an alphabet.",
+              "kind": "class",
+              "line": 35,
+              "methods": [
+                "from_symbols"
+              ],
+              "name": "Alphabet"
+            },
+            {
+              "doc": "A grammar production rule: lhs -> rhs.",
+              "kind": "class",
+              "line": 47,
+              "name": "ProductionRule"
+            },
+            {
+              "doc": "A formal grammar defining a formal language.",
+              "kind": "class",
+              "line": 58,
+              "methods": [
+                "add_rule",
+                "non_terminals",
+                "terminals",
+                "derive",
+                "derives_sentence"
+              ],
+              "name": "Grammar"
+            },
+            {
+              "doc": "A quotation graph node representing quoted terms or reflexive self-quotations.",
+              "kind": "class",
+              "line": 138,
+              "methods": [
+                "self_quoting"
+              ],
+              "name": "QuotationNode"
+            },
+            {
+              "doc": "Reverse-Polish-Notation (RPN) formal proof verifier for language calculus.",
+              "kind": "class",
+              "line": 151,
+              "methods": [
+                "add_constant",
+                "add_variable",
+                "add_type_hyp",
+                "add_axiom",
+                "add_theorem",
+                "add_essential_hyp",
+                "verify_proof"
+              ],
+              "name": "MetamathDatabase"
+            }
+          ]
+        },
+        {
+          "doc": "Meta-Calculus: symbolic dynamics of string rewrite systems and trajectory traces.",
+          "module": "grounded_hypercalculi.meta_calculus",
+          "path": "src/grounded_hypercalculi/meta_calculus.py",
+          "symbols": [
+            {
+              "doc": "A transition rule in a symbolic rewrite system.",
+              "kind": "class",
+              "line": 22,
+              "methods": [
+                "apply",
+                "apply_all"
+              ],
+              "name": "RewriteRule"
+            },
+            {
+              "doc": "A symbolic rewrite system defining a state transition graph.",
+              "kind": "class",
+              "line": 83,
+              "methods": [
+                "add_rule",
+                "step",
+                "trajectory"
+              ],
+              "name": "RewriteSystem"
+            },
+            {
+              "doc": "Drop the first ``k`` states: sigma^k(pi)_i = pi_{i+k}.",
+              "kind": "function",
+              "line": 162,
+              "name": "shift_operator",
+              "signature": "(trajectory: Sequence[Any], k: int=1)"
+            },
+            {
+              "doc": "Whether two traces are equal: same length, same states in the same order.",
+              "kind": "function",
+              "line": 175,
+              "name": "trajectory_bisimilar",
+              "signature": "(traj1: Sequence[Any], traj2: Sequence[Any])"
+            }
+          ]
+        },
+        {
+          "doc": "Oracle Calculus: hypercomputation, trans-omega leapfrog computations, and oracle towers.",
+          "module": "grounded_hypercalculi.oracle_calculus",
+          "path": "src/grounded_hypercalculi/oracle_calculus.py",
+          "symbols": [
+            {
+              "doc": "Verdict of a computation with respect to an oracle tier.",
+              "kind": "class",
+              "line": 48,
+              "name": "HaltingStatus"
+            },
+            {
+              "doc": "A Turing degree representing an equivalence class of computational complexity.",
+              "kind": "class",
+              "line": 56,
+              "methods": [
+                "is_computable",
+                "jump"
+              ],
+              "name": "TuringDegree"
+            },
+            {
+              "doc": "A program or proposition query submitted to an oracle machine.",
+              "kind": "class",
+              "line": 83,
+              "name": "ComputationalQuery"
+            },
+            {
+              "doc": "An omega-tower of halting problem oracles.",
+              "kind": "class",
+              "line": 92,
+              "methods": [
+                "decide_halting"
+              ],
+              "name": "OracleTower"
+            },
+            {
+              "doc": "Staged state-progression operator.",
+              "kind": "class",
+              "line": 140,
+              "methods": [
+                "leapfrog_step"
+              ],
+              "name": "LeapfrogComputation"
+            },
+            {
+              "doc": "A hyperoracle equipped with hyperjumps (Kleene's O / Pi^1_1-comprehension).",
+              "kind": "class",
+              "line": 219,
+              "methods": [
+                "evaluate_tower",
+                "solve_hyperhalting"
+              ],
+              "name": "Hyperoracle"
+            },
+            {
+              "doc": "Conclusion analysis operator: fixed-point closure of self-referential oracle queries.",
+              "kind": "class",
+              "line": 261,
+              "methods": [
+                "analyze_conclusion"
+              ],
+              "name": "ConclusionAnalysis"
+            }
+          ]
+        },
+        {
+          "doc": "Ordinal Calculus: exact transfinite arithmetic below omega^omega, differences, derivatives, and Veblen hierarchies.",
+          "module": "grounded_hypercalculi.ordinal_calculus",
+          "path": "src/grounded_hypercalculi/ordinal_calculus.py",
+          "symbols": [
+            {
+              "doc": "An ordinal below omega^omega in Cantor normal form.",
+              "kind": "class",
+              "line": 27,
+              "methods": [
+                "from_int",
+                "is_zero",
+                "is_finite",
+                "to_int",
+                "left_sub"
+              ],
+              "name": "BoundedOrdinal"
+            },
+            {
+              "doc": "Discrete difference operator Delta F(alpha) = F(alpha + 1) - F(alpha).",
+              "kind": "function",
+              "line": 103,
+              "name": "ordinal_difference",
+              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], alpha: BoundedOrdinal)"
+            },
+            {
+              "doc": "Enumerate the first n fixed points of a normal ordinal function F (where F(gamma) == gamma).",
+              "kind": "function",
+              "line": 111,
+              "name": "ordinal_derivative",
+              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], n_fixed_points: int=3)"
+            },
+            {
+              "doc": "The Veblen hierarchy phi_alpha(beta).",
+              "kind": "class",
+              "line": 143,
+              "methods": [
+                "evaluate_finite"
+              ],
+              "name": "VeblenHierarchy"
+            }
+          ]
+        },
+        {
+          "doc": "Real Analysis Calculus: continuum foundations, Dedekind cuts, Cauchy sequences, and surreal numbers.",
+          "module": "grounded_hypercalculi.real_calculus",
+          "path": "src/grounded_hypercalculi/real_calculus.py",
+          "symbols": [
+            {
+              "doc": "Exact rational number p/q.",
+              "kind": "class",
+              "line": 17,
+              "methods": [
+                "to_float"
+              ],
+              "name": "GroundedRational"
+            },
+            {
+              "doc": "A real number represented as a Dedekind cut (L, R) of rationals.",
+              "kind": "class",
+              "line": 80,
+              "methods": [
+                "midpoint",
+                "approximate",
+                "contains",
+                "sqrt_two"
+              ],
+              "name": "DedekindCut"
+            },
+            {
+              "doc": "A Conway Surreal Number {L | R} supporting transfinite and infinitesimal quantities.",
+              "kind": "class",
+              "line": 144,
+              "methods": [
+                "is_number",
+                "value",
+                "infinitesimal"
+              ],
+              "name": "SurrealGame"
+            },
+            {
+              "doc": "A Cauchy sequence of rationals generating a real number.",
+              "kind": "class",
+              "line": 231,
+              "methods": [
+                "term",
+                "is_cauchy",
+                "limit",
+                "euler_e",
+                "geometric_series"
+              ],
+              "name": "CauchySequence"
+            },
+            {
+              "doc": "Central difference derivative: (f(x+h) - f(x-h)) / (2h).",
+              "kind": "function",
+              "line": 321,
+              "name": "numerical_derivative",
+              "signature": "(f: Callable[[float], float], x: float, h: float=1e-06)"
+            },
+            {
+              "doc": "Riemann midpoint integration of f over [a, b].",
+              "kind": "function",
+              "line": 328,
+              "name": "riemann_integral",
+              "signature": "(f: Callable[[float], float], a: float, b: float, subdivisions: int=1000)"
+            },
+            {
+              "doc": "A closed real interval [lower, upper] for verified interval arithmetic and bounding.",
+              "kind": "class",
+              "line": 338,
+              "methods": [
+                "point",
+                "midpoint",
+                "width",
+                "radius",
+                "contains",
+                "intersection",
+                "hull",
+                "enclose_samples"
+              ],
+              "name": "Interval"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 0,
+        "modules": 6,
+        "symbols": 32,
+        "tracked_files": 50
+      },
+      "docs": [],
+      "had_pages_before": true,
+      "id": "grounded-hypercalculi",
+      "layers": [],
+      "module": "grounded_hypercalculi",
+      "package": "grounded-hypercalculi",
+      "pages_url": "https://timelordraps.github.io/grounded-hypercalculi/",
+      "papers": [
+        "paper/paper.pdf",
+        "paper/paper.tex"
+      ],
+      "repo_url": "https://github.com/TimeLordRaps/grounded-hypercalculi",
+      "root_docs": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GOVERNANCE.md",
+        "SECURITY.md"
+      ],
+      "tagline": "Because there are more calculi than just maths'.",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Canonical finite structures for `L0_triangle.hm`.",
+          "module": "hyperlogic.models",
+          "path": "src/hyperlogic/models.py",
+          "symbols": [
+            {
+              "doc": "The three-register circuit: shape, matter, reading, and back.",
+              "kind": "function",
+              "line": 56,
+              "name": "minimal_model",
+              "signature": "()"
+            },
+            {
+              "doc": "Drops ax-advance only: the closure's turn no longer advances past it.",
+              "kind": "function",
+              "line": 68,
+              "name": "without_advance",
+              "signature": "()"
+            },
+            {
+              "doc": "Drops ax-stay only: one turn lands outside what the closure derives.",
+              "kind": "function",
+              "line": 76,
+              "name": "without_stay",
+              "signature": "()"
+            },
+            {
+              "doc": "Drops ax-triangle only: one sign's three-step circuit does not return.",
+              "kind": "function",
+              "line": 84,
+              "name": "without_triangle",
+              "signature": "()"
+            },
+            {
+              "doc": "Drops ax-closure-self only: the closure no longer returns after one turn.",
+              "kind": "function",
+              "line": 92,
+              "name": "without_closure_self",
+              "signature": "()"
+            },
+            {
+              "doc": "One sign that is its own turn. Satisfies all four axioms.",
+              "kind": "function",
+              "line": 105,
+              "name": "collapsed_model",
+              "signature": "()"
+            },
+            {
+              "doc": "Four signs, two of which land on one conclusion by different routes.",
+              "kind": "function",
+              "line": 119,
+              "name": "separating_model",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "Section V relations and the Section VI closes.",
+          "module": "hyperlogic.relations",
+          "path": "src/hyperlogic/relations.py",
+          "symbols": [
+            {
+              "doc": "The three Section V relations, weakest first.",
+              "kind": "class",
+              "line": 31,
+              "name": "Relation"
+            },
+            {
+              "doc": "Whether `left` is the stronger of two relations.",
+              "kind": "function",
+              "line": 47,
+              "name": "stronger_than",
+              "signature": "(left: Relation, right: Relation)"
+            },
+            {
+              "doc": "The founding relation: the two signs stand in some one derivation context.",
+              "kind": "function",
+              "line": 60,
+              "name": "shares_context",
+              "signature": "(model: SignModel, left: str, right: str)"
+            },
+            {
+              "doc": "The middle relation: one turn takes both signs to the same place.",
+              "kind": "function",
+              "line": 66,
+              "name": "same_conclusion",
+              "signature": "(model: SignModel, left: str, right: str)"
+            },
+            {
+              "doc": "The strongest relation: each sign returns to the other, both ways.",
+              "kind": "function",
+              "line": 76,
+              "name": "interderivable",
+              "signature": "(model: SignModel, left: str, right: str)"
+            },
+            {
+              "doc": "Evaluate any of the three relations by name.",
+              "kind": "function",
+              "line": 82,
+              "name": "holds",
+              "signature": "(model: SignModel, relation: Relation, left: str, right: str)"
+            },
+            {
+              "doc": "`log-advances` closes at the STRONGEST relation, not the weakest.",
+              "kind": "function",
+              "line": 102,
+              "name": "close_advances_as_not_interderivable",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "`log-derives` closes at the founding relation.",
+              "kind": "function",
+              "line": 118,
+              "name": "close_derives_as_shares_context",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "`log-returns` closes so that a full circuit lands back in the same context.",
+              "kind": "function",
+              "line": 135,
+              "name": "close_returns_as_circuit_in_context",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Check all three Section VI closes in declaration order.",
+              "kind": "function",
+              "line": 159,
+              "name": "check_closes",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Whether the structure satisfies every Section VI close.",
+              "kind": "function",
+              "line": 164,
+              "name": "closes_hold",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Each relation implies the weaker one below it, as Section V declares.",
+              "kind": "function",
+              "line": 174,
+              "name": "strength_order_holds",
+              "signature": "(model: SignModel)"
+            }
+          ]
+        },
+        {
+          "doc": "The executable L0 status report.",
+          "module": "hyperlogic.report",
+          "path": "src/hyperlogic/report.py",
+          "symbols": [
+            {
+              "doc": "Produce the report as lines, so tests can assert on it without capture.",
+              "kind": "function",
+              "line": 218,
+              "name": "build_report",
+              "signature": "()"
+            },
+            {
+              "doc": "Print the report. Returns nonzero if a structural expectation broke.",
+              "kind": "function",
+              "line": 261,
+              "name": "main",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "The L0 triangle: finite sign models and checkable derivation claims.",
+          "module": "hyperlogic.triangle",
+          "path": "src/hyperlogic/triangle.py",
+          "symbols": [
+            {
+              "doc": "Whether a claim was observed to hold in one finite structure.",
+              "kind": "class",
+              "line": 38,
+              "name": "Status"
+            },
+            {
+              "doc": "The structure fails at least one L0 axiom, so it refutes nothing.",
+              "kind": "class",
+              "line": 45,
+              "name": "NotAModel"
+            },
+            {
+              "doc": "The outcome of checking one claim against one finite structure.",
+              "kind": "class",
+              "line": 66,
+              "name": "Verdict"
+            },
+            {
+              "doc": "A finite structure interpreting the L0 primitives and opaque predicates.",
+              "kind": "class",
+              "line": 98,
+              "methods": [
+                "turn",
+                "turn_n"
+              ],
+              "name": "SignModel"
+            },
+            {
+              "doc": "Turning moves a sign past where it was.",
+              "kind": "function",
+              "line": 164,
+              "name": "ax_advance",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Turning stays inside what is derivable from the closure.",
+              "kind": "function",
+              "line": 175,
+              "name": "ax_stay",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "THE self-grounding axiom: three turns are a circuit. A cycle needs no exterior.",
+              "kind": "function",
+              "line": 186,
+              "name": "ax_triangle",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "The closure already returns after one turn. Not a claim that it made itself.",
+              "kind": "function",
+              "line": 197,
+              "name": "ax_closure_self",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Check all four Section III axioms in declaration order.",
+              "kind": "function",
+              "line": 211,
+              "name": "check_axioms",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Whether the structure satisfies every L0 axiom.",
+              "kind": "function",
+              "line": 216,
+              "name": "is_model",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "The names of the axioms this structure does not satisfy.",
+              "kind": "function",
+              "line": 225,
+              "name": "failed_axioms",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Every sign reachable from `sign` under turn, reflexively.",
+              "kind": "function",
+              "line": 235,
+              "name": "circuit",
+              "signature": "(model: SignModel, sign: str)"
+            },
+            {
+              "doc": "The closure's own turn is not the closure.",
+              "kind": "function",
+              "line": 252,
+              "name": "d_turn_advances",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "What the closure turns into is still derivable from it.",
+              "kind": "function",
+              "line": 262,
+              "name": "d_turn_stays",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "The full circuit of the closure comes back to the closure.",
+              "kind": "function",
+              "line": 272,
+              "name": "d_triple_turn_returns",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Plurality, derived rather than assumed.",
+              "kind": "function",
+              "line": 282,
+              "name": "d_two_signs",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Every sign has a return point. This is what makes it a cycle, not a sequence.",
+              "kind": "function",
+              "line": 297,
+              "name": "d_return_exists",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Check every Section IV derive.",
+              "kind": "function",
+              "line": 311,
+              "name": "check_derives",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Every sign returns after ONE turn. NOT an L0 theorem.",
+              "kind": "function",
+              "line": 321,
+              "name": "universal_one_turn_return",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Two turns suffice for a circuit. NOT an L0 theorem, and the period matters.",
+              "kind": "function",
+              "line": 336,
+              "name": "two_turn_return",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Whether this model reads `advances` as non-identity.",
+              "kind": "function",
+              "line": 353,
+              "name": "advances_is_irreflexive",
+              "signature": "(model: SignModel)"
+            },
+            {
+              "doc": "Report a conclusive refutation, or raise if the structure cannot refute.",
+              "kind": "function",
+              "line": 368,
+              "name": "refuted_by",
+              "signature": "(claim: str, verdict: Verdict, model: SignModel)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 1,
+        "modules": 4,
+        "symbols": 43,
+        "tracked_files": 21
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperlogic",
+      "layers": [
+        "L0_triangle.hm"
+      ],
+      "module": "hyperlogic",
+      "package": "hyperlogic",
+      "pages_url": "https://timelordraps.github.io/hyperlogic/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperlogic",
+      "root_docs": [
+        "DESIGN.md",
+        "VALIDATION.md"
+      ],
+      "tagline": "A self-grounded triangle of shape, matter and reading, derived from one",
+      "tier": "language",
+      "visibility": "public"
+    }
+  ],
+  "note": "This view shows only the repositories that are published. Other parts of the family exist and are not shown here.",
+  "owner": "TimeLordRaps",
+  "schema": "vstd-family-graph/1",
+  "totals": {
+    "edges_by_kind": {
+      "citation": 16,
+      "dependency": 0,
+      "import": 0
+    },
+    "repositories": 5,
+    "reserved": 0,
+    "symbols": 266
+  },
+  "view": "public"
+}

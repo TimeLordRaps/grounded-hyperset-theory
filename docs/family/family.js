@@ -896,11 +896,15 @@
 
   var dragging = null, moved = false, panFrom = null;
 
+  function capture(ev) {
+    try { svgRoot.setPointerCapture(ev.pointerId); } catch (err) { /* no such pointer */ }
+  }
+
   function startDrag(ev, id) {
     ev.preventDefault();
     dragging = { id: id, at: clientToScene(ev) };
     moved = false;
-    svgRoot.setPointerCapture(ev.pointerId);
+    capture(ev);
   }
 
   function onPointerMove(ev) {
@@ -924,10 +928,10 @@
   }
 
   function onPointerUp(ev) {
-    if (dragging) {
+    if (dragging || panFrom) {
       try { svgRoot.releasePointerCapture(ev.pointerId); } catch (err) { /* already gone */ }
-      dragging = null;
     }
+    dragging = null;
     panFrom = null;
   }
 
@@ -1081,8 +1085,13 @@
     }, { passive: false });
     svgRoot.addEventListener("pointerdown", function (ev) {
       if (dragging) return;
+      ev.preventDefault();
       panFrom = { cx: ev.clientX, cy: ev.clientY, vx: view.x, vy: view.y };
       moved = false;
+      /* Capture, for the same reason a node drag does: pointermove is bound to
+         the svg, so without it a pan that leaves the panel stops dead halfway
+         and only resumes if you happen to come back inside. */
+      capture(ev);
     });
     svgRoot.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);

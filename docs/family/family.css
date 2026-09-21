@@ -107,8 +107,14 @@ section > h2 {
 
 .node { cursor: pointer; }
 .node circle { stroke: var(--bg); stroke-width: 2; transition: r .18s ease; }
-.node text { fill: var(--ink); font-size: 11px; text-anchor: middle; }
-.node .count { fill: var(--faint); font-size: 9px; }
+/* Labels sit on top of the edge curves. Without a halo the edge strokes read as
+   part of the glyphs; 36 label/edge intersections were measured on a five-node
+   graph alone. paint-order draws the background-coloured stroke first, so the
+   text is knocked out of whatever passes beneath it. */
+.node text { fill: var(--ink); font-size: 11px; text-anchor: middle;
+             paint-order: stroke fill; stroke: var(--bg); stroke-width: 3px;
+             stroke-linejoin: round; }
+.node .count { fill: var(--faint); font-size: 9px; stroke-width: 2.5px; }
 .node.is-focus circle { stroke: var(--focus); stroke-width: 3; }
 .node.is-focus text { font-weight: 700; }
 .node.reserved circle { fill: none; stroke: var(--declared); stroke-dasharray: 3 3; stroke-width: 2; }

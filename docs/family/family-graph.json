@@ -1,5 +1,5 @@
 {
-  "digest": "271d1ae0ec72b2f79938d1524c57d9dc64374b0d49f7907c12fa36d133e8943a",
+  "digest": "09b2f39572e31a489335199bbc21f8f42ffce4650f514827d1f20108c0bac123",
   "edges": [
     {
       "evidence": [
@@ -2838,10 +2838,10 @@
         "layers": 1,
         "modules": 4,
         "symbols": 43,
-        "tracked_files": 21
+        "tracked_files": 27
       },
       "docs": [],
-      "had_pages_before": false,
+      "had_pages_before": true,
       "id": "hyperlogic",
       "layers": [
         "L0_triangle.hm"

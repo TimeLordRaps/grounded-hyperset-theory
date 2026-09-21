@@ -175,8 +175,8 @@
         }),
         svg("text", { y: r + 14, text: n.id }),
         n.counts.symbols
-          ? svg("text", { y: r + 25, class: "count", text: n.counts.symbols + " symbols" })
-          : svg("text", { y: r + 25, class: "count", text: n.reserved ? "reserved" : "no package" })
+          ? svg("text", { y: r + 27, class: "count", text: n.counts.symbols + " symbols" })
+          : svg("text", { y: r + 27, class: "count", text: n.reserved ? "reserved" : "no package" })
       ]);
       g.addEventListener("click", function () { focus(n.id); });
       g.addEventListener("keydown", function (ev) {

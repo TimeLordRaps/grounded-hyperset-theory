@@ -377,44 +377,374 @@
     return n.id === focusId ? r + 3 : r;
   }
 
-  function drawGraph() {
+  /* ------------------------------------------------------------- viewport */
+
+  /* The picture is a viewport onto a scene, not a fixed drawing. Everything
+     below works in scene coordinates; the transform on <g id="scene"> is the
+     only thing that changes when you zoom or pan, so nothing has to be
+     re-rendered to move the camera. */
+  var view = { k: 1, x: 0, y: 0 };
+  var MIN_K = 0.25, MAX_K = 6;
+
+  var svgRoot = null, scene = null, gHulls = null, gEdges = null, gNodes = null;
+  var tip = null, matrixHost = null;
+
+  var pos = {};        /* id -> { x, y, vx, vy, fx, fy } in scene coordinates */
+  var hulls = [];      /* component rings, for the structure layout */
+  var mode = "structure";
+  var hoverId = null, hoverEdge = null;
+  var trailFrom = null, trailNodes = {}, trailEdges = {};
+  var anim = null, simAlpha = 0, simFrame = null;
+
+  function applyView() {
+    scene.setAttribute("transform",
+      "translate(" + view.x.toFixed(2) + "," + view.y.toFixed(2) + ") " +
+      "scale(" + view.k.toFixed(4) + ")");
+    /* Strokes and text are scaled by the transform, so counter-scale them to
+       keep hairlines hairline and labels legible at any zoom. */
+    scene.style.setProperty("--k", view.k);
+  }
+
+  function clientToScene(ev) {
+    var r = svgRoot.getBoundingClientRect();
+    var sx = (ev.clientX - r.left) / r.width * W;
+    var sy = (ev.clientY - r.top) / r.height * H;
+    return { x: (sx - view.x) / view.k, y: (sy - view.y) / view.k };
+  }
+
+  function zoomAbout(px, py, factor) {
+    var k = Math.max(MIN_K, Math.min(MAX_K, view.k * factor));
+    if (k === view.k) return;
+    /* Hold the scene point under the cursor still. */
+    view.x = px - (px - view.x) * (k / view.k);
+    view.y = py - (py - view.y) * (k / view.k);
+    view.k = k;
+    applyView();
+  }
+
+  function contentBox() {
+    var ids = Object.keys(pos);
+    if (!ids.length) return { x: 0, y: 0, w: W, h: H };
+    var l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
+    ids.forEach(function (id) {
+      var p = pos[id], e = extents(byId[id], p);
+      l = Math.min(l, p.x - e.l); r = Math.max(r, p.x + e.r);
+      t = Math.min(t, p.y - e.t); b = Math.max(b, p.y + e.b);
+    });
+    hulls.forEach(function (g) {
+      l = Math.min(l, g.x - g.rx - 34); r = Math.max(r, g.x + g.rx + 34);
+      t = Math.min(t, g.y - g.ry - HULL_CAP); b = Math.max(b, g.y + g.ry + 34);
+    });
+    return { x: l, y: t, w: Math.max(1, r - l), h: Math.max(1, b - t) };
+  }
+
+  function fitView(animate) {
+    var box = contentBox();
+    var pad = 16;
+    var k = Math.max(MIN_K, Math.min(MAX_K,
+      Math.min((W - pad * 2) / box.w, (H - pad * 2) / box.h)));
+    var target = {
+      k: k,
+      x: W / 2 - (box.x + box.w / 2) * k,
+      y: H / 2 - (box.y + box.h / 2) * k
+    };
+    if (!animate) { view = target; applyView(); return; }
+    var from = { k: view.k, x: view.x, y: view.y }, t0 = now();
+    (function step() {
+      var u = ease(Math.min(1, (now() - t0) / 340));
+      view.k = from.k + (target.k - from.k) * u;
+      view.x = from.x + (target.x - from.x) * u;
+      view.y = from.y + (target.y - from.y) * u;
+      applyView();
+      if (u < 1) window.requestAnimationFrame(step);
+    })();
+  }
+
+  function now() { return window.performance ? window.performance.now() : Date.now(); }
+  function ease(u) { return u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2; }
+
+  /* -------------------------------------------------------------- layouts */
+
+  /* Every layout produces target positions for the same nodes; moving between
+     them is an animation rather than a redraw, so you can watch one shape turn
+     into another and keep track of which node is which. */
+
+  function structureTargets() {
     var placed = layout();
-    var pos = placed.pos;
-    var root = document.getElementById("graph");
-    clear(root);
+    return { pos: placed.pos, hulls: placed.groups };
+  }
 
-    maxSymbols = 1;
-    graph.nodes.forEach(function (n) {
-      maxSymbols = Math.max(maxSymbols, n.counts.symbols || 0);
+  function radialTargets() {
+    /* The focus at the centre, everything else ringed by how many edges away it
+       is. This is the ego view -- a bad picture of the family and a good picture
+       of one part's neighbourhood, which is why it is an option and not the
+       default. */
+    var dist = {}, queue = [focusId], adj = {};
+    graph.nodes.forEach(function (n) { adj[n.id] = []; });
+    activeEdges().forEach(function (e) {
+      adj[e.source].push(e.target);
+      adj[e.target].push(e.source);
     });
-
-    var active = activeEdges();
-    var maxW = 1;
-    active.forEach(function (e) { maxW = Math.max(maxW, e.weight); });
-    /* Spread the weights across the full stroke range. The previous scale was
-       1 + log(w + 1), which mapped the family's real range of 1 to 8 onto 1.7
-       to 3.2 -- the heaviest edge in the graph was not twice the lightest. */
-    function widthOf(w) {
-      return maxW <= 1 ? 2.2 : 1.2 + 4.3 * (w - 1) / (maxW - 1);
+    dist[focusId] = 0;
+    for (var qi = 0; qi < queue.length; qi++) {
+      var v = queue[qi];
+      adj[v].forEach(function (w) {
+        if (dist[w] === undefined) { dist[w] = dist[v] + 1; queue.push(w); }
+      });
     }
-
-    var defs = svg("defs");
-    KINDS.forEach(function (kind) {
-      defs.appendChild(svg("marker", {
-        id: "arrow-" + kind, viewBox: "0 0 10 10", refX: "9", refY: "5",
-        markerWidth: "6", markerHeight: "6", orient: "auto-start-reverse"
-      }, [svg("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: "var(--" + kind + ")" })]));
+    var far = 0;
+    graph.nodes.forEach(function (n) {
+      if (dist[n.id] === undefined) dist[n.id] = -1;
+      far = Math.max(far, dist[n.id]);
     });
-    root.appendChild(defs);
+    var rings = {};
+    graph.nodes.forEach(function (n) {
+      var d = dist[n.id] < 0 ? far + 1 : dist[n.id];
+      (rings[d] = rings[d] || []).push(n);
+    });
+    var out = {};
+    Object.keys(rings).map(Number).sort(function (a, b) { return a - b; })
+      .forEach(function (d) {
+        var members = rings[d].sort(byTier);
+        if (d === 0) { out[members[0].id] = { x: W / 2, y: H / 2, place: "down" }; return; }
+        var rx = 108 * d * 1.45, ry = 108 * d;
+        var step = (Math.PI * 2) / members.length;
+        members.forEach(function (n, i) {
+          var a = -Math.PI / 2 + i * step + (d % 2 ? 0 : step / 2);
+          var dx = rx * Math.cos(a), dy = ry * Math.sin(a);
+          var len = Math.sqrt(dx * dx + dy * dy) || 1;
+          var cs = dx / len, sn = dy / len;
+          out[n.id] = {
+            x: W / 2 + dx, y: H / 2 + dy,
+            place: Math.abs(cs) > 0.55 ? (cs > 0 ? "right" : "left") : (sn < 0 ? "up" : "down")
+          };
+        });
+      });
+    return { pos: out, hulls: [] };
+  }
 
-    var gHulls = svg("g", { class: "hulls" });
-    var gEdges = svg("g", { class: "edges" });
-    var gNodes = svg("g", { class: "nodes" });
-    root.appendChild(gHulls);
-    root.appendChild(gEdges);
-    root.appendChild(gNodes);
+  function gridTargets() {
+    var ns = graph.nodes.slice().sort(byTier);
+    var cols = Math.ceil(Math.sqrt(ns.length * 1.6));
+    var cw = W / (cols + 0.5), rh = 118;
+    var out = {};
+    ns.forEach(function (n, i) {
+      var c = i % cols, r = Math.floor(i / cols);
+      out[n.id] = { x: cw * (c + 0.75), y: 70 + r * rh, place: "down" };
+    });
+    return { pos: out, hulls: [] };
+  }
 
-    placed.groups.forEach(function (g) {
+  /* --------------------------------------------------------- force layout */
+
+  /* Hand-rolled because the page has no dependencies and eleven nodes do not
+     need a quadtree. Structure is kept as a bias rather than thrown away: the
+     y anchor is the node's layer in the condensation, so the stack survives,
+     and members of a component attract each other, so a cycle still clumps. */
+  var anchor = {};
+
+  function prepareForce() {
+    var placed = layout();
+    anchor = {};
+    Object.keys(placed.pos).forEach(function (id) {
+      anchor[id] = { x: placed.pos[id].x, y: placed.pos[id].y };
+    });
+    graph.nodes.forEach(function (n) {
+      if (!pos[n.id]) pos[n.id] = { x: W / 2, y: H / 2, vx: 0, vy: 0 };
+      pos[n.id].vx = 0;
+      pos[n.id].vy = 0;
+    });
+    simAlpha = 1;
+  }
+
+  function simStep() {
+    var ids = graph.nodes.map(function (n) { return n.id; });
+    var act = activeEdges();
+    var i, j, a, b, dx, dy, d, f;
+
+    for (i = 0; i < ids.length; i++) {
+      a = pos[ids[i]];
+      for (j = i + 1; j < ids.length; j++) {
+        b = pos[ids[j]];
+        dx = b.x - a.x; dy = b.y - a.y;
+        d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+        f = 24000 / (d * d);
+        if (d < 64) f += (64 - d) * 3.2;        /* hard collision */
+        dx /= d; dy /= d;
+        a.vx -= dx * f * 0.0016; a.vy -= dy * f * 0.0016;
+        b.vx += dx * f * 0.0016; b.vy += dy * f * 0.0016;
+      }
+    }
+    act.forEach(function (e) {
+      if (e.source === e.target) return;
+      a = pos[e.source]; b = pos[e.target];
+      dx = b.x - a.x; dy = b.y - a.y;
+      d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      var rest = 150 - Math.min(48, e.weight * 8);
+      f = (d - rest) * 0.012;
+      dx /= d; dy /= d;
+      a.vx += dx * f; a.vy += dy * f;
+      b.vx -= dx * f; b.vy -= dy * f;
+    });
+    ids.forEach(function (id) {
+      var p = pos[id], an = anchor[id];
+      if (an) {
+        p.vy += (an.y - p.y) * 0.030;            /* keep the layering */
+        p.vx += (W / 2 - p.x) * 0.0016;
+      }
+      if (p.fx !== undefined) { p.x = p.fx; p.y = p.fy; p.vx = p.vy = 0; return; }
+      p.vx *= 0.82; p.vy *= 0.82;
+      p.x += p.vx * simAlpha;
+      p.y += p.vy * simAlpha;
+      var e = extents(byId[id], p);
+      p.x = Math.max(e.l + 4, Math.min(W - e.r - 4, p.x));
+      p.y = Math.max(e.t + 4, Math.min(H - e.b - 4, p.y));
+    });
+    ids.forEach(function (id) { pos[id].place = placeFor(id); });
+    simAlpha *= 0.985;
+  }
+
+  /* With no ring to point away from, a label goes wherever its node is least
+     crowded: the side with the fewest neighbours within reach. */
+  function placeFor(id) {
+    var p = pos[id], score = { left: 0, right: 0, up: 0, down: 0 };
+    graph.nodes.forEach(function (n) {
+      if (n.id === id) return;
+      var q = pos[n.id], dx = q.x - p.x, dy = q.y - p.y;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d > 190) return;
+      var w = (190 - d) / 190;
+      score[dx > 0 ? "right" : "left"] += w * Math.abs(dx) / (d || 1);
+      score[dy > 0 ? "down" : "up"] += w * Math.abs(dy) / (d || 1);
+    });
+    if (p.x < 130) score.left += 9;
+    if (p.x > W - 130) score.right += 9;
+    if (p.y < 60) score.up += 9;
+    if (p.y > H - 60) score.down += 9;
+    var best = "down", bv = Infinity;
+    ["right", "left", "down", "up"].forEach(function (k) {
+      if (score[k] < bv) { bv = score[k]; best = k; }
+    });
+    return best;
+  }
+
+  function runSim() {
+    if (simFrame) window.cancelAnimationFrame(simFrame);
+    (function loop() {
+      simStep();
+      paint();
+      if (simAlpha > 0.02) simFrame = window.requestAnimationFrame(loop);
+      else simFrame = null;
+    })();
+  }
+
+  /* ------------------------------------------------------------ animation */
+
+  function targetsFor(m) {
+    if (m === "radial") return radialTargets();
+    if (m === "grid") return gridTargets();
+    return structureTargets();
+  }
+
+  function moveTo(m, animate) {
+    var t = targetsFor(m);
+    hulls = t.hulls;
+    var from = {};
+    Object.keys(t.pos).forEach(function (id) {
+      from[id] = pos[id] ? { x: pos[id].x, y: pos[id].y }
+                         : { x: t.pos[id].x, y: t.pos[id].y };
+      pos[id] = pos[id] || { x: t.pos[id].x, y: t.pos[id].y, vx: 0, vy: 0 };
+      pos[id].place = t.pos[id].place;
+      delete pos[id].fx; delete pos[id].fy;
+    });
+    var toHulls = hulls.map(function (g) { return { x: g.x, y: g.y, rx: g.rx, ry: g.ry }; });
+    if (anim) { window.cancelAnimationFrame(anim); anim = null; }
+    if (!animate) {
+      Object.keys(t.pos).forEach(function (id) { pos[id].x = t.pos[id].x; pos[id].y = t.pos[id].y; });
+      paint(); fitView(false); return;
+    }
+    var fromHulls = toHulls.map(function (g) { return { x: g.x, y: W === 0 ? g.y : g.y, rx: 0, ry: 0 }; });
+    var t0 = now();
+    (function step() {
+      var u = ease(Math.min(1, (now() - t0) / 520));
+      Object.keys(t.pos).forEach(function (id) {
+        pos[id].x = from[id].x + (t.pos[id].x - from[id].x) * u;
+        pos[id].y = from[id].y + (t.pos[id].y - from[id].y) * u;
+      });
+      hulls.forEach(function (g, i) {
+        g.rx = fromHulls[i].rx + (toHulls[i].rx - fromHulls[i].rx) * u;
+        g.ry = fromHulls[i].ry + (toHulls[i].ry - fromHulls[i].ry) * u;
+      });
+      paint();
+      if (u < 1) anim = window.requestAnimationFrame(step);
+      else { anim = null; fitView(true); }
+    })();
+  }
+
+  function relayout(animate) {
+    if (mode === "matrix") { paintMatrix(); return; }
+    matrixHost.hidden = true;
+    svgRoot.hidden = false;
+    if (mode === "force") {
+      prepareForce();
+      hulls = [];
+      runSim();
+      window.setTimeout(function () { fitView(true); }, 420);
+    } else {
+      moveTo(mode, animate !== false);
+    }
+  }
+
+  /* ------------------------------------------------------- path following */
+
+  /* Shortest directed path, so "does this part reach that one, and how" has an
+     answer you can see rather than trace by eye. */
+  function trace(from, to) {
+    var adj = {};
+    graph.nodes.forEach(function (n) { adj[n.id] = []; });
+    activeEdges().forEach(function (e) { adj[e.source].push(e); });
+    var prev = {}, seen = {}, queue = [from];
+    seen[from] = true;
+    for (var i = 0; i < queue.length; i++) {
+      var v = queue[i];
+      if (v === to) break;
+      adj[v].forEach(function (e) {
+        if (seen[e.target]) return;
+        seen[e.target] = true; prev[e.target] = e; queue.push(e.target);
+      });
+    }
+    if (!seen[to]) return null;
+    var path = [], cur = to;
+    while (cur !== from) { var e = prev[cur]; path.unshift(e); cur = e.source; }
+    return path;
+  }
+
+  function setTrail(from, to) {
+    trailNodes = {}; trailEdges = {};
+    var path = from && to ? trace(from, to) : null;
+    if (!path) return path;
+    trailNodes[from] = true;
+    path.forEach(function (e) {
+      trailEdges[e.kind + "|" + e.source + "|" + e.target] = true;
+      trailNodes[e.target] = true;
+    });
+    return path;
+  }
+
+  function edgeKey(e) { return e.kind + "|" + e.source + "|" + e.target; }
+
+  /* --------------------------------------------------------------- paint */
+
+  var maxSymbols = 1, maxW = 1;
+  var nodeEls = {}, edgeEls = [];
+
+  function paint() {
+    if (mode === "matrix") return;
+    clear(gHulls); clear(gEdges); clear(gNodes);
+    nodeEls = {}; edgeEls = [];
+
+    hulls.forEach(function (g) {
+      if (g.rx < 1) return;
       gHulls.appendChild(svg("ellipse", {
         class: "scc-hull", cx: g.x.toFixed(1), cy: g.y.toFixed(1),
         rx: (g.rx + 34).toFixed(1), ry: (g.ry + 34).toFixed(1)
@@ -425,62 +755,435 @@
       }));
     });
 
+    var active = activeEdges();
+    maxW = 1;
+    active.forEach(function (e) { maxW = Math.max(maxW, e.weight); });
+
     active.forEach(function (e) {
       var a = pos[e.source], b = pos[e.target];
       if (!a || !b) return;
       var dx = b.x - a.x, dy = b.y - a.y;
       var len = Math.sqrt(dx * dx + dy * dy) || 1;
-      /* Bow with the edge's own length, so a short hop is not wrapped in a huge
-         loop and a long one is not drawn flat. Reciprocal pairs bow opposite
-         ways so both directions stay readable, and kinds are nudged apart on
-         top of that. */
       var dir = e.source < e.target ? 1 : -1;
       var bow = dir * 0.085 * Math.min(len, 300) * (1 + 0.5 * KINDS.indexOf(e.kind));
       var c = control(a, b, bow);
       var ends = trimEnds(a, c, b, radiusOf(byId[e.source]) + 3,
                           radiusOf(byId[e.target]) + 7);
-      var incident = e.source === focusId || e.target === focusId;
-      gEdges.appendChild(svg("path", {
-        class: "edge " + e.kind + (incident ? " incident" : " dimmed"),
+      var path = svg("path", {
+        class: "edge " + e.kind,
         d: edgePath(ends.a, c, ends.b),
-        "stroke-width": widthOf(e.weight).toFixed(2),
-        "marker-end": "url(#arrow-" + e.kind + ")",
-        opacity: incident ? 0.95 : 0.16
-      }));
+        "stroke-width": widthOf(e.weight).toFixed(2)
+      });
+      edgeEls.push({ e: e, el: path });
+      gEdges.appendChild(path);
+      /* A 2px stroke is not a hit target. The visible path stays untouchable and
+         an invisible fat one beside it takes the pointer. */
+      var hit = svg("path", { class: "edge-hit", d: edgePath(ends.a, c, ends.b) });
+      hit.addEventListener("pointerenter", function (ev) { showEdgeTip(e, ev); });
+      hit.addEventListener("pointerleave", hideTip);
+      hit.addEventListener("click", function () { focus(e.source); });
+      gEdges.appendChild(hit);
     });
 
-    var near = neighbours(focusId);
     graph.nodes.forEach(function (n) {
       var p = pos[n.id];
       if (!p) return;
-      var related = n.id === focusId || near[n.id];
       var r = radiusOf(n);
-      var count = countLabel(n);
       var side = p.place === "left" || p.place === "right";
       var dx = side ? (p.place === "right" ? r + 9 : -(r + 9)) : 0;
       var nameY = side ? -2 : (p.place === "up" ? -(r + 23) : r + 14);
       var countY = side ? 11 : (p.place === "up" ? -(r + 10) : r + 27);
       var g = svg("g", {
-        class: "node" + (n.id === focusId ? " is-focus" : "") +
-               (n.reserved ? " reserved" : "") + (related ? "" : " dimmed"),
+        class: "node",
         transform: "translate(" + p.x.toFixed(1) + "," + p.y.toFixed(1) + ")",
         tabindex: "0", role: "button",
         "aria-label": n.id + " — " + (n.tagline || n.tier)
       }, [
+        svg("circle", { class: "halo", r: (r + 7).toFixed(1) }),
         svg("circle", { r: r.toFixed(1), fill: n.reserved ? "none" : "var(--tier-" + n.tier + ")" }),
         svg("text", { x: dx.toFixed(1), y: nameY.toFixed(1), class: p.place, text: n.id }),
         svg("text", { x: dx.toFixed(1), y: countY.toFixed(1),
-                      class: "count " + p.place, text: count })
+                      class: "count " + p.place, text: countLabel(n) })
       ]);
-      g.addEventListener("click", function () { focus(n.id); });
-      g.addEventListener("keydown", function (ev) {
-        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); focus(n.id); }
-      });
+      wireNode(g, n);
+      nodeEls[n.id] = g;
       gNodes.appendChild(g);
+    });
+    restyle();
+  }
+
+  /* What is lit and what is faded is a class change, nothing more. Separating it
+     from paint() is what makes hover cheap and, more to the point, correct:
+     rebuilding the scene under the pointer destroys the element the pointer is
+     over, so whatever it moves onto never gets its enter event. */
+  function restyle() {
+    var tracing = Object.keys(trailEdges).length > 0;
+    var near = hoverId ? neighbours(hoverId) : null;
+
+    edgeEls.forEach(function (rec) {
+      var e = rec.e, lit;
+      if (tracing) lit = !!trailEdges[edgeKey(e)];
+      else if (hoverId) lit = e.source === hoverId || e.target === hoverId;
+      else lit = e.source === focusId || e.target === focusId;
+      rec.el.setAttribute("class", "edge " + e.kind + (lit ? " lit" : " dim"));
+      rec.el.setAttribute("marker-end", "url(#arrow-" + e.kind + (lit ? "" : "-dim") + ")");
+      rec.el.setAttribute("opacity", lit ? 0.96 : 0.13);
+    });
+
+    graph.nodes.forEach(function (n) {
+      var g = nodeEls[n.id];
+      if (!g) return;
+      var p = pos[n.id];
+      var lit = tracing ? !!trailNodes[n.id]
+              : (hoverId ? (n.id === hoverId || (near && near[n.id])) : true);
+      g.setAttribute("class", "node" + (n.id === focusId ? " is-focus" : "") +
+        (n.reserved ? " reserved" : "") + (lit ? "" : " dim") +
+        (p && p.fx !== undefined ? " pinned" : "") +
+        (n.id === trailFrom ? " trail-from" : ""));
     });
   }
 
-  /* --------------------------------------------------------------- detail */
+  function widthOf(w) { return maxW <= 1 ? 2.2 : 1.2 + 4.3 * (w - 1) / (maxW - 1); }
+
+  /* ---------------------------------------------------------- interaction */
+
+  function wireNode(g, n) {
+    g.addEventListener("pointerenter", function (ev) {
+      if (dragging) return;
+      hoverId = n.id; showNodeTip(n, ev); restyle();
+    });
+    g.addEventListener("pointerleave", function () {
+      if (dragging) return;
+      hoverId = null; hideTip(); restyle();
+    });
+    g.addEventListener("pointerdown", function (ev) { startDrag(ev, n.id); });
+    g.addEventListener("click", function (ev) {
+      if (moved) { moved = false; return; }
+      if (ev.shiftKey) { pickTrail(n.id); return; }
+      focus(n.id);
+    });
+    g.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); focus(n.id); }
+      if (ev.key === "p" || ev.key === "P") { pickTrail(n.id); }
+    });
+  }
+
+  function pickTrail(id) {
+    if (trailFrom === null || trailFrom === id) {
+      trailFrom = trailFrom === id ? null : id;
+      trailNodes = {}; trailEdges = {};
+      say(trailFrom ? "Path from " + trailFrom + " — shift-click a second part."
+                    : "Path cleared.");
+      restyle();
+      return;
+    }
+    var path = setTrail(trailFrom, id);
+    if (!path) {
+      say(trailFrom + " does not reach " + id + " along the edge kinds now shown.");
+    } else {
+      say(trailFrom + " → " + id + " in " + path.length + " step" +
+          (path.length === 1 ? "" : "s") + ": " +
+          [trailFrom].concat(path.map(function (e) { return e.target; })).join(" → "));
+    }
+    trailFrom = null;
+    restyle();
+  }
+
+  function say(text) {
+    var host = document.getElementById("graph-say");
+    if (host) host.textContent = text || "";
+  }
+
+  var dragging = null, moved = false, panFrom = null;
+
+  function startDrag(ev, id) {
+    ev.preventDefault();
+    dragging = { id: id, at: clientToScene(ev) };
+    moved = false;
+    svgRoot.setPointerCapture(ev.pointerId);
+  }
+
+  function onPointerMove(ev) {
+    if (dragging) {
+      var s = clientToScene(ev);
+      var p = pos[dragging.id];
+      p.x = s.x; p.y = s.y;
+      p.fx = s.x; p.fy = s.y;
+      p.vx = p.vy = 0;
+      moved = true;
+      if (mode === "force") { simAlpha = Math.max(simAlpha, 0.55); if (!simFrame) runSim(); }
+      else paint();
+      return;
+    }
+    if (panFrom) {
+      view.x = panFrom.vx + (ev.clientX - panFrom.cx) * (W / svgRoot.getBoundingClientRect().width);
+      view.y = panFrom.vy + (ev.clientY - panFrom.cy) * (H / svgRoot.getBoundingClientRect().height);
+      applyView();
+      moved = true;
+    }
+  }
+
+  function onPointerUp(ev) {
+    if (dragging) {
+      try { svgRoot.releasePointerCapture(ev.pointerId); } catch (err) { /* already gone */ }
+      dragging = null;
+    }
+    panFrom = null;
+  }
+
+  function showNodeTip(n, ev) {
+    var e = edgesFor(n.id);
+    tipHtml([
+      el("b", { text: n.id }),
+      el("span", { class: "t-tier", text: " " + n.tier +
+        (n.visibility && n.visibility !== "public" ? " · " + n.visibility : "") }),
+      n.tagline ? el("p", { text: n.tagline }) : null,
+      el("p", { class: "t-facts", text:
+        n.counts.symbols + " public symbols · " + e.out.length + " out · " +
+        e.into.length + " in" }),
+      el("p", { class: "t-hint", text: "click to focus · drag to move · shift-click to start a path" })
+    ], ev);
+  }
+
+  function showEdgeTip(e, ev) {
+    hoverEdge = e;
+    var ev_files = (e.evidence || []).slice(0, 6);
+    tipHtml([
+      el("b", { text: e.source + " → " + e.target }),
+      el("span", { class: "t-tier", text: " " + e.kind + " ×" + e.weight }),
+      el("p", { text: KIND_NOTE[e.kind] }),
+      ev_files.length ? el("p", { class: "t-facts", text: ev_files.join(", ") +
+        (e.evidence.length > ev_files.length ? ", +" + (e.evidence.length - ev_files.length) + " more" : "") }) : null
+    ], ev);
+  }
+
+  function tipHtml(kids, ev) {
+    clear(tip);
+    kids.forEach(function (k) { if (k) tip.appendChild(k); });
+    tip.hidden = false;
+    var host = svgRoot.parentNode.getBoundingClientRect();
+    var x = ev.clientX - host.left + 14, y = ev.clientY - host.top + 14;
+    if (x + 260 > host.width) x = Math.max(6, x - 288);
+    if (y + 150 > host.height) y = Math.max(6, y - 170);
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+  }
+
+  function hideTip() { hoverEdge = null; tip.hidden = true; }
+
+  /* --------------------------------------------------------- matrix view */
+
+  /* A dense cyclic graph is hard to read as arcs and trivial to read as a
+     matrix: the two blocks of mutual citation are visible as blocks, and the
+     empty rectangle above the diagonal is the one-way bridge between them. */
+  function paintMatrix() {
+    svgRoot.hidden = true;
+    matrixHost.hidden = false;
+    clear(matrixHost);
+
+    var comps = components();
+    var order = [];
+    comps.slice().sort(function (a, b) { return b.length - a.length; })
+      .forEach(function (c) {
+        c.slice().sort(function (x, y) { return byTier(byId[x], byId[y]); })
+          .forEach(function (id) { order.push(id); });
+      });
+    var index = {};
+    order.forEach(function (id, i) { index[id] = i; });
+    /* One cell, possibly several edges: a pair can be both a declared dependency
+       and a citation. Show the most specific kind rather than whichever was
+       written last, and say in the title that the others are there. */
+    var cell = {};
+    activeEdges().forEach(function (e) {
+      var k = e.source + "|" + e.target, had = cell[k];
+      if (!had) { cell[k] = e; return; }
+      cell[k] = KINDS.indexOf(e.kind) < KINDS.indexOf(had.kind) ? e : had;
+      cell[k].alsoKinds = (had.alsoKinds || []).concat([e === cell[k] ? had.kind : e.kind]);
+    });
+
+    var compOf = {};
+    comps.forEach(function (c, i) { c.forEach(function (id) { compOf[id] = i; }); });
+
+    var table = el("table", { class: "matrix" });
+    var head = el("tr", {}, [el("th", { class: "corner", text: "cites →" })]);
+    order.forEach(function (id) {
+      head.appendChild(el("th", { class: "col" }, [el("span", { text: id })]));
+    });
+    table.appendChild(head);
+
+    order.forEach(function (src) {
+      var tr = el("tr", {}, [el("th", { class: "row", text: src })]);
+      order.forEach(function (dst) {
+        var e = cell[src + "|" + dst];
+        var same = compOf[src] === compOf[dst];
+        var td = el("td", {
+          class: (src === dst ? "self " : "") + (same ? "block " : "") + (e ? "on " + e.kind : "off"),
+          title: e ? src + " → " + dst + " · " + e.kind + " ×" + e.weight +
+                     (e.alsoKinds ? " (also " + e.alsoKinds.join(", ") + ")" : "") +
+                     (e.evidence ? " · " + e.evidence.slice(0, 4).join(", ") : "")
+                   : src + " does not name " + dst
+        });
+        if (e) {
+          td.style.setProperty("--w", Math.min(1, 0.35 + e.weight / 8).toFixed(2));
+          td.addEventListener("click", function () { focus(src); });
+        }
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+    matrixHost.appendChild(table);
+    matrixHost.appendChild(el("p", { class: "hint", text:
+      "Rows name columns. Parts are ordered by component, so a solid square on the " +
+      "diagonal is a set that all reach each other, and an empty rectangle off it is " +
+      "a boundary nothing crosses." }));
+  }
+
+  /* --------------------------------------------------------------- chrome */
+
+  function buildGraph() {
+    var panel = document.getElementById("graph-panel");
+    svgRoot = document.getElementById("graph");
+    svgRoot.setAttribute("viewBox", "0 0 " + W + " " + H);
+    clear(svgRoot);
+
+    var defs = svg("defs");
+    KINDS.forEach(function (kind) {
+      [["", 1], ["-dim", 0.5]].forEach(function (v) {
+        defs.appendChild(svg("marker", {
+          id: "arrow-" + kind + v[0], viewBox: "0 0 10 10", refX: "9", refY: "5",
+          markerWidth: "6", markerHeight: "6", orient: "auto-start-reverse"
+        }, [svg("path", { d: "M 0 0 L 10 5 L 0 10 z",
+                          fill: "var(--" + kind + ")", opacity: v[1] })]));
+      });
+    });
+    svgRoot.appendChild(defs);
+
+    scene = svg("g", { id: "scene" });
+    gHulls = svg("g", { class: "hulls" });
+    gEdges = svg("g", { class: "edges" });
+    gNodes = svg("g", { class: "nodes" });
+    scene.appendChild(gHulls);
+    scene.appendChild(gEdges);
+    scene.appendChild(gNodes);
+    svgRoot.appendChild(scene);
+
+    tip = el("div", { class: "tip", hidden: "hidden" });
+    matrixHost = el("div", { class: "matrix-host", hidden: "hidden" });
+    var stage = svgRoot.parentNode;
+    stage.appendChild(tip);
+    stage.appendChild(matrixHost);
+
+    svgRoot.addEventListener("wheel", function (ev) {
+      ev.preventDefault();
+      var s = clientToScene(ev);
+      zoomAbout(s.x * view.k + view.x, s.y * view.k + view.y,
+                ev.deltaY < 0 ? 1.12 : 1 / 1.12);
+    }, { passive: false });
+    svgRoot.addEventListener("pointerdown", function (ev) {
+      if (dragging) return;
+      panFrom = { cx: ev.clientX, cy: ev.clientY, vx: view.x, vy: view.y };
+      moved = false;
+    });
+    svgRoot.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    svgRoot.addEventListener("dblclick", function () { fitView(true); });
+
+    panel.addEventListener("keydown", function (ev) {
+      var step = 40;
+      if (ev.key === "+" || ev.key === "=") { zoomAbout(W / 2, H / 2, 1.2); }
+      else if (ev.key === "-") { zoomAbout(W / 2, H / 2, 1 / 1.2); }
+      else if (ev.key === "0" || ev.key === "f") { fitView(true); }
+      else if (ev.key === "ArrowLeft" && ev.target === panel) { view.x += step; applyView(); }
+      else if (ev.key === "ArrowRight" && ev.target === panel) { view.x -= step; applyView(); }
+      else if (ev.key === "ArrowUp" && ev.target === panel) { view.y += step; applyView(); }
+      else if (ev.key === "ArrowDown" && ev.target === panel) { view.y -= step; applyView(); }
+      else return;
+      ev.preventDefault();
+    });
+
+    maxSymbols = 1;
+    graph.nodes.forEach(function (n) {
+      maxSymbols = Math.max(maxSymbols, n.counts.symbols || 0);
+    });
+  }
+
+  function buildToolbar() {
+    var host = document.getElementById("graph-tools");
+    if (!host) return;
+    clear(host);
+
+    var modes = [
+      ["structure", "Structure", "components condensed and layered — cycles are rings, everything between them points down"],
+      ["force", "Force", "live simulation you can pull apart; the layering is kept as a bias"],
+      ["radial", "Neighbourhood", "the focused part at the centre, the rest ringed by distance from it"],
+      ["grid", "Grid", "every part on a lattice, by tier — no structure, just an even look at them all"],
+      ["matrix", "Matrix", "who names whom as a grid; components sit as blocks on the diagonal"]
+    ];
+    var group = el("div", { class: "seg", role: "group", "aria-label": "Layout" });
+    modes.forEach(function (m) {
+      var b = el("button", {
+        type: "button", title: m[2], "data-mode": m[0],
+        "aria-pressed": String(mode === m[0]), text: m[1]
+      });
+      b.addEventListener("click", function () {
+        mode = m[0];
+        group.querySelectorAll("button").forEach(function (x) {
+          x.setAttribute("aria-pressed", String(x.dataset.mode === mode));
+        });
+        writeHash();
+        relayout(true);
+        say("");
+      });
+      group.appendChild(b);
+    });
+    host.appendChild(group);
+
+    var zoom = el("div", { class: "seg", role: "group", "aria-label": "Zoom" });
+    [["−", "zoom out", function () { zoomAbout(W / 2, H / 2, 1 / 1.25); }],
+     ["+", "zoom in", function () { zoomAbout(W / 2, H / 2, 1.25); }],
+     ["Fit", "fit the whole graph (f)", function () { fitView(true); }]
+    ].forEach(function (b) {
+      var btn = el("button", { type: "button", title: b[1], text: b[0] });
+      btn.addEventListener("click", b[2]);
+      zoom.appendChild(btn);
+    });
+    host.appendChild(zoom);
+
+    var wide = el("button", { type: "button", class: "wide", text: "Expand",
+                              title: "give the graph the whole window (Esc to leave)" });
+    wide.addEventListener("click", function () {
+      var panel = document.getElementById("graph-panel");
+      var on = panel.classList.toggle("expanded");
+      wide.textContent = on ? "Collapse" : "Expand";
+      document.body.classList.toggle("has-expanded", on);
+      window.setTimeout(function () { fitView(true); }, 60);
+    });
+    host.appendChild(wide);
+
+    var reset = el("button", { type: "button", class: "wide", text: "Unpin all",
+                               title: "release every node you have dragged" });
+    reset.addEventListener("click", function () {
+      Object.keys(pos).forEach(function (id) { delete pos[id].fx; delete pos[id].fy; });
+      trailFrom = null; trailNodes = {}; trailEdges = {};
+      say("");
+      relayout(true);
+    });
+    host.appendChild(reset);
+  }
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Escape") return;
+    var panel = document.getElementById("graph-panel");
+    if (panel && panel.classList.contains("expanded")) {
+      panel.classList.remove("expanded");
+      document.body.classList.remove("has-expanded");
+      var w = document.querySelector("#graph-tools .wide");
+      if (w) w.textContent = "Expand";
+      window.setTimeout(function () { fitView(true); }, 60);
+    }
+  });
+
+  function drawGraph() { relayout(false); }
 
   function edgesFor(id) {
     var out = [], into = [];
@@ -679,12 +1382,38 @@
   function focus(id) {
     if (!byId[id]) return;
     focusId = id;
-    if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, "", "#" + id);
-    }
-    drawGraph();
+    writeHash();
+    if (mode === "matrix") paintMatrix();
+    else if (mode === "radial") relayout(true);
+    else restyle();
     drawDetail();
     drawApi(document.getElementById("search").value);
+  }
+
+  /* The whole view lives in the URL, so a link carries the part you were
+     looking at, the layout you were in and the edge kinds you had on. */
+  function writeHash() {
+    var off = KINDS.filter(function (k) { return !enabled[k]; });
+    var h = "#" + focusId + (mode === "structure" ? "" : "&layout=" + mode) +
+            (off.length ? "&off=" + off.join(",") : "");
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", h);
+    }
+  }
+
+  function readHash() {
+    var raw = (window.location.hash || "").replace("#", "");
+    if (!raw) return null;
+    var parts = raw.split("&");
+    var out = { repo: parts[0] || null, layout: null, off: [] };
+    parts.slice(1).forEach(function (p) {
+      var i = p.indexOf("=");
+      if (i < 0) return;
+      var k = p.slice(0, i), v = p.slice(i + 1);
+      if (k === "layout") out.layout = v;
+      if (k === "off") out.off = v.split(",").filter(Boolean);
+    });
+    return out;
   }
 
   function buildLegend() {
@@ -701,7 +1430,10 @@
       b.addEventListener("click", function () {
         enabled[kind] = !enabled[kind];
         b.setAttribute("aria-pressed", String(enabled[kind]));
-        drawGraph();
+        writeHash();
+        trailFrom = null; trailNodes = {}; trailEdges = {};
+        say("");
+        relayout(true);
         drawDetail();
       });
       host.appendChild(b);
@@ -712,10 +1444,13 @@
     graph = data;
     graph.nodes.forEach(function (n) { byId[n.id] = n; });
     if (!byId[focusId]) focusId = graph.nodes[0].id;
-    var hash = (window.location.hash || "").replace(/^#/, "");
-    if (byId[hash]) focusId = hash;
+    var h0 = readHash();
+    if (h0) {
+      if (byId[h0.repo]) focusId = h0.repo;
+      if (h0.layout) mode = h0.layout;
+      h0.off.forEach(function (k) { if (k in enabled) enabled[k] = false; });
+    }
 
-    document.getElementById("graph").setAttribute("viewBox", "0 0 " + W + " " + H);
     var home = byId[focusOwner()];
     var back = document.getElementById("back");
     if (back && home) {
@@ -733,8 +1468,10 @@
       "sha256 of the canonical graph payload: " + graph.digest;
 
     indexSymbols();
+    buildGraph();
+    buildToolbar();
     buildLegend();
-    drawGraph();
+    relayout(false);
     drawDetail();
     drawApi("");
 
@@ -745,9 +1482,14 @@
       timer = window.setTimeout(function () { drawApi(search.value); }, 90);
     });
     window.addEventListener("hashchange", function () {
-      var h = (window.location.hash || "").replace(/^#/, "");
-      if (byId[h] && h !== focusId) focus(h);
+      var h = readHash();
+      if (h && byId[h.repo] && h.repo !== focusId) focus(h.repo);
     });
+    window.addEventListener("resize", function () {
+      window.clearTimeout(fitTimer);
+      fitTimer = window.setTimeout(function () { fitView(false); }, 120);
+    });
+    var fitTimer = null;
   }
 
   function fail(message) {

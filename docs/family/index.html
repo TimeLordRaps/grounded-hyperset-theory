@@ -17,23 +17,31 @@
 </header>
 
 <main>
-  <section id="graph-panel">
-    <h2>Interaction graph</h2>
-    <svg id="graph" viewBox="0 0 760 560" role="img"
-         aria-label="Interaction graph of the hyper-* family, with grounded-hyperset-theory highlighted"></svg>
+  <section id="graph-panel" tabindex="0">
+    <div class="panel-head">
+      <h2>Interaction graph</h2>
+      <div id="graph-tools" class="tools"></div>
+    </div>
+    <div class="stage">
+      <svg id="graph" viewBox="0 0 760 560" role="application"
+           aria-label="Interaction graph of the hyper-* family, with grounded-hyperset-theory highlighted"></svg>
+    </div>
+    <p id="graph-say" class="say" aria-live="polite"></p>
     <div class="legend" id="legend"></div>
     <p class="hint">
-      Laid out by the structure of the graph itself, not by anything declared. Parts that
-      all reach each other are grouped into a ring; between rings every edge points one way
-      down the page, so cycles are exactly and only what stays inside a ring. The most-cited
-      parts settle at the bottom. Disc area tracks the size of a package's public API and
-      stroke weight tracks how many times one part names another.
+      <strong>Drag</strong> the background to pan and the <strong>wheel</strong> to zoom;
+      double-click or <kbd>f</kbd> fits the whole graph. <strong>Drag a node</strong> to move
+      it &mdash; it stays where you put it until you unpin. <strong>Hover</strong> a node or an
+      edge for what it is and what the edge was read from. <strong>Click</strong> to focus;
+      <strong>shift-click</strong> two parts to trace the shortest path between them.
     </p>
     <p class="hint">
-      <strong>grounded-hyperset-theory</strong> is outlined, and the edges touching it are held at full
-      strength while the rest fade. Click any node to move that highlight &mdash; the panel
-      beside the graph and the API index below follow, while the layout holds still.
-      Toggle an edge kind to recompute the whole structure without it.
+      <strong>Structure</strong> is laid out by the graph itself, not by anything declared:
+      parts that all reach each other are grouped into a ring, and between rings every edge
+      points one way down the page, so cycles are exactly and only what stays inside a ring.
+      Disc area tracks the size of a package&rsquo;s public API; stroke weight tracks how many
+      times one part names another. Toggle an edge kind to recompute the whole structure
+      without it.
     </p>
   </section>
 

@@ -18,6 +18,9 @@
   --tier-applied: #cf222e;
   --tier-combination: #8250df;
   --tier-declared: #8c959f;
+  --panel-hi: #eaeef2;
+  --stage: #fbfcfd;
+  --accent: #0550ae;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
@@ -40,6 +43,9 @@
     --tier-applied: #ff7b72;
     --tier-combination: #d2a8ff;
     --tier-declared: #6e7681;
+    --panel-hi: #1c2230;
+    --stage: #0b0f15;
+    --accent: #4493f8;
   }
 }
 
@@ -118,15 +124,14 @@ section > h2 {
 .node.is-focus circle { stroke: var(--focus); stroke-width: 3; }
 .node.is-focus text { font-weight: 700; }
 .node.reserved circle { fill: none; stroke: var(--declared); stroke-dasharray: 3 3; stroke-width: 2; }
-.node.dimmed { opacity: .28; }
 /* Radius now carries the symbol count, so hover may not overwrite it. */
 .node:hover circle { stroke: var(--ink); stroke-width: 2; }
 
 /* The ring behind a multi-part component. Drawn beneath the edges so it reads
    as ground rather than as another edge. */
-.scc-hull { fill: var(--panel); stroke: var(--border); stroke-dasharray: 4 5;
+.scc-hull { pointer-events: none; fill: var(--panel); stroke: var(--border); stroke-dasharray: 4 5;
             stroke-width: 1; opacity: .5; }
-.scc-label { fill: var(--faint); font-size: 10px; text-anchor: middle;
+.scc-label { pointer-events: none; fill: var(--faint); font-size: 10px; text-anchor: middle;
              letter-spacing: .03em; }
 
 /* A label set beside its node runs outward, away from the ring. Class selectors
@@ -138,8 +143,6 @@ section > h2 {
 .edge.dependency { stroke: var(--dependency); }
 .edge.import { stroke: var(--import); }
 .edge.citation { stroke: var(--citation); }
-.edge.dimmed { opacity: .07; }
-.edge.incident { opacity: 1; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .legend button {
@@ -242,4 +245,92 @@ footer code { font-family: var(--mono); }
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ------------------------------------------------------------- viewport */
+
+#graph-panel { outline: none; }
+#graph-panel:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+.panel-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.panel-head h2 { margin-right: auto; }
+
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 4px 0 10px; }
+.tools .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 7px;
+              overflow: hidden; }
+.tools button { font: inherit; font-size: 12px; padding: 5px 10px; cursor: pointer;
+                background: var(--panel); color: var(--faint); border: 0;
+                border-right: 1px solid var(--border); }
+.tools .seg button:last-child { border-right: 0; }
+.tools button:hover { color: var(--ink); background: var(--panel-hi); }
+.tools button[aria-pressed="true"] { color: var(--ink); background: var(--panel-hi);
+                                     box-shadow: inset 0 -2px 0 var(--accent); }
+.tools button.wide { border: 1px solid var(--border); border-radius: 7px; }
+
+/* The stage positions the tooltip and the matrix over the same box as the svg. */
+.stage { position: relative; }
+#graph { display: block; width: 100%; height: auto; touch-action: none;
+         cursor: grab; background: var(--stage); border-radius: 8px; }
+#graph:active { cursor: grabbing; }
+
+/* Zooming scales the scene, so anything meant to stay a fixed size on screen
+   divides by --k. Without this, labels turn into billboards at 4x. */
+#scene { --k: 1; }
+#scene text { font-size: calc(11px / var(--k)); }
+#scene .count { font-size: calc(9px / var(--k)); }
+#scene .scc-label { font-size: calc(10px / var(--k)); }
+#scene .node text { stroke-width: calc(3px / var(--k)); }
+#scene .node .count { stroke-width: calc(2.5px / var(--k)); }
+#scene .scc-hull { stroke-width: calc(1px / var(--k)); }
+
+.node { cursor: pointer; }
+.node .halo { fill: none; stroke: none; }
+.node:hover .halo, .node:focus-visible .halo { fill: var(--panel-hi); }
+.node.dim { opacity: .34; }
+.node.pinned circle:nth-of-type(2) { stroke: var(--faint); stroke-dasharray: 2 2; stroke-width: 1.5; }
+.node.trail-from circle:nth-of-type(2) { stroke: var(--accent); stroke-width: 2.5; }
+.edge { fill: none; pointer-events: none; transition: opacity .12s linear; }
+.edge-hit { fill: none; stroke: transparent; stroke-width: 13; cursor: help;
+            pointer-events: stroke; }
+
+.say { min-height: 18px; margin: 6px 2px 0; font-size: 12px; color: var(--accent); }
+
+.tip { position: absolute; z-index: 5; max-width: 268px; pointer-events: none;
+       background: var(--panel-hi); border: 1px solid var(--border); border-radius: 8px;
+       padding: 9px 11px; font-size: 12px; line-height: 1.45; color: var(--ink);
+       box-shadow: 0 8px 24px rgba(0,0,0,.34); }
+.tip p { margin: 5px 0 0; }
+.tip .t-tier { color: var(--faint); text-transform: lowercase; }
+.tip .t-facts { color: var(--faint); }
+.tip .t-hint { color: var(--faint); font-size: 11px; border-top: 1px solid var(--border);
+               padding-top: 5px; margin-top: 7px; }
+
+/* Expanded: the graph takes the window. The rest of the page stays in the DOM
+   so focus and scroll position survive coming back. */
+#graph-panel.expanded { position: fixed; inset: 12px; z-index: 40; margin: 0;
+                        overflow: auto; background: var(--panel);
+                        box-shadow: 0 24px 80px rgba(0,0,0,.6); }
+body.has-expanded { overflow: hidden; }
+
+/* ---------------------------------------------------------- matrix view */
+
+.matrix-host { overflow: auto; padding: 4px 0 2px; }
+table.matrix { border-collapse: collapse; font-size: 10px; }
+table.matrix th { font-weight: 500; color: var(--faint); white-space: nowrap; }
+table.matrix th.row { text-align: right; padding-right: 7px; }
+table.matrix th.col span { display: inline-block; transform: rotate(-90deg);
+                           transform-origin: left bottom; white-space: nowrap;
+                           width: 14px; margin-bottom: 4px; }
+table.matrix th.corner { text-align: left; color: var(--faint); padding-right: 7px; }
+table.matrix td { width: 15px; height: 15px; border: 1px solid var(--bg);
+                  background: var(--panel); }
+table.matrix td.block { background: var(--panel-hi); }
+table.matrix td.self { background: var(--border); }
+table.matrix td.on { cursor: pointer; }
+table.matrix td.on.citation { background: var(--citation); opacity: var(--w, 1); }
+table.matrix td.on.dependency { background: var(--dependency); opacity: var(--w, 1); }
+table.matrix td.on.import { background: var(--import); opacity: var(--w, 1); }
+table.matrix td.on:hover { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .edge { transition: none; }
 }

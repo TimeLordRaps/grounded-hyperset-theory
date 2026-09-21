@@ -682,7 +682,9 @@
       Object.keys(t.pos).forEach(function (id) { pos[id].x = t.pos[id].x; pos[id].y = t.pos[id].y; });
       paint(); fitView(false); return;
     }
-    var fromHulls = toHulls.map(function (g) { return { x: g.x, y: W === 0 ? g.y : g.y, rx: 0, ry: 0 }; });
+    /* Rings grow from nothing rather than sliding in at full size, which reads
+       as the grouping being derived from where the nodes land. */
+    var fromHulls = toHulls.map(function (g) { return { x: g.x, y: g.y, rx: 0, ry: 0 }; });
     var t0 = now();
     (function step() {
       var u = ease(Math.min(1, (now() - t0) / 520));
@@ -700,7 +702,19 @@
     })();
   }
 
+  /* Leaving force mode has to stop the simulation. moveTo cancels its own
+     animation handle, not this one, so without it the sim keeps integrating in
+     the background and pulls every node off the layout it was just moved to --
+     visibly, because the component hulls do not move with it: the ring drifts
+     out of its own circle. */
+  function stopSim() {
+    unraf(simFrame);
+    simFrame = null;
+    simAlpha = 0;
+  }
+
   function relayout(animate) {
+    if (mode !== "force") stopSim();
     if (mode === "matrix") { paintMatrix(); return; }
     matrixHost.hidden = true;
     svgRoot.hidden = false;

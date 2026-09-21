@@ -20,13 +20,20 @@
   <section id="graph-panel">
     <h2>Interaction graph</h2>
     <svg id="graph" viewBox="0 0 760 560" role="img"
-         aria-label="Interaction graph of the hyper-* family, centred on grounded-hyperset-theory"></svg>
+         aria-label="Interaction graph of the hyper-* family, with grounded-hyperset-theory highlighted"></svg>
     <div class="legend" id="legend"></div>
     <p class="hint">
-      This repository is at the centre. Every part of the family is drawn; edges touching
-      the centre are held at full strength and the rest are faded. Click any node to
-      re-centre the whole page on it &mdash; the graph, the panel beside it and the API
-      index below all follow. Toggle an edge kind to see the family without it.
+      Laid out by the structure of the graph itself, not by anything declared. Parts that
+      all reach each other are grouped into a ring; between rings every edge points one way
+      down the page, so cycles are exactly and only what stays inside a ring. The most-cited
+      parts settle at the bottom. Disc area tracks the size of a package's public API and
+      stroke weight tracks how many times one part names another.
+    </p>
+    <p class="hint">
+      <strong>grounded-hyperset-theory</strong> is outlined, and the edges touching it are held at full
+      strength while the rest fade. Click any node to move that highlight &mdash; the panel
+      beside the graph and the API index below follow, while the layout holds still.
+      Toggle an edge kind to recompute the whole structure without it.
     </p>
   </section>
 

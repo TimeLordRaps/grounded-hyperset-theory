@@ -119,7 +119,20 @@ section > h2 {
 .node.is-focus text { font-weight: 700; }
 .node.reserved circle { fill: none; stroke: var(--declared); stroke-dasharray: 3 3; stroke-width: 2; }
 .node.dimmed { opacity: .28; }
-.node:hover circle { r: 15; }
+/* Radius now carries the symbol count, so hover may not overwrite it. */
+.node:hover circle { stroke: var(--ink); stroke-width: 2; }
+
+/* The ring behind a multi-part component. Drawn beneath the edges so it reads
+   as ground rather than as another edge. */
+.scc-hull { fill: var(--panel); stroke: var(--border); stroke-dasharray: 4 5;
+            stroke-width: 1; opacity: .5; }
+.scc-label { fill: var(--faint); font-size: 10px; text-anchor: middle;
+             letter-spacing: .03em; }
+
+/* A label set beside its node runs outward, away from the ring. Class selectors
+   beat the bare `.node text` rule, so these win over the centred default. */
+.node text.left { text-anchor: end; }
+.node text.right { text-anchor: start; }
 
 .edge { fill: none; pointer-events: none; }
 .edge.dependency { stroke: var(--dependency); }

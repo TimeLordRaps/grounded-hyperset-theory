@@ -1,11 +1,12 @@
 /* Family explorer — shared script, byte-identical in every repository.
  *
  * Reads family-graph.json (generated from the repositories by
- * tools/build_family_graph.py) and renders an ego-centric view: the repository
- * this page belongs to sits at the centre, every other part of the family is
- * placed around it, and every edge in the family is drawn, with the ones
- * touching the centre held at full strength. Clicking any node re-centres the
- * view without leaving the page, so one page explores the whole family.
+ * tools/build_family_graph.py) and lays the family out by its own structure:
+ * strongly connected components, condensed and layered, so mutual citation
+ * reads as a ring and everything between rings points one way down the page.
+ * The repository this page belongs to is highlighted rather than moved, and
+ * clicking any node moves the highlight, the detail panel and the API index
+ * without disturbing the picture.
  *
  * No external dependencies, no network calls beyond the graph file itself.
  */
@@ -22,7 +23,7 @@
     citation: "tracked prose (.md / .hm / .tex) names the target"
   };
 
-  var W = 760, H = 560, CX = W / 2, CY = H / 2, R1 = 152, R2 = 248;
+  var W = 760, H = 560;
 
   var graph = null;
   var byId = {};
@@ -62,10 +63,15 @@
 
   /* ---------------------------------------------------------------- graph */
 
+  function activeEdges() {
+    return graph.edges.filter(function (e) {
+      return enabled[e.kind] && byId[e.source] && byId[e.target];
+    });
+  }
+
   function neighbours(id) {
     var set = {};
-    graph.edges.forEach(function (e) {
-      if (!enabled[e.kind]) return;
+    activeEdges().forEach(function (e) {
       if (e.source === id) set[e.target] = true;
       if (e.target === id) set[e.source] = true;
     });
@@ -73,84 +79,285 @@
     return set;
   }
 
-  function layout() {
-    var near = neighbours(focusId);
-    var inner = [], outer = [];
-    graph.nodes.forEach(function (n) {
-      if (n.id === focusId) return;
-      (near[n.id] ? inner : outer).push(n);
+  /* Strongly connected components of whatever subgraph is on screen.
+   *
+   * This is the structure the family actually has, and it is derived from the
+   * edges rather than declared: a component with more than one member is a set
+   * of parts that every one of which reaches every other. Tier, by contrast, is
+   * an attribute someone wrote down. Laying out by tier draws the label; laying
+   * out by component draws the thing.
+   *
+   * Iterative Tarjan. Recursion would be fine at ten nodes, but the graph is
+   * generated from whatever repositories exist and that number is not fixed.
+   */
+  function components() {
+    var adj = {};
+    graph.nodes.forEach(function (n) { adj[n.id] = []; });
+    activeEdges().forEach(function (e) {
+      if (e.source !== e.target) adj[e.source].push(e.target);
     });
-    inner.sort(byTier);
-    outer.sort(byTier);
 
-    var pos = {};
-    pos[focusId] = { x: CX, y: CY, ring: 0 };
-    function place(list, radius) {
-      var step = (Math.PI * 2) / Math.max(list.length, 1);
-      list.forEach(function (n, i) {
-        var a = -Math.PI / 2 + i * step;
-        pos[n.id] = { x: CX + radius * Math.cos(a), y: CY + radius * Math.sin(a), ring: radius };
-      });
+    var index = 0, stack = [], onStack = {}, idx = {}, low = {}, comps = [];
+
+    function strong(root) {
+      var work = [{ v: root, i: 0 }];
+      while (work.length) {
+        var f = work[work.length - 1];
+        if (f.i === 0) {
+          idx[f.v] = low[f.v] = index++;
+          stack.push(f.v);
+          onStack[f.v] = true;
+        }
+        var descended = false;
+        var list = adj[f.v];
+        while (f.i < list.length) {
+          var w = list[f.i++];
+          if (idx[w] === undefined) { work.push({ v: w, i: 0 }); descended = true; break; }
+          if (onStack[w]) low[f.v] = Math.min(low[f.v], idx[w]);
+        }
+        if (descended) continue;
+        if (low[f.v] === idx[f.v]) {
+          var comp = [], x;
+          do { x = stack.pop(); onStack[x] = false; comp.push(x); } while (x !== f.v);
+          comps.push(comp);
+        }
+        work.pop();
+        if (work.length) {
+          var parent = work[work.length - 1].v;
+          low[parent] = Math.min(low[parent], low[f.v]);
+        }
+      }
     }
-    place(inner, R1);
-    place(outer, R2);
-    return pos;
+
+    graph.nodes.forEach(function (n) { if (idx[n.id] === undefined) strong(n.id); });
+    return comps;
   }
 
-  function edgePath(a, b, bow) {
+  function ringRadius(size) { return size < 2 ? 0 : Math.max(58, 16 * size); }
+
+  /* Layered layout over the component condensation.
+   *
+   * A citation edge runs from the part that names another to the part named, so
+   * the most-cited parts are sinks. Putting sinks at the bottom makes the page
+   * read as a stack with the ground underneath, and because the condensation of
+   * the components is acyclic, every edge between components then points the
+   * same way down the page. Cycles are exactly and only what stays inside a
+   * ring.
+   *
+   * Position does not depend on the focus, so the picture holds still while you
+   * click through it. A layout that reshuffles on every click destroys the
+   * mental model it just built.
+   */
+  function layout() {
+    var comps = components();
+    var compOf = {};
+    comps.forEach(function (c, i) { c.forEach(function (id) { compOf[id] = i; }); });
+
+    var preds = comps.map(function () { return {}; });
+    activeEdges().forEach(function (e) {
+      var a = compOf[e.source], b = compOf[e.target];
+      if (a !== b) preds[b][a] = true;
+    });
+
+    var layer = comps.map(function () { return -1; });
+    function depth(i) {
+      if (layer[i] >= 0) return layer[i];
+      layer[i] = 0;
+      var d = 0;
+      Object.keys(preds[i]).forEach(function (p) { d = Math.max(d, depth(+p) + 1); });
+      layer[i] = d;
+      return d;
+    }
+    comps.forEach(function (c, i) { depth(i); });
+
+    var rows = {};
+    comps.forEach(function (c, i) { (rows[layer[i]] = rows[layer[i]] || []).push(i); });
+    var levels = Object.keys(rows).map(Number).sort(function (a, b) { return a - b; });
+
+    /* Rows, not bands.
+       A band has to reserve room for its widest ring plus the labels above and
+       below it; spacing band *centres* evenly instead pushes the top of a tall
+       ring off the canvas. And a level with many single-part components -- which
+       is what the graph degenerates to when the citation edges are switched off,
+       eleven of them at once -- has to wrap rather than run off the side. So a
+       level is packed into as many rows as it needs, and rows, not levels, are
+       what gets stacked. */
+    var ABOVE = 54, BELOW = 40, GAP = 24, AVAIL = W - 24;
+
+    function widthOf(i) {
+      if (comps[i].length > 1) return 2 * ringRadius(comps[i].length) + 40;
+      return Math.max(96, comps[i][0].length * 6.8 + 26);
+    }
+
+    var bands = [];
+    levels.forEach(function (L) {
+      var ids = rows[L].slice().sort(function (a, b) {
+        var d = comps[b].length - comps[a].length;
+        return d !== 0 ? d : (comps[a][0] < comps[b][0] ? -1 : 1);
+      });
+      var row = [], used = 0;
+      ids.forEach(function (i) {
+        var w = widthOf(i);
+        if (row.length && used + w > AVAIL) { bands.push(row); row = []; used = 0; }
+        row.push(i);
+        used += w;
+      });
+      if (row.length) bands.push(row);
+    });
+
+    var bandR = bands.map(function (row) {
+      return row.reduce(function (m, i) { return Math.max(m, ringRadius(comps[i].length)); }, 0);
+    });
+    var centres = [], cursor = 0;
+    bands.forEach(function (row, bi) {
+      cursor += ABOVE + bandR[bi];
+      centres.push(cursor);
+      cursor += bandR[bi] + BELOW + (bi < bands.length - 1 ? GAP : 0);
+    });
+    var squeeze = cursor > H ? H / cursor : 1;
+    var top = Math.max(0, (H - cursor * squeeze) / 2);
+
+    var pos = {}, groups = [];
+    bands.forEach(function (row, bi) {
+      var y = top + centres[bi] * squeeze;
+      var total = row.reduce(function (s, i) { return s + widthOf(i); }, 0);
+      var x = (W - total) / 2;
+      row.forEach(function (i) {
+        placeComponent(comps[i], x + widthOf(i) / 2, y, pos, groups);
+        x += widthOf(i);
+      });
+    });
+
+
+    return { pos: pos, groups: groups, levels: levels.length, rows: bands.length };
+  }
+
+  function placeComponent(ids, cx, cy, pos, groups) {
+    var members = ids.map(function (id) { return byId[id]; }).sort(byTier);
+    if (members.length === 1) {
+      pos[members[0].id] = { x: cx, y: cy, place: "down" };
+      return;
+    }
+    var r = ringRadius(members.length);
+    var stepA = (Math.PI * 2) / members.length;
+    members.forEach(function (n, i) {
+      var a = -Math.PI / 2 + i * stepA;
+      var cos = Math.cos(a), sin = Math.sin(a);
+      /* Labels go on the outward side of the ring. Hanging every one below its
+         node puts the top node's label inside the ring, over the very cycle the
+         ring exists to show, and leaves the two bottom nodes' labels -- which on
+         a five-ring are only about 1.2r apart -- to collide with each other.
+         Anything near the horizontal extremes is set beside its node instead,
+         where there is room to run outward. */
+      var place = Math.abs(cos) > 0.55 ? (cos > 0 ? "right" : "left")
+                : (sin < 0 ? "up" : "down");
+      pos[n.id] = { x: cx + r * cos, y: cy + r * sin, place: place };
+    });
+    groups.push({ x: cx, y: cy, r: r, size: members.length });
+  }
+
+  function control(a, b, bow) {
     var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
     var dx = b.x - a.x, dy = b.y - a.y;
     var len = Math.sqrt(dx * dx + dy * dy) || 1;
-    var cx = mx + (-dy / len) * bow, cy = my + (dx / len) * bow;
+    return { x: mx + (-dy / len) * bow, y: my + (dx / len) * bow };
+  }
+
+  function edgePath(a, c, b) {
     return "M" + a.x.toFixed(1) + " " + a.y.toFixed(1) +
-           " Q" + cx.toFixed(1) + " " + cy.toFixed(1) +
+           " Q" + c.x.toFixed(1) + " " + c.y.toFixed(1) +
            " " + b.x.toFixed(1) + " " + b.y.toFixed(1);
   }
 
-  function trim(a, b, r) {
-    var dx = b.x - a.x, dy = b.y - a.y;
-    var len = Math.sqrt(dx * dx + dy * dy) || 1;
-    return { x: b.x - (dx / len) * r, y: b.y - (dy / len) * r };
+  /* Pull each end back to its node's rim along the curve's own tangent, which
+     for a quadratic bezier points at the control point. Trimming along the
+     straight chord instead leaves the arrowhead aimed past the node it lands
+     on, by more the harder the edge is bowed. */
+  function trimEnds(a, c, b, ra, rb) {
+    function toward(p, q, d) {
+      var dx = q.x - p.x, dy = q.y - p.y;
+      var l = Math.sqrt(dx * dx + dy * dy) || 1;
+      return { x: p.x + (dx / l) * d, y: p.y + (dy / l) * d };
+    }
+    return { a: toward(a, c, ra), b: toward(b, c, rb) };
   }
 
+  var maxSymbols = 1;
+
   function radiusOf(n) {
-    if (n.id === focusId) return 16;
-    if (n.reserved || n.tier === "declared") return 10;
-    return 12;
+    if (n.reserved) return 9;
+    /* Area, not radius, tracks the symbol count, so a package with four times
+       the API reads as four times the disc rather than four times the width. */
+    var r = 8 + 7 * Math.sqrt((n.counts.symbols || 0) / maxSymbols);
+    return n.id === focusId ? r + 3 : r;
   }
 
   function drawGraph() {
-    var pos = layout();
+    var placed = layout();
+    var pos = placed.pos;
     var root = document.getElementById("graph");
     clear(root);
 
+    maxSymbols = 1;
+    graph.nodes.forEach(function (n) {
+      maxSymbols = Math.max(maxSymbols, n.counts.symbols || 0);
+    });
+
+    var active = activeEdges();
+    var maxW = 1;
+    active.forEach(function (e) { maxW = Math.max(maxW, e.weight); });
+    /* Spread the weights across the full stroke range. The previous scale was
+       1 + log(w + 1), which mapped the family's real range of 1 to 8 onto 1.7
+       to 3.2 -- the heaviest edge in the graph was not twice the lightest. */
+    function widthOf(w) {
+      return maxW <= 1 ? 2.2 : 1.2 + 4.3 * (w - 1) / (maxW - 1);
+    }
+
     var defs = svg("defs");
     KINDS.forEach(function (kind) {
-      var m = svg("marker", {
+      defs.appendChild(svg("marker", {
         id: "arrow-" + kind, viewBox: "0 0 10 10", refX: "9", refY: "5",
         markerWidth: "6", markerHeight: "6", orient: "auto-start-reverse"
-      }, [svg("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: "var(--" + kind + ")" })]);
-      defs.appendChild(m);
+      }, [svg("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: "var(--" + kind + ")" })]));
     });
     root.appendChild(defs);
 
+    var gHulls = svg("g", { class: "hulls" });
     var gEdges = svg("g", { class: "edges" });
     var gNodes = svg("g", { class: "nodes" });
+    root.appendChild(gHulls);
     root.appendChild(gEdges);
     root.appendChild(gNodes);
 
-    graph.edges.forEach(function (e) {
-      if (!enabled[e.kind]) return;
+    placed.groups.forEach(function (g) {
+      gHulls.appendChild(svg("circle", {
+        class: "scc-hull", cx: g.x.toFixed(1), cy: g.y.toFixed(1), r: (g.r + 34).toFixed(1)
+      }));
+      gHulls.appendChild(svg("text", {
+        class: "scc-label", x: g.x.toFixed(1), y: (g.y - g.r - 42).toFixed(1),
+        text: g.size + " parts, each reaching every other"
+      }));
+    });
+
+    active.forEach(function (e) {
       var a = pos[e.source], b = pos[e.target];
       if (!a || !b) return;
+      var dx = b.x - a.x, dy = b.y - a.y;
+      var len = Math.sqrt(dx * dx + dy * dy) || 1;
+      /* Bow with the edge's own length, so a short hop is not wrapped in a huge
+         loop and a long one is not drawn flat. Reciprocal pairs bow opposite
+         ways so both directions stay readable, and kinds are nudged apart on
+         top of that. */
+      var dir = e.source < e.target ? 1 : -1;
+      var bow = dir * 0.085 * Math.min(len, 300) * (1 + 0.5 * KINDS.indexOf(e.kind));
+      var c = control(a, b, bow);
+      var ends = trimEnds(a, c, b, radiusOf(byId[e.source]) + 3,
+                          radiusOf(byId[e.target]) + 7);
       var incident = e.source === focusId || e.target === focusId;
-      var bow = (KINDS.indexOf(e.kind) + 1) * 16 * (e.source < e.target ? 1 : -1);
-      var end = trim(a, b, radiusOf(byId[e.target]) + 6);
-      var width = Math.min(5, 1 + Math.log(e.weight + 1));
       gEdges.appendChild(svg("path", {
         class: "edge " + e.kind + (incident ? " incident" : " dimmed"),
-        d: edgePath(a, end, bow),
-        "stroke-width": width.toFixed(2),
+        d: edgePath(ends.a, c, ends.b),
+        "stroke-width": widthOf(e.weight).toFixed(2),
         "marker-end": "url(#arrow-" + e.kind + ")",
         opacity: incident ? 0.95 : 0.16
       }));
@@ -162,6 +369,13 @@
       if (!p) return;
       var related = n.id === focusId || near[n.id];
       var r = radiusOf(n);
+      var count = n.counts.symbols
+        ? n.counts.symbols + " symbols"
+        : (n.reserved ? "reserved" : "no package");
+      var side = p.place === "left" || p.place === "right";
+      var dx = side ? (p.place === "right" ? r + 9 : -(r + 9)) : 0;
+      var nameY = side ? -2 : (p.place === "up" ? -(r + 23) : r + 14);
+      var countY = side ? 11 : (p.place === "up" ? -(r + 10) : r + 27);
       var g = svg("g", {
         class: "node" + (n.id === focusId ? " is-focus" : "") +
                (n.reserved ? " reserved" : "") + (related ? "" : " dimmed"),
@@ -169,14 +383,10 @@
         tabindex: "0", role: "button",
         "aria-label": n.id + " — " + (n.tagline || n.tier)
       }, [
-        svg("circle", {
-          r: r,
-          fill: n.reserved ? "none" : "var(--tier-" + n.tier + ")"
-        }),
-        svg("text", { y: r + 14, text: n.id }),
-        n.counts.symbols
-          ? svg("text", { y: r + 27, class: "count", text: n.counts.symbols + " symbols" })
-          : svg("text", { y: r + 27, class: "count", text: n.reserved ? "reserved" : "no package" })
+        svg("circle", { r: r.toFixed(1), fill: n.reserved ? "none" : "var(--tier-" + n.tier + ")" }),
+        svg("text", { x: dx.toFixed(1), y: nameY.toFixed(1), class: p.place, text: n.id }),
+        svg("text", { x: dx.toFixed(1), y: countY.toFixed(1),
+                      class: "count " + p.place, text: count })
       ]);
       g.addEventListener("click", function () { focus(n.id); });
       g.addEventListener("keydown", function (ev) {

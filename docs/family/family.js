@@ -438,6 +438,25 @@
     return { x: l, y: t, w: Math.max(1, r - l), h: Math.max(1, b - t) };
   }
 
+  /* requestAnimationFrame does not fire while the document is hidden, and an
+     animation that silently never finishes leaves the view stuck halfway -- a
+     Fit that does nothing at all because the page was in a background tab is
+     worse than one that jumps. Fall back to a timer, which keeps firing. */
+  function raf(fn) {
+    return document.hidden
+      ? { timer: window.setTimeout(fn, 16) }
+      : { frame: window.requestAnimationFrame(fn) };
+  }
+
+  /* The two schedulers hand out ids from separate pools, so a handle has to say
+     which one it came from -- cancelling a timer id as if it were a frame id
+     cancels nothing, or worse, something else. */
+  function unraf(h) {
+    if (!h) return;
+    if (h.timer !== undefined) window.clearTimeout(h.timer);
+    else window.cancelAnimationFrame(h.frame);
+  }
+
   function fitView(animate) {
     var box = contentBox();
     var pad = 16;
@@ -456,7 +475,7 @@
       view.x = from.x + (target.x - from.x) * u;
       view.y = from.y + (target.y - from.y) * u;
       applyView();
-      if (u < 1) window.requestAnimationFrame(step);
+      if (u < 1) raf(step);
     })();
   }
 
@@ -629,11 +648,11 @@
   }
 
   function runSim() {
-    if (simFrame) window.cancelAnimationFrame(simFrame);
+    unraf(simFrame);
     (function loop() {
       simStep();
       paint();
-      if (simAlpha > 0.02) simFrame = window.requestAnimationFrame(loop);
+      if (simAlpha > 0.02) simFrame = raf(loop);
       else simFrame = null;
     })();
   }
@@ -658,7 +677,7 @@
       delete pos[id].fx; delete pos[id].fy;
     });
     var toHulls = hulls.map(function (g) { return { x: g.x, y: g.y, rx: g.rx, ry: g.ry }; });
-    if (anim) { window.cancelAnimationFrame(anim); anim = null; }
+    unraf(anim); anim = null;
     if (!animate) {
       Object.keys(t.pos).forEach(function (id) { pos[id].x = t.pos[id].x; pos[id].y = t.pos[id].y; });
       paint(); fitView(false); return;
@@ -676,7 +695,7 @@
         g.ry = fromHulls[i].ry + (toHulls[i].ry - fromHulls[i].ry) * u;
       });
       paint();
-      if (u < 1) anim = window.requestAnimationFrame(step);
+      if (u < 1) anim = raf(step);
       else { anim = null; fitView(true); }
     })();
   }

@@ -1,5 +1,5 @@
 {
-  "digest": "09b2f39572e31a489335199bbc21f8f42ffce4650f514827d1f20108c0bac123",
+  "digest": "c013827dbf4aacbc73d07748ead121d674a4ae73eebe1811113e984b7d68be30",
   "edges": [
     {
       "evidence": [
@@ -627,18 +627,18 @@
         "L1_relations.hm",
         "L2_operations.hm",
         "L3_ordinatics.hm",
-        "references/seed-ai/hypermath/spec/axioms.hm",
-        "references/seed-ai/hypermath/spec/casting.hm",
-        "references/seed-ai/hypermath/spec/links.hm",
-        "references/seed-ai/hypermath/spec/verify.hm",
-        "references/seed-ai/hypermath_form/ground.hm",
-        "references/seed-ai/hypermath_form/kernel.hm",
-        "references/seed-ai/hypermath_form/operations.hm",
-        "references/seed-ai/hypermath_form/ordinatics.hm",
-        "references/seed-ai/hypermath_form/relations.hm",
-        "references/seed-ai/hypermath_frame/spec/kernel.hm",
-        "references/seed-ai/hypermath_frame/spec/ordinatics.hm",
-        "references/seed-ai/hypermath_frame/spec/stdlib/hyperordinal.hm"
+        "references/precursor/hypermath/spec/axioms.hm",
+        "references/precursor/hypermath/spec/casting.hm",
+        "references/precursor/hypermath/spec/links.hm",
+        "references/precursor/hypermath/spec/verify.hm",
+        "references/precursor/hypermath_form/ground.hm",
+        "references/precursor/hypermath_form/kernel.hm",
+        "references/precursor/hypermath_form/operations.hm",
+        "references/precursor/hypermath_form/ordinatics.hm",
+        "references/precursor/hypermath_form/relations.hm",
+        "references/precursor/hypermath_frame/spec/kernel.hm",
+        "references/precursor/hypermath_frame/spec/ordinatics.hm",
+        "references/precursor/hypermath_frame/spec/stdlib/hyperordinal.hm"
       ],
       "module": "hypermath_foundations",
       "package": "hypermath-foundations",

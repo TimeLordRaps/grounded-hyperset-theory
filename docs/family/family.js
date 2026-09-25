@@ -15,7 +15,9 @@
   "use strict";
 
   var SVG = "http://www.w3.org/2000/svg";
-  var TIERS = ["foundation", "language", "applied", "combination", "declared"];
+  // "unplaced" is what the generator calls a member it has no tier for yet, so a
+  // new repository is drawn the day it joins rather than waiting for a label.
+  var TIERS = ["foundation", "language", "applied", "combination", "declared", "unplaced"];
   var KINDS = ["dependency", "import", "citation"];
   var KIND_NOTE = {
     dependency: "declared in pyproject.toml — installing the source pulls the target in",

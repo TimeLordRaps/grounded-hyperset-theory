@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from pathlib import Path, PurePosixPath
 import re
 import sys
@@ -33,13 +34,48 @@ LOCAL_WINDOWS_PATH = re.compile(
 DRIVE_QUALIFIED_PATH = re.compile(
     r"(?i)(?<![A-Za-z0-9_%])(?:[A-Za-z]:(?:\\\\|[\\/])[A-Za-z0-9._-]{2,})"
 )
+
+
+class DigestTerms:
+    """Find hyphen-joined word pairs by the SHA-256 digests of their casefolded text.
+
+    The pairs guarded this way must never appear in public text, so the checker
+    keeps only their digests and never spells them itself. A pair matches exactly
+    where a case-insensitive, word-bounded pattern for the same pair would. A digest
+    keeps a term out of the source; it cannot stop someone who already suspects a
+    term from confirming it.
+    """
+
+    WORD_RUN = re.compile(r"\w+(?:-\w+)*")
+
+    def __init__(self, *digests: str) -> None:
+        self.digests = frozenset(digests)
+
+    def search(self, text: str) -> re.Match[str] | None:
+        for run in self.WORD_RUN.finditer(text):
+            start = run.start()
+            words = run.group(0).split("-")
+            for first, second in zip(words, words[1:]):
+                pair = text[start : start + len(first) + 1 + len(second)]
+                if hashlib.sha256(pair.casefold().encode("utf-8")).hexdigest() in self.digests:
+                    return re.compile(re.escape(pair)).match(text, start)
+                start += len(first) + 1
+        return None
+
+
 PUBLIC_BOUNDARY_PATTERNS = (
     ("local user or home path", LOCAL_WINDOWS_PATH),
     ("drive-qualified local path", DRIVE_QUALIFIED_PATH),
     ("synthetic private locator", re.compile(r"(?i)evaluator-vault://")),
     ("local model artifact filename", re.compile(r"(?i)\b[a-z0-9_-]+\.gguf\b")),
     ("private deployment field", re.compile(r"(?i)\b(?:model_path|weights_path|lora_path)\b")),
-    ("private business operations identifier", re.compile(r"(?i)\b(?:vstd-labs|timelord-labs)\b")),
+    (
+        "private business operations identifier",
+        DigestTerms(
+            "585785d57be0911dec1a7a4158e21704cd959e7486b6191c470333db777e23a2",
+            "842ef1f940f1ae4a818c768a39c7d8e109e0d95484233c61b1ef2540b98e56a2",
+        ),
+    ),
     ("private key block", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
     ("GitHub token shape", re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b")),
     ("PyPI token shape", re.compile(r"\bpypi-[A-Za-z0-9_-]{20,}\b")),

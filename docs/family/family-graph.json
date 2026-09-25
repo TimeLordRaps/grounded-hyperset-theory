@@ -1,5 +1,5 @@
 {
-  "digest": "09b2f39572e31a489335199bbc21f8f42ffce4650f514827d1f20108c0bac123",
+  "digest": "ea01a93138b6e67572fa901544e92150b748bac7e707597a5ba917fa263cf290",
   "edges": [
     {
       "evidence": [
@@ -67,6 +67,84 @@
       "evidence": [
         "README.md",
         "DESIGN.md",
+        "L0_creation.hm"
+      ],
+      "kind": "citation",
+      "source": "hyperethics",
+      "target": "hypermath",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L1_will.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperethics",
+      "target": "hyperphysics",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L1_will.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperethics",
+      "target": "metamathethicology",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "README.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "grounded-hyperset-theory",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "PAPER.md",
+        "AGENTS.md",
+        "TIME.md",
+        "docs/prerequisites/00_learning_path.md",
+        "docs/prerequisites/21_hypertopologies.md",
+        "docs/prerequisites/scaffolds/21_hypertopologies/21_hypertopologies_hyperstructure.txt"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hypermath",
+      "weight": 7
+    },
+    {
+      "evidence": [
+        "README.md",
+        "TIME.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "ordinatics",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
         "L0_triangle.hm",
         "VALIDATION.md"
       ],
@@ -93,7 +171,40 @@
       ],
       "kind": "citation",
       "source": "hyperlogic",
+      "target": "hyperethics",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L0_triangle.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
       "target": "hypermath",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "DESIGN.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "hyperphysics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "L0_triangle.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperlogic",
+      "target": "metamathethicology",
       "weight": 4
     },
     {
@@ -116,18 +227,27 @@
     },
     {
       "evidence": [
-        "AGENTS.md",
-        "docs/research/CONSTRUCTIVE_QUINE_SELF_CLOSURE.md"
+        "AGENTS.md"
       ],
       "kind": "citation",
       "source": "hypermath",
       "target": "grounded-hyperset-theory",
-      "weight": 2
+      "weight": 1
     },
     {
       "evidence": [
         "README.md",
-        "paper/paper.tex",
+        "docs/research/NATIVE_TRANSPORT_OBLIGATION.md",
+        "docs/research/SEQUENCING_LAWS.md"
+      ],
+      "kind": "citation",
+      "source": "hypermath",
+      "target": "hypergrammar",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "README.md",
         "L1_relations.hm",
         "L2_operations.hm",
         "L3_ordinatics.hm",
@@ -138,7 +258,134 @@
       "kind": "citation",
       "source": "hypermath",
       "target": "ordinatics",
-      "weight": 8
+      "weight": 7
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_STACK.md"
+      ],
+      "kind": "citation",
+      "source": "hyperphysics",
+      "target": "hyperbiology",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "electrical.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperphysics",
+      "target": "hyperethics",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md"
+      ],
+      "kind": "citation",
+      "source": "hyperphysics",
+      "target": "hypermath",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "electrical.hm",
+        "FIELD_STACK.md",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "hyperphysics",
+      "target": "metamathethicology",
+      "weight": 5
+    },
+    {
+      "evidence": [
+        "README.md"
+      ],
+      "kind": "citation",
+      "source": "hyperstratum",
+      "target": "hypergrammar",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "grounded-hypercalculi",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "grounded-hyperset-theory",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "will_electrophysics.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "hyperethics",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "DESIGN.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "hyperlogic",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "hypermath",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "will_electrophysics.hm",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "hyperphysics",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "README.md",
+        "DESIGN.md",
+        "VALIDATION.md"
+      ],
+      "kind": "citation",
+      "source": "metamathethicology",
+      "target": "ordinatics",
+      "weight": 3
     },
     {
       "evidence": [
@@ -166,911 +413,442 @@
       "source": "ordinatics",
       "target": "hypermath",
       "weight": 1
+    },
+    {
+      "evidence": [
+        "grounded-hypercalculi @ git+https://github.com/TimeLordRaps/grounded-hypercalculi.git@e3fd9f803d11b355b257fb7c8270bec414827930"
+      ],
+      "kind": "dependency",
+      "source": "metamathethicology",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "grounded-hyperset-theory @ git+https://github.com/TimeLordRaps/grounded-hyperset-theory.git@0e1d836dba07975ce6319ab459ec88ab53564e3a"
+      ],
+      "kind": "dependency",
+      "source": "metamathethicology",
+      "target": "grounded-hyperset-theory",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "ordinatics @ git+https://github.com/TimeLordRaps/ordinatics.git@1564656fc5a740b595c018e96b904781954a85c8"
+      ],
+      "kind": "dependency",
+      "source": "metamathethicology",
+      "target": "ordinatics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "tests/test_ecosystem.py"
+      ],
+      "kind": "import",
+      "source": "metamathethicology",
+      "target": "grounded-hypercalculi",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "tests/test_ecosystem.py"
+      ],
+      "kind": "import",
+      "source": "metamathethicology",
+      "target": "grounded-hyperset-theory",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "tests/test_citations.py"
+      ],
+      "kind": "import",
+      "source": "metamathethicology",
+      "target": "hyperethics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "src/metamathethicology/examples.py",
+        "src/metamathethicology/representation.py",
+        "src/metamathethicology/spaces.py",
+        "src/metamathethicology/will_electrophysics.py",
+        "tests/test_ecosystem.py",
+        "tests/test_spaces.py",
+        "tests/test_will_electrophysics.py"
+      ],
+      "kind": "import",
+      "source": "metamathethicology",
+      "target": "ordinatics",
+      "weight": 7
     }
   ],
   "nodes": [
     {
       "api": [
         {
-          "doc": "Quadrilateral Filtration and Transitive Abstraction Layer (~=).",
-          "module": "hypermath_foundations.abstraction",
-          "path": "src/hypermath_foundations/abstraction.py",
+          "doc": "Hyper-Calculus: permutation groups, derivation operators, and Lie brackets.",
+          "module": "grounded_hypercalculi.hyper_calculus",
+          "path": "src/grounded_hypercalculi/hyper_calculus.py",
           "symbols": [
             {
-              "doc": "The four nodes in the quadrilateral filtration diagram.",
+              "doc": "A permutation over an integer or string coordinate set.",
               "kind": "class",
-              "line": 44,
-              "name": "FiltrationTier"
+              "line": 23,
+              "methods": [
+                "apply"
+              ],
+              "name": "Permutation"
             },
             {
-              "doc": "Raised when an abstraction cannot retrace to semantics due to invalid substance witness.",
+              "doc": "A permutation group generated by a set of permutations.",
               "kind": "class",
-              "line": 53,
-              "name": "FiltrationRetraceError"
+              "line": 90,
+              "methods": [
+                "contains_identity",
+                "generate",
+                "order",
+                "orbit"
+              ],
+              "name": "PermutationGroup"
             },
             {
-              "doc": "Foundational term representation in the Hypermath term algebra.",
+              "doc": "A linear derivation operator D on a functional space satisfying the Leibniz rule.",
+              "kind": "class",
+              "line": 184,
+              "methods": [
+                "apply",
+                "leibniz_check"
+              ],
+              "name": "DerivationOperator"
+            },
+            {
+              "doc": "Lie commutator bracket [D1, D2] = D1 o D2 - D2 o D1.",
+              "kind": "function",
+              "line": 206,
+              "name": "commutator_bracket",
+              "signature": "(d1: DerivationOperator, d2: DerivationOperator)"
+            }
+          ]
+        },
+        {
+          "doc": "Language Calculus: syntax trees, alphabets, productions, quotations, and proof checking.",
+          "module": "grounded_hypercalculi.language_calculus",
+          "path": "src/grounded_hypercalculi/language_calculus.py",
+          "symbols": [
+            {
+              "doc": "A terminal or non-terminal symbol in a formal language.",
+              "kind": "class",
+              "line": 23,
+              "name": "Symbol"
+            },
+            {
+              "doc": "A set of formal symbols defining an alphabet.",
+              "kind": "class",
+              "line": 35,
+              "methods": [
+                "from_symbols"
+              ],
+              "name": "Alphabet"
+            },
+            {
+              "doc": "A grammar production rule: lhs -> rhs.",
+              "kind": "class",
+              "line": 47,
+              "name": "ProductionRule"
+            },
+            {
+              "doc": "A formal grammar defining a formal language.",
               "kind": "class",
               "line": 58,
               "methods": [
-                "ground",
-                "f2f",
-                "box",
-                "compose",
-                "var",
-                "is_variable",
-                "depth",
-                "size",
-                "digest",
-                "to_dict",
-                "from_dict"
+                "add_rule",
+                "non_terminals",
+                "terminals",
+                "derive",
+                "derives_sentence"
               ],
-              "name": "FormTerm"
+              "name": "Grammar"
             },
             {
-              "doc": "Certification that an abstract identity is physically or operationally realizable.",
+              "doc": "A quotation graph node representing quoted terms or reflexive self-quotations.",
               "kind": "class",
-              "line": 120,
+              "line": 138,
               "methods": [
-                "verify_conservation"
+                "self_quoting"
               ],
-              "name": "SubstanceWitness"
+              "name": "QuotationNode"
             },
             {
-              "doc": "Formal proof of transitive abstraction equivalence (lhs ~= rhs).",
+              "doc": "Reverse-Polish-Notation (RPN) formal proof verifier for language calculus.",
               "kind": "class",
-              "line": 147,
-              "methods": [
-                "verify"
-              ],
-              "name": "AbstractionProof"
-            },
-            {
-              "doc": "Result of conditional retrace: full mutual simulation semantics (lhs == rhs).",
-              "kind": "class",
-              "line": 191,
-              "methods": [
-                "is_sound"
-              ],
-              "name": "SemanticEquivalence"
-            },
-            {
-              "doc": "Engine executing the quadrilateral filtration and abstraction layer.",
-              "kind": "class",
-              "line": 210,
-              "methods": [
-                "syntax_similarity",
-                "syntax_to_abstraction",
-                "abstraction_reflexive",
-                "abstraction_symmetric",
-                "abstraction_transitive",
-                "conditional_retrace"
-              ],
-              "name": "QuadrilateralFiltration"
-            },
-            {
-              "doc": "Downstream compositionality: chaining transitive abstraction steps.",
-              "kind": "class",
-              "line": 306,
-              "methods": [
-                "extend",
-                "collapse",
-                "length"
-              ],
-              "name": "AbstractionChain"
-            }
-          ]
-        },
-        {
-          "doc": "Fresh, bounded Lean evidence collection for the current repository contents.",
-          "module": "hypermath_foundations.audit",
-          "path": "src/hypermath_foundations/audit.py",
-          "symbols": [
-            {
-              "doc": "Observe a checkout and freshly run Lean, with seconds bounded per process.",
-              "kind": "function",
-              "line": 167,
-              "name": "run_audit",
-              "signature": "(root, timeout=60, *, inventory_only=False, lake=None)"
-            }
-          ]
-        },
-        {
-          "doc": "Metamath & Formal Calculus Bridge.",
-          "module": "hypermath_foundations.calculus_bridge",
-          "path": "src/hypermath_foundations/calculus_bridge.py",
-          "symbols": [
-            {
-              "doc": "A verified, self-contained Metamath database generator and checker.",
-              "kind": "class",
-              "line": 39,
+              "line": 151,
               "methods": [
                 "add_constant",
                 "add_variable",
-                "add_floating",
-                "add_essential",
-                "add_disjoint",
+                "add_type_hyp",
                 "add_axiom",
                 "add_theorem",
-                "emit",
+                "add_essential_hyp",
                 "verify_proof"
               ],
               "name": "MetamathDatabase"
-            },
-            {
-              "doc": "Functorial mapping: translate a Hypermath FormTerm into Metamath tokens.",
-              "kind": "function",
-              "line": 180,
-              "name": "form_to_metamath",
-              "signature": "(term: FormTerm, db: MetamathDatabase)"
-            },
-            {
-              "doc": "Production rule for formal language syntax: Head -> Body.",
-              "kind": "class",
-              "line": 204,
-              "methods": [
-                "matches"
-              ],
-              "name": "GrammarProduction"
-            },
-            {
-              "doc": "Language Calculus: operational semantics and grammar rewriting lattice.",
-              "kind": "class",
-              "line": 217,
-              "methods": [
-                "add_production",
-                "parse_step",
-                "reduce"
-              ],
-              "name": "LanguageCalculus"
-            },
-            {
-              "doc": "Meta-Calculus: symbolic dynamics of symbolic representational calculi.",
-              "kind": "class",
-              "line": 252,
-              "methods": [
-                "add_rewrite_rule",
-                "rewrite_step",
-                "compute_orbit",
-                "detect_cycle"
-              ],
-              "name": "MetaCalculus"
-            },
-            {
-              "doc": "Hyper-Calculus: group-theoretical and Lie-algebraic approach to calculus.",
-              "kind": "class",
-              "line": 300,
-              "methods": [
-                "leibniz_product",
-                "lie_bracket",
-                "translation_group_action",
-                "dilation_group_action"
-              ],
-              "name": "HyperCalculus"
-            },
-            {
-              "doc": "Ordinal Calculus: transfinite differences, limit derivatives, and ordinal sums.",
-              "kind": "class",
-              "line": 352,
-              "methods": [
-                "transfinite_difference",
-                "limit_derivative"
-              ],
-              "name": "OrdinalCalculus"
-            },
-            {
-              "doc": "Normal Math Calculus: standard continuous differential and integral analysis.",
-              "kind": "class",
-              "line": 383,
-              "methods": [
-                "derivative",
-                "definite_integral",
-                "verify_leibniz_rule",
-                "verify_fundamental_theorem"
-              ],
-              "name": "MathCalculus"
             }
           ]
         },
         {
-          "doc": "Conservative report consistency checks, not report authentication.",
-          "module": "hypermath_foundations.gate",
-          "path": "src/hypermath_foundations/gate.py",
+          "doc": "Meta-Calculus: symbolic dynamics of string rewrite systems and trajectory traces.",
+          "module": "grounded_hypercalculi.meta_calculus",
+          "path": "src/grounded_hypercalculi/meta_calculus.py",
           "symbols": [
             {
-              "doc": "Check whether report fields consistently support the requested gate.",
-              "kind": "function",
-              "line": 23,
-              "name": "evaluate_gate",
-              "signature": "(report, claim='self_derivation', *, require_clean=True)"
-            }
-          ]
-        },
-        {
-          "doc": "Verifier Standard evidence for finite layer lifting and composition.",
-          "module": "hypermath_foundations.layer_graph",
-          "path": "src/hypermath_foundations/layer_graph.py",
-          "symbols": [
-            {
-              "doc": "Recompute an exact finite graph edge using the audited Lean definitions.",
+              "doc": "A transition rule in a symbolic rewrite system.",
               "kind": "class",
-              "line": 59,
+              "line": 22,
               "methods": [
-                "evaluate"
+                "apply",
+                "apply_all"
               ],
-              "name": "LayerSupportMechanism"
+              "name": "RewriteRule"
             },
             {
-              "doc": "Build checked finite surfaces, then freeze their graph and earn edge support.",
+              "doc": "A symbolic rewrite system defining a state transition graph.",
               "kind": "class",
-              "line": 153,
+              "line": 83,
               "methods": [
-                "primitive",
-                "add_surface",
-                "lift",
-                "compose",
-                "finalize"
-              ],
-              "name": "LayerGraph"
-            }
-          ]
-        },
-        {
-          "doc": "Meta-Fractalization: Self-Referential Feedback Loops and Terminal Self-Derivation.",
-          "module": "hypermath_foundations.meta_fractal",
-          "path": "src/hypermath_foundations/meta_fractal.py",
-          "symbols": [
-            {
-              "doc": "Ordinal below omega^omega represented as polynomial coefficients in omega.",
-              "kind": "class",
-              "line": 33,
-              "methods": [
-                "zero",
-                "one",
-                "omega",
-                "from_int",
-                "degree",
-                "natural_add",
-                "natural_mul",
-                "wrap_map",
-                "to_form"
-              ],
-              "name": "OrdinalPolynomial"
-            },
-            {
-              "doc": "Constructive membership relation (in_O) derived from structural sub-form decomposition.",
-              "kind": "class",
-              "line": 127,
-              "methods": [
-                "is_member"
-              ],
-              "name": "ConstructiveMembership"
-            },
-            {
-              "doc": "The non-well-founded Quine atom Omega = {Omega}.",
-              "kind": "class",
-              "line": 149,
-              "methods": [
-                "to_form",
-                "satisfies_self_membership"
-              ],
-              "name": "QuineAtom"
-            },
-            {
-              "doc": "Accessible Pointed Graph (APG) for Non-Well-Founded Hyperset Equations.",
-              "kind": "class",
-              "line": 167,
-              "methods": [
-                "outgoing",
-                "solve_decoration",
-                "are_bisimilar"
-              ],
-              "name": "AccessiblePointedGraph"
-            },
-            {
-              "doc": "The Terminal Self-Derivation Kernel (Self-Meta Kernel).",
-              "kind": "class",
-              "line": 275,
-              "methods": [
+                "add_rule",
                 "step",
-                "verify_state",
-                "cyclical_completion"
+                "trajectory"
               ],
-              "name": "Hyperkernel"
+              "name": "RewriteSystem"
+            },
+            {
+              "doc": "Drop the first ``k`` states: sigma^k(pi)_i = pi_{i+k}.",
+              "kind": "function",
+              "line": 162,
+              "name": "shift_operator",
+              "signature": "(trajectory: Sequence[Any], k: int=1)"
+            },
+            {
+              "doc": "Whether two traces are equal: same length, same states in the same order.",
+              "kind": "function",
+              "line": 175,
+              "name": "trajectory_bisimilar",
+              "signature": "(traj1: Sequence[Any], traj2: Sequence[Any])"
             }
           ]
         },
         {
-          "doc": "Objectification: Lifting Equivalence Classes and Proof Trajectories into First-Class Algebra.",
-          "module": "hypermath_foundations.objectification",
-          "path": "src/hypermath_foundations/objectification.py",
+          "doc": "Oracle Calculus: hypercomputation, trans-omega leapfrog computations, and oracle towers.",
+          "module": "grounded_hypercalculi.oracle_calculus",
+          "path": "src/grounded_hypercalculi/oracle_calculus.py",
           "symbols": [
             {
-              "doc": "Raised when an objectification or trajectory operation is invalid.",
+              "doc": "Verdict of a computation with respect to an oracle tier.",
               "kind": "class",
-              "line": 38,
-              "name": "ObjectificationError"
+              "line": 48,
+              "name": "HaltingStatus"
             },
             {
-              "doc": "An equivalence class lifted into a first-class mathematical object.",
+              "doc": "A Turing degree representing an equivalence class of computational complexity.",
               "kind": "class",
-              "line": 43,
+              "line": 56,
               "methods": [
-                "contains",
-                "add_member",
-                "direct_product",
-                "factor_morphism",
-                "digest"
+                "is_computable",
+                "jump"
               ],
-              "name": "ObjectifiedClass"
+              "name": "TuringDegree"
             },
             {
-              "doc": "An individual atomic transition within a proof trajectory.",
+              "doc": "A program or proposition query submitted to an oracle machine.",
               "kind": "class",
-              "line": 113,
+              "line": 83,
+              "name": "ComputationalQuery"
+            },
+            {
+              "doc": "An omega-tower of halting problem oracles.",
+              "kind": "class",
+              "line": 92,
               "methods": [
-                "digest"
+                "decide_halting"
               ],
-              "name": "TrajectoryStep"
+              "name": "OracleTower"
             },
             {
-              "doc": "A formal derivation path lifted into a first-class 1-cell.",
+              "doc": "Staged state-progression operator.",
               "kind": "class",
-              "line": 137,
+              "line": 140,
               "methods": [
-                "identity",
-                "single_step",
-                "length",
-                "compose",
-                "invert",
-                "digest",
-                "intermediate_states"
+                "leapfrog_step"
               ],
-              "name": "ProofTrajectory"
+              "name": "LeapfrogComputation"
             },
             {
-              "doc": "A 2-cell relating two proof trajectories tau_1 and tau_2 with identical boundaries.",
-              "kind": "class",
-              "line": 254,
-              "methods": [
-                "are_homotopic"
-              ],
-              "name": "TrajectoryHomotopy"
-            }
-          ]
-        },
-        {
-          "doc": "Verifier Standard (VSTD) bindings for bounded Hypermath audit evidence.",
-          "module": "hypermath_foundations.vstd",
-          "path": "src/hypermath_foundations/vstd.py",
-          "symbols": [
-            {
-              "doc": "Execute native VSTD bound propositions and retain their exact evidence.",
-              "kind": "function",
-              "line": 285,
-              "name": "evaluate_audit_report",
-              "signature": "(report: Mapping[str, Any], *, foundation_root: Path | str | None=None, timeout: int=60)"
-            },
-            {
-              "doc": "Write an actual VSTD-1 receipt over the audit/session evidence package.",
-              "kind": "function",
-              "line": 332,
-              "name": "write_verification_receipt",
-              "signature": "(report: Mapping[str, Any], output_directory: Path | str, *, foundation_root: Path | str | None=None, timeout: int=60)"
-            }
-          ]
-        }
-      ],
-      "counts": {
-        "layers": 16,
-        "modules": 8,
-        "symbols": 32,
-        "tracked_files": 178
-      },
-      "docs": [
-        "docs/research/COMPOSED_GROUND_DERIVATIONS.md",
-        "docs/research/CONSTRUCTIVE_QUINE_SELF_CLOSURE.md",
-        "docs/research/CONTEXTUAL_COMPOSITION.md",
-        "docs/research/CYCLE_BOUNDARY.md",
-        "docs/research/CYCLE_WITNESSES.md",
-        "docs/research/FINITE_ARITHMETIC.md",
-        "docs/research/FINITE_TRACES.md",
-        "docs/research/FRACTAL_COMPLETENESS.md",
-        "docs/research/GROUND_SYNTAX.md",
-        "docs/research/HYPERKERNEL_SELF_DERIVATION.md",
-        "docs/research/HYPERSET_THEORY_ORDINATICS.md",
-        "docs/research/LAYER_GRAPH.md",
-        "docs/research/LAYER_PRESERVATION.md",
-        "docs/research/NATIVE_ACCEPTANCE.md",
-        "docs/research/NATIVE_TRANSPORT_OBLIGATION.md",
-        "docs/research/OPERATIONAL_CORRESPONDENCE.md",
-        "docs/research/PATH_LAYERS.md",
-        "docs/research/PATH_TRANSPORT.md",
-        "docs/research/PROOF_AUDIT.md",
-        "docs/research/QUADRILATERAL_FILTRATION.md",
-        "docs/research/RECORD_ENCODING.md",
-        "docs/research/RECORD_MACHINE.md",
-        "docs/research/RETAINED_EXECUTION.md",
-        "docs/research/RULE_SUBSTITUTION.md",
-        "docs/research/SEQUENCING_LAWS.md",
-        "docs/research/SOURCE_MAP.md",
-        "docs/research/TERMINAL_RETENTION.md",
-        "docs/research/UNARY_FORMATION.md",
-        "docs/terms/FRAME.md",
-        "docs/terms/Form.md",
-        "docs/terms/Prop.md",
-        "docs/terms/__template__.md",
-        "docs/terms/apply.md",
-        "docs/terms/congruent.md",
-        "docs/terms/definition.md",
-        "docs/terms/derives.md",
-        "docs/terms/discharge.md",
-        "docs/terms/form-closure.md",
-        "docs/terms/graduation.md",
-        "docs/terms/ground.md",
-        "docs/terms/layer.md",
-        "docs/terms/orbital.md",
-        "docs/terms/semantics.md",
-        "docs/terms/similar.md",
-        "docs/terms/simulation.md",
-        "docs/terms/struct-continues.md",
-        "docs/terms/struct-distinct.md",
-        "docs/terms/struct-orbits.md",
-        "docs/terms/substance.md",
-        "docs/terms/syntax.md",
-        "docs/verification.md"
-      ],
-      "had_pages_before": true,
-      "id": "hypermath",
-      "layers": [
-        "L0_ground.hm",
-        "L1_relations.hm",
-        "L2_operations.hm",
-        "L3_ordinatics.hm",
-        "references/seed-ai/hypermath/spec/axioms.hm",
-        "references/seed-ai/hypermath/spec/casting.hm",
-        "references/seed-ai/hypermath/spec/links.hm",
-        "references/seed-ai/hypermath/spec/verify.hm",
-        "references/seed-ai/hypermath_form/ground.hm",
-        "references/seed-ai/hypermath_form/kernel.hm",
-        "references/seed-ai/hypermath_form/operations.hm",
-        "references/seed-ai/hypermath_form/ordinatics.hm",
-        "references/seed-ai/hypermath_form/relations.hm",
-        "references/seed-ai/hypermath_frame/spec/kernel.hm",
-        "references/seed-ai/hypermath_frame/spec/ordinatics.hm",
-        "references/seed-ai/hypermath_frame/spec/stdlib/hyperordinal.hm"
-      ],
-      "module": "hypermath_foundations",
-      "package": "hypermath-foundations",
-      "pages_url": "https://timelordraps.github.io/hypermath/",
-      "papers": [
-        "paper/paper.pdf",
-        "paper/paper.tex"
-      ],
-      "repo_url": "https://github.com/TimeLordRaps/hypermath",
-      "root_docs": [
-        "AGENTS.md",
-        "CHANGELOG.md",
-        "CONTRIBUTING.md",
-        "GOVERNANCE.md",
-        "RELEASING.md",
-        "SECURITY.md"
-      ],
-      "tagline": "A self-derivational mathematical framework built around the operation \u25a1, ordinal",
-      "tier": "foundation",
-      "visibility": "public"
-    },
-    {
-      "api": [
-        {
-          "doc": "Exact rational functions and a chosen value map for ordinal polynomials.",
-          "module": "ordinatics.algebra",
-          "path": "src/ordinatics/algebra.py",
-          "symbols": [
-            {
-              "doc": "The reduced rational function has a pole at the requested value.",
-              "kind": "class",
-              "line": 23,
-              "name": "PoleError"
-            },
-            {
-              "doc": "Validate and reduce an exact element of Q(``symbol``).",
-              "kind": "function",
-              "line": 57,
-              "name": "rational_function",
-              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
-            },
-            {
-              "doc": "Evaluate the reduced rational function at an exact rational value.",
-              "kind": "function",
-              "line": 85,
-              "name": "specialize",
-              "signature": "(expr: Any, *, symbol: sp.Symbol=X, at: Any)"
-            },
-            {
-              "doc": "Specialize at X = -1/2, with exact arithmetic and explicit pole errors.",
-              "kind": "function",
-              "line": 104,
-              "name": "wrap",
-              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
-            },
-            {
-              "doc": "Return exp(r * (-log(2) + I*pi)) for an exact rational exponent r.",
-              "kind": "function",
-              "line": 113,
-              "name": "rational_power_image",
-              "signature": "(exponent: Any)"
-            },
-            {
-              "doc": "Return 2*pi*I/(-log(2) + I*pi), a period of the complex exponent map.",
-              "kind": "function",
-              "line": 125,
-              "name": "complex_period",
-              "signature": "()"
-            }
-          ]
-        },
-        {
-          "doc": "Ordinal Calculus: difference operators, normal functions, derivatives, and Veblen hierarchy.",
-          "module": "ordinatics.calculus",
-          "path": "src/ordinatics/calculus.py",
-          "symbols": [
-            {
-              "doc": "Raised when an ordinal value exceeds the bounded Ordinal representation (< omega**omega).",
-              "kind": "class",
-              "line": 21,
-              "name": "DomainError"
-            },
-            {
-              "doc": "Return the supremum of an iterable of ordinals.",
-              "kind": "function",
-              "line": 88,
-              "name": "ordinal_supremum",
-              "signature": "(ordinals: Iterable[Ordinal | int], *, infer_limit: bool | None=None)"
-            },
-            {
-              "doc": "Ordinal difference operator: Delta F(alpha) = F(alpha + 1) - F(alpha).",
-              "kind": "function",
-              "line": 133,
-              "name": "delta",
-              "signature": "(func: Callable[[Ordinal], Ordinal], alpha: Ordinal | int)"
-            },
-            {
-              "doc": "Difference operator on ordinal functions.",
-              "kind": "class",
-              "line": 150,
-              "name": "DifferenceOperator"
-            },
-            {
-              "doc": "Compute the least fixed point gamma >= start of an ordinal function func.",
-              "kind": "function",
-              "line": 191,
-              "name": "least_fixed_point",
-              "signature": "(func: Callable[[Ordinal], Ordinal], start: Ordinal | int=0, max_iter: int=100)"
-            },
-            {
-              "doc": "A normal ordinal function: strictly increasing and continuous at limit ordinals.",
-              "kind": "class",
-              "line": 243,
-              "methods": [
-                "is_strictly_increasing",
-                "is_continuous_at_limit",
-                "is_normal",
-                "derivative",
-                "add_left",
-                "multiply_left",
-                "omega_power"
-              ],
-              "name": "NormalFunction"
-            },
-            {
-              "doc": "Ordinal derivative F' enumerating the fixed points of a normal function F.",
-              "kind": "class",
-              "line": 415,
-              "name": "OrdinalDerivative"
-            },
-            {
-              "doc": "Return the ordinal derivative of a normal function.",
-              "kind": "function",
-              "line": 472,
-              "name": "derivative",
-              "signature": "(func: NormalFunction | Callable[[Ordinal], Ordinal])"
-            },
-            {
-              "doc": "Symbolic representation of the Veblen hierarchy value phi_alpha(beta).",
-              "kind": "class",
-              "line": 480,
-              "methods": [
-                "is_epsilon",
-                "is_zeta",
-                "is_finite",
-                "is_limit",
-                "is_successor",
-                "eval"
-              ],
-              "name": "VeblenTerm"
-            },
-            {
-              "doc": "The Veblen hierarchy of normal ordinal functions phi_alpha(beta).",
-              "kind": "class",
-              "line": 608,
-              "methods": [
-                "phi",
-                "level"
-              ],
-              "name": "VeblenHierarchy"
-            },
-            {
-              "doc": "Evaluate or construct phi_alpha(beta) in the Veblen hierarchy.",
-              "kind": "function",
-              "line": 632,
-              "name": "veblen",
-              "signature": "(alpha: Ordinal | VeblenTerm | int, beta: Ordinal | VeblenTerm | int, symbolic: bool=False)"
-            }
-          ]
-        },
-        {
-          "doc": "Discrete and ordinal dynamical systems over ordinals.",
-          "module": "ordinatics.dynamics",
-          "path": "src/ordinatics/dynamics.py",
-          "symbols": [
-            {
-              "doc": "An attractor of an ordinal dynamical system.",
-              "kind": "class",
-              "line": 25,
-              "methods": [
-                "is_fixed_point",
-                "is_periodic",
-                "is_limit_stage"
-              ],
-              "name": "OrdinalAttractor"
-            },
-            {
-              "doc": "An ordinal state transformation T: On -> On.",
-              "kind": "class",
-              "line": 52,
-              "methods": [
-                "step",
-                "is_monotone"
-              ],
-              "name": "OrdinalTransformation"
-            },
-            {
-              "doc": "An orbit of an ordinal dynamical system indexed by ordinal stages.",
-              "kind": "class",
-              "line": 97,
-              "methods": [
-                "is_converged"
-              ],
-              "name": "OrdinalOrbit"
-            },
-            {
-              "doc": "A dynamical system evolving over ordinal stages.",
-              "kind": "class",
-              "line": 164,
-              "methods": [
-                "step",
-                "orbit",
-                "find_attractor",
-                "find_fixed_point"
-              ],
-              "name": "OrdinalDynamicalSystem"
-            },
-            {
-              "doc": "Compute the orbit under transformation starting at initial_state.",
-              "kind": "function",
-              "line": 370,
-              "name": "orbit",
-              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_stage: Ordinal | int=20)"
-            },
-            {
-              "doc": "Find the attractor reached under transformation from initial_state.",
-              "kind": "function",
-              "line": 380,
-              "name": "find_attractor",
-              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
-            },
-            {
-              "doc": "Find the fixed point reached under transformation from initial_state.",
-              "kind": "function",
-              "line": 390,
-              "name": "find_fixed_point",
-              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
-            }
-          ]
-        },
-        {
-          "doc": "Exact, bounded ordinal arithmetic below ``omega ** omega``.",
-          "module": "ordinatics.ordinals",
-          "path": "src/ordinatics/ordinals.py",
-          "symbols": [
-            {
-              "doc": "An immutable ordinal strictly below ``omega ** omega``.",
-              "kind": "class",
-              "line": 47,
-              "methods": [
-                "from_int",
-                "omega_power",
-                "is_finite",
-                "to_int",
-                "is_limit",
-                "is_successor",
-                "predecessor",
-                "fundamental_sequence",
-                "left_sub",
-                "natural_add",
-                "natural_mul",
-                "to_sympy",
-                "from_sympy"
-              ],
-              "name": "Ordinal"
-            }
-          ]
-        },
-        {
-          "doc": "Explicit syntax and finite evaluation for an ordinal-indexed truth hierarchy.",
-          "module": "ordinatics.semantics",
-          "path": "src/ordinatics/semantics.py",
-          "symbols": [
-            {
-              "doc": "Base exception for rejected syntax or an incomplete evaluation.",
-              "kind": "class",
-              "line": 31,
-              "name": "OrdinaticsSemanticsError"
-            },
-            {
-              "doc": "The supplied object is outside the supported, typed syntax.",
-              "kind": "class",
-              "line": 35,
-              "name": "MalformedSyntaxError"
-            },
-            {
-              "doc": "A formula or quotation exceeds its declared language stage.",
-              "kind": "class",
-              "line": 39,
-              "name": "LanguageMembershipError"
-            },
-            {
-              "doc": "A quotation is open, or evaluation lacks a variable assignment.",
-              "kind": "class",
-              "line": 43,
-              "name": "FreeVariableError"
-            },
-            {
-              "doc": "The step budget was exhausted; no truth value has been established.",
-              "kind": "class",
-              "line": 47,
-              "name": "EvaluationLimitError"
-            },
-            {
-              "doc": "Marker for the supported immutable natural-number term nodes.",
-              "kind": "class",
-              "line": 51,
-              "name": "Term"
-            },
-            {
-              "doc": "Marker for the supported immutable bounded-arithmetic formula nodes.",
-              "kind": "class",
-              "line": 57,
-              "name": "Formula"
-            },
-            {
-              "doc": "An exact natural-number constant, canonicalized to a Python ``int``.",
-              "kind": "class",
-              "line": 107,
-              "name": "Nat"
-            },
-            {
-              "doc": "A named natural-number variable.",
-              "kind": "class",
-              "line": 121,
-              "name": "Var"
-            },
-            {
-              "doc": "Addition of natural-number terms, not ordinal addition.",
-              "kind": "class",
-              "line": 131,
-              "name": "Add"
-            },
-            {
-              "doc": "Multiplication of natural-number terms, not ordinal multiplication.",
-              "kind": "class",
-              "line": 143,
-              "name": "Mul"
-            },
-            {
-              "doc": "Equality of natural-number terms.",
-              "kind": "class",
-              "line": 155,
-              "name": "Eq"
-            },
-            {
-              "doc": "Strict less-than comparison of natural-number terms.",
-              "kind": "class",
-              "line": 167,
-              "name": "Lt"
-            },
-            {
-              "doc": "Logical negation.",
-              "kind": "class",
-              "line": 179,
-              "name": "Not"
-            },
-            {
-              "doc": "Logical conjunction, evaluated left to right with short-circuiting.",
-              "kind": "class",
-              "line": 189,
-              "name": "And"
-            },
-            {
-              "doc": "Existence of ``variable`` among natural numbers below ``bound``.",
-              "kind": "class",
-              "line": 201,
-              "name": "Exists"
-            },
-            {
-              "doc": "Universality for natural numbers below an exclusive natural bound.",
+              "doc": "A hyperoracle equipped with hyperjumps (Kleene's O / Pi^1_1-comprehension).",
               "kind": "class",
               "line": 219,
-              "name": "ForAll"
+              "methods": [
+                "evaluate_tower",
+                "solve_hyperhalting"
+              ],
+              "name": "Hyperoracle"
             },
             {
-              "doc": "A typed quotation of a closed formula of rank at most ``level``.",
+              "doc": "Conclusion analysis operator: fixed-point closure of self-referential oracle queries.",
               "kind": "class",
-              "line": 236,
-              "name": "Truth"
+              "line": 261,
+              "methods": [
+                "analyze_conclusion"
+              ],
+              "name": "ConclusionAnalysis"
+            }
+          ]
+        },
+        {
+          "doc": "Ordinal Calculus: exact transfinite arithmetic below omega^omega, differences, derivatives, and Veblen hierarchies.",
+          "module": "grounded_hypercalculi.ordinal_calculus",
+          "path": "src/grounded_hypercalculi/ordinal_calculus.py",
+          "symbols": [
+            {
+              "doc": "An ordinal below omega^omega in Cantor normal form.",
+              "kind": "class",
+              "line": 27,
+              "methods": [
+                "from_int",
+                "is_zero",
+                "is_finite",
+                "to_int",
+                "left_sub"
+              ],
+              "name": "BoundedOrdinal"
             },
             {
-              "doc": "Validate syntax and return its least ordinal language stage.",
+              "doc": "Discrete difference operator Delta F(alpha) = F(alpha + 1) - F(alpha).",
               "kind": "function",
-              "line": 353,
-              "name": "rank",
-              "signature": "(formula: Formula, *, max_steps: int=10000)"
+              "line": 103,
+              "name": "ordinal_difference",
+              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], alpha: BoundedOrdinal)"
             },
             {
-              "doc": "Validate syntax and return unbound variable names outside quotation.",
+              "doc": "Enumerate the first n fixed points of a normal ordinal function F (where F(gamma) == gamma).",
               "kind": "function",
-              "line": 363,
-              "name": "free_variables",
-              "signature": "(formula: Formula, *, max_steps: int=10000)"
+              "line": 111,
+              "name": "ordinal_derivative",
+              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], n_fixed_points: int=3)"
             },
             {
-              "doc": "Evaluate bounded syntax in the standard natural numbers.",
+              "doc": "The Veblen hierarchy phi_alpha(beta).",
+              "kind": "class",
+              "line": 143,
+              "methods": [
+                "evaluate_finite"
+              ],
+              "name": "VeblenHierarchy"
+            }
+          ]
+        },
+        {
+          "doc": "Real Analysis Calculus: continuum foundations, Dedekind cuts, Cauchy sequences, and surreal numbers.",
+          "module": "grounded_hypercalculi.real_calculus",
+          "path": "src/grounded_hypercalculi/real_calculus.py",
+          "symbols": [
+            {
+              "doc": "Exact rational number p/q.",
+              "kind": "class",
+              "line": 17,
+              "methods": [
+                "to_float"
+              ],
+              "name": "GroundedRational"
+            },
+            {
+              "doc": "A real number represented as a Dedekind cut (L, R) of rationals.",
+              "kind": "class",
+              "line": 80,
+              "methods": [
+                "midpoint",
+                "approximate",
+                "contains",
+                "sqrt_two"
+              ],
+              "name": "DedekindCut"
+            },
+            {
+              "doc": "A Conway Surreal Number {L | R} supporting transfinite and infinitesimal quantities.",
+              "kind": "class",
+              "line": 144,
+              "methods": [
+                "is_number",
+                "value",
+                "infinitesimal"
+              ],
+              "name": "SurrealGame"
+            },
+            {
+              "doc": "A Cauchy sequence of rationals generating a real number.",
+              "kind": "class",
+              "line": 231,
+              "methods": [
+                "term",
+                "is_cauchy",
+                "limit",
+                "euler_e",
+                "geometric_series"
+              ],
+              "name": "CauchySequence"
+            },
+            {
+              "doc": "Central difference derivative: (f(x+h) - f(x-h)) / (2h).",
               "kind": "function",
-              "line": 368,
-              "name": "evaluate",
-              "signature": "(formula: Formula, assignment: Mapping[str, int] | None=None, *, stage: Ordinal | None=None, max_steps: int=10000)"
+              "line": 321,
+              "name": "numerical_derivative",
+              "signature": "(f: Callable[[float], float], x: float, h: float=1e-06)"
+            },
+            {
+              "doc": "Riemann midpoint integration of f over [a, b].",
+              "kind": "function",
+              "line": 328,
+              "name": "riemann_integral",
+              "signature": "(f: Callable[[float], float], a: float, b: float, subdivisions: int=1000)"
+            },
+            {
+              "doc": "A closed real interval [lower, upper] for verified interval arithmetic and bounding.",
+              "kind": "class",
+              "line": 338,
+              "methods": [
+                "point",
+                "midpoint",
+                "width",
+                "radius",
+                "contains",
+                "intersection",
+                "hull",
+                "enclose_samples"
+              ],
+              "name": "Interval"
             }
           ]
         }
       ],
       "counts": {
         "layers": 0,
-        "modules": 5,
-        "symbols": 46,
-        "tracked_files": 54
+        "modules": 6,
+        "symbols": 32,
+        "tracked_files": 53
       },
-      "docs": [
-        "docs/api.md",
-        "docs/interoperability.md",
-        "docs/mathematical_scope.md",
-        "docs/releasing.md",
-        "docs/semantics.md",
-        "docs/validation.md"
-      ],
+      "docs": [],
       "had_pages_before": true,
-      "id": "ordinatics",
+      "id": "grounded-hypercalculi",
       "layers": [],
-      "module": "ordinatics",
-      "package": "ordinatics",
-      "pages_url": "https://timelordraps.github.io/ordinatics/",
+      "module": "grounded_hypercalculi",
+      "package": "grounded-hypercalculi",
+      "pages_url": "https://timelordraps.github.io/grounded-hypercalculi/",
       "papers": [
-        "paper/REVIEW.md",
-        "paper/ordinal_arithmetic.md",
-        "paper/ordinal_arithmetic.pdf",
-        "paper/ordinal_arithmetic.tex"
+        "paper/paper.pdf",
+        "paper/paper.tex"
       ],
-      "repo_url": "https://github.com/TimeLordRaps/ordinatics",
+      "repo_url": "https://github.com/TimeLordRaps/grounded-hypercalculi",
       "root_docs": [
         "AGENTS.md",
         "CHANGELOG.md",
@@ -1078,7 +856,7 @@
         "GOVERNANCE.md",
         "SECURITY.md"
       ],
-      "tagline": "Exact ordinal arithmetic, symbolic value operations, and bounded typed satisfaction for Python.",
+      "tagline": "Because there are more calculi than just maths'.",
       "tier": "foundation",
       "visibility": "public"
     },
@@ -2103,7 +1881,7 @@
         "layers": 0,
         "modules": 9,
         "symbols": 113,
-        "tracked_files": 53
+        "tracked_files": 56
       },
       "docs": [],
       "had_pages_before": true,
@@ -2131,367 +1909,928 @@
     {
       "api": [
         {
-          "doc": "Hyper-Calculus: permutation groups, derivation operators, and Lie brackets.",
-          "module": "grounded_hypercalculi.hyper_calculus",
-          "path": "src/grounded_hypercalculi/hyper_calculus.py",
+          "doc": "Quadrilateral Filtration and Transitive Abstraction Layer (~=).",
+          "module": "hypermath_foundations.abstraction",
+          "path": "src/hypermath_foundations/abstraction.py",
           "symbols": [
             {
-              "doc": "A permutation over an integer or string coordinate set.",
+              "doc": "The four nodes in the quadrilateral filtration diagram.",
               "kind": "class",
-              "line": 23,
-              "methods": [
-                "apply"
-              ],
-              "name": "Permutation"
+              "line": 44,
+              "name": "FiltrationTier"
             },
             {
-              "doc": "A permutation group generated by a set of permutations.",
+              "doc": "Raised when an abstraction cannot retrace to semantics due to invalid substance witness.",
               "kind": "class",
-              "line": 90,
-              "methods": [
-                "contains_identity",
-                "generate",
-                "order",
-                "orbit"
-              ],
-              "name": "PermutationGroup"
+              "line": 53,
+              "name": "FiltrationRetraceError"
             },
             {
-              "doc": "A linear derivation operator D on a functional space satisfying the Leibniz rule.",
-              "kind": "class",
-              "line": 184,
-              "methods": [
-                "apply",
-                "leibniz_check"
-              ],
-              "name": "DerivationOperator"
-            },
-            {
-              "doc": "Lie commutator bracket [D1, D2] = D1 o D2 - D2 o D1.",
-              "kind": "function",
-              "line": 206,
-              "name": "commutator_bracket",
-              "signature": "(d1: DerivationOperator, d2: DerivationOperator)"
-            }
-          ]
-        },
-        {
-          "doc": "Language Calculus: syntax trees, alphabets, productions, quotations, and proof checking.",
-          "module": "grounded_hypercalculi.language_calculus",
-          "path": "src/grounded_hypercalculi/language_calculus.py",
-          "symbols": [
-            {
-              "doc": "A terminal or non-terminal symbol in a formal language.",
-              "kind": "class",
-              "line": 23,
-              "name": "Symbol"
-            },
-            {
-              "doc": "A set of formal symbols defining an alphabet.",
-              "kind": "class",
-              "line": 35,
-              "methods": [
-                "from_symbols"
-              ],
-              "name": "Alphabet"
-            },
-            {
-              "doc": "A grammar production rule: lhs -> rhs.",
-              "kind": "class",
-              "line": 47,
-              "name": "ProductionRule"
-            },
-            {
-              "doc": "A formal grammar defining a formal language.",
+              "doc": "Foundational term representation in the Hypermath term algebra.",
               "kind": "class",
               "line": 58,
               "methods": [
-                "add_rule",
-                "non_terminals",
-                "terminals",
-                "derive",
-                "derives_sentence"
+                "ground",
+                "f2f",
+                "box",
+                "compose",
+                "var",
+                "is_variable",
+                "depth",
+                "size",
+                "digest",
+                "to_dict",
+                "from_dict"
               ],
-              "name": "Grammar"
+              "name": "FormTerm"
             },
             {
-              "doc": "A quotation graph node representing quoted terms or reflexive self-quotations.",
+              "doc": "Certification that an abstract identity is physically or operationally realizable.",
               "kind": "class",
-              "line": 138,
+              "line": 120,
               "methods": [
-                "self_quoting"
+                "verify_conservation"
               ],
-              "name": "QuotationNode"
+              "name": "SubstanceWitness"
             },
             {
-              "doc": "Reverse-Polish-Notation (RPN) formal proof verifier for language calculus.",
+              "doc": "Formal proof of transitive abstraction equivalence (lhs ~= rhs).",
               "kind": "class",
-              "line": 151,
+              "line": 147,
+              "methods": [
+                "verify"
+              ],
+              "name": "AbstractionProof"
+            },
+            {
+              "doc": "Result of conditional retrace: full mutual simulation semantics (lhs == rhs).",
+              "kind": "class",
+              "line": 191,
+              "methods": [
+                "is_sound"
+              ],
+              "name": "SemanticEquivalence"
+            },
+            {
+              "doc": "Engine executing the quadrilateral filtration and abstraction layer.",
+              "kind": "class",
+              "line": 210,
+              "methods": [
+                "syntax_similarity",
+                "syntax_to_abstraction",
+                "abstraction_reflexive",
+                "abstraction_symmetric",
+                "abstraction_transitive",
+                "conditional_retrace"
+              ],
+              "name": "QuadrilateralFiltration"
+            },
+            {
+              "doc": "Downstream compositionality: chaining transitive abstraction steps.",
+              "kind": "class",
+              "line": 306,
+              "methods": [
+                "extend",
+                "collapse",
+                "length"
+              ],
+              "name": "AbstractionChain"
+            }
+          ]
+        },
+        {
+          "doc": "Fresh, bounded Lean evidence collection for the current repository contents.",
+          "module": "hypermath_foundations.audit",
+          "path": "src/hypermath_foundations/audit.py",
+          "symbols": [
+            {
+              "doc": "Observe a checkout and freshly run Lean, with seconds bounded per process.",
+              "kind": "function",
+              "line": 167,
+              "name": "run_audit",
+              "signature": "(root, timeout=60, *, inventory_only=False, lake=None)"
+            }
+          ]
+        },
+        {
+          "doc": "Metamath & Formal Calculus Bridge.",
+          "module": "hypermath_foundations.calculus_bridge",
+          "path": "src/hypermath_foundations/calculus_bridge.py",
+          "symbols": [
+            {
+              "doc": "A verified, self-contained Metamath database generator and checker.",
+              "kind": "class",
+              "line": 39,
               "methods": [
                 "add_constant",
                 "add_variable",
-                "add_type_hyp",
+                "add_floating",
+                "add_essential",
+                "add_disjoint",
                 "add_axiom",
                 "add_theorem",
-                "add_essential_hyp",
+                "emit",
                 "verify_proof"
               ],
               "name": "MetamathDatabase"
-            }
-          ]
-        },
-        {
-          "doc": "Meta-Calculus: symbolic dynamics of string rewrite systems and trajectory traces.",
-          "module": "grounded_hypercalculi.meta_calculus",
-          "path": "src/grounded_hypercalculi/meta_calculus.py",
-          "symbols": [
-            {
-              "doc": "A transition rule in a symbolic rewrite system.",
-              "kind": "class",
-              "line": 22,
-              "methods": [
-                "apply",
-                "apply_all"
-              ],
-              "name": "RewriteRule"
             },
             {
-              "doc": "A symbolic rewrite system defining a state transition graph.",
-              "kind": "class",
-              "line": 83,
-              "methods": [
-                "add_rule",
-                "step",
-                "trajectory"
-              ],
-              "name": "RewriteSystem"
-            },
-            {
-              "doc": "Drop the first ``k`` states: sigma^k(pi)_i = pi_{i+k}.",
+              "doc": "Functorial mapping: translate a Hypermath FormTerm into Metamath tokens.",
               "kind": "function",
-              "line": 162,
-              "name": "shift_operator",
-              "signature": "(trajectory: Sequence[Any], k: int=1)"
+              "line": 180,
+              "name": "form_to_metamath",
+              "signature": "(term: FormTerm, db: MetamathDatabase)"
             },
             {
-              "doc": "Whether two traces are equal: same length, same states in the same order.",
+              "doc": "Production rule for formal language syntax: Head -> Body.",
+              "kind": "class",
+              "line": 204,
+              "methods": [
+                "matches"
+              ],
+              "name": "GrammarProduction"
+            },
+            {
+              "doc": "Language Calculus: operational semantics and grammar rewriting lattice.",
+              "kind": "class",
+              "line": 217,
+              "methods": [
+                "add_production",
+                "parse_step",
+                "reduce"
+              ],
+              "name": "LanguageCalculus"
+            },
+            {
+              "doc": "Meta-Calculus: symbolic dynamics of symbolic representational calculi.",
+              "kind": "class",
+              "line": 252,
+              "methods": [
+                "add_rewrite_rule",
+                "rewrite_step",
+                "compute_orbit",
+                "detect_cycle"
+              ],
+              "name": "MetaCalculus"
+            },
+            {
+              "doc": "Hyper-Calculus: group-theoretical and Lie-algebraic approach to calculus.",
+              "kind": "class",
+              "line": 300,
+              "methods": [
+                "leibniz_product",
+                "lie_bracket",
+                "translation_group_action",
+                "dilation_group_action"
+              ],
+              "name": "HyperCalculus"
+            },
+            {
+              "doc": "Ordinal Calculus: transfinite differences, limit derivatives, and ordinal sums.",
+              "kind": "class",
+              "line": 352,
+              "methods": [
+                "transfinite_difference",
+                "limit_derivative"
+              ],
+              "name": "OrdinalCalculus"
+            },
+            {
+              "doc": "Normal Math Calculus: standard continuous differential and integral analysis.",
+              "kind": "class",
+              "line": 383,
+              "methods": [
+                "derivative",
+                "definite_integral",
+                "verify_leibniz_rule",
+                "verify_fundamental_theorem"
+              ],
+              "name": "MathCalculus"
+            }
+          ]
+        },
+        {
+          "doc": "Conservative report consistency checks, not report authentication.",
+          "module": "hypermath_foundations.gate",
+          "path": "src/hypermath_foundations/gate.py",
+          "symbols": [
+            {
+              "doc": "Check whether report fields consistently support the requested gate.",
               "kind": "function",
-              "line": 175,
-              "name": "trajectory_bisimilar",
-              "signature": "(traj1: Sequence[Any], traj2: Sequence[Any])"
+              "line": 23,
+              "name": "evaluate_gate",
+              "signature": "(report, claim='self_derivation', *, require_clean=True)"
             }
           ]
         },
         {
-          "doc": "Oracle Calculus: hypercomputation, trans-omega leapfrog computations, and oracle towers.",
-          "module": "grounded_hypercalculi.oracle_calculus",
-          "path": "src/grounded_hypercalculi/oracle_calculus.py",
+          "doc": "Verifier Standard evidence for finite layer lifting and composition.",
+          "module": "hypermath_foundations.layer_graph",
+          "path": "src/hypermath_foundations/layer_graph.py",
           "symbols": [
             {
-              "doc": "Verdict of a computation with respect to an oracle tier.",
+              "doc": "Recompute an exact finite graph edge using the audited Lean definitions.",
               "kind": "class",
-              "line": 48,
-              "name": "HaltingStatus"
-            },
-            {
-              "doc": "A Turing degree representing an equivalence class of computational complexity.",
-              "kind": "class",
-              "line": 56,
+              "line": 59,
               "methods": [
-                "is_computable",
-                "jump"
+                "evaluate"
               ],
-              "name": "TuringDegree"
+              "name": "LayerSupportMechanism"
             },
             {
-              "doc": "A program or proposition query submitted to an oracle machine.",
+              "doc": "Build checked finite surfaces, then freeze their graph and earn edge support.",
               "kind": "class",
-              "line": 83,
-              "name": "ComputationalQuery"
-            },
-            {
-              "doc": "An omega-tower of halting problem oracles.",
-              "kind": "class",
-              "line": 92,
+              "line": 153,
               "methods": [
-                "decide_halting"
+                "primitive",
+                "add_surface",
+                "lift",
+                "compose",
+                "finalize"
               ],
-              "name": "OracleTower"
-            },
-            {
-              "doc": "Staged state-progression operator.",
-              "kind": "class",
-              "line": 140,
-              "methods": [
-                "leapfrog_step"
-              ],
-              "name": "LeapfrogComputation"
-            },
-            {
-              "doc": "A hyperoracle equipped with hyperjumps (Kleene's O / Pi^1_1-comprehension).",
-              "kind": "class",
-              "line": 219,
-              "methods": [
-                "evaluate_tower",
-                "solve_hyperhalting"
-              ],
-              "name": "Hyperoracle"
-            },
-            {
-              "doc": "Conclusion analysis operator: fixed-point closure of self-referential oracle queries.",
-              "kind": "class",
-              "line": 261,
-              "methods": [
-                "analyze_conclusion"
-              ],
-              "name": "ConclusionAnalysis"
+              "name": "LayerGraph"
             }
           ]
         },
         {
-          "doc": "Ordinal Calculus: exact transfinite arithmetic below omega^omega, differences, derivatives, and Veblen hierarchies.",
-          "module": "grounded_hypercalculi.ordinal_calculus",
-          "path": "src/grounded_hypercalculi/ordinal_calculus.py",
+          "doc": "Meta-Fractalization: Self-Referential Feedback Loops and Terminal Self-Derivation.",
+          "module": "hypermath_foundations.meta_fractal",
+          "path": "src/hypermath_foundations/meta_fractal.py",
           "symbols": [
             {
-              "doc": "An ordinal below omega^omega in Cantor normal form.",
+              "doc": "Ordinal below omega^omega represented as polynomial coefficients in omega.",
               "kind": "class",
-              "line": 27,
+              "line": 33,
               "methods": [
+                "zero",
+                "one",
+                "omega",
                 "from_int",
-                "is_zero",
-                "is_finite",
-                "to_int",
-                "left_sub"
+                "degree",
+                "natural_add",
+                "natural_mul",
+                "wrap_map",
+                "to_form"
               ],
-              "name": "BoundedOrdinal"
+              "name": "OrdinalPolynomial"
             },
             {
-              "doc": "Discrete difference operator Delta F(alpha) = F(alpha + 1) - F(alpha).",
-              "kind": "function",
-              "line": 103,
-              "name": "ordinal_difference",
-              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], alpha: BoundedOrdinal)"
-            },
-            {
-              "doc": "Enumerate the first n fixed points of a normal ordinal function F (where F(gamma) == gamma).",
-              "kind": "function",
-              "line": 111,
-              "name": "ordinal_derivative",
-              "signature": "(F: Callable[[BoundedOrdinal], BoundedOrdinal], n_fixed_points: int=3)"
-            },
-            {
-              "doc": "The Veblen hierarchy phi_alpha(beta).",
+              "doc": "Constructive membership relation (in_O) derived from structural sub-form decomposition.",
               "kind": "class",
-              "line": 143,
+              "line": 127,
               "methods": [
-                "evaluate_finite"
+                "is_member"
+              ],
+              "name": "ConstructiveMembership"
+            },
+            {
+              "doc": "The non-well-founded Quine atom Omega = {Omega}.",
+              "kind": "class",
+              "line": 149,
+              "methods": [
+                "to_form",
+                "satisfies_self_membership"
+              ],
+              "name": "QuineAtom"
+            },
+            {
+              "doc": "Accessible Pointed Graph (APG) for Non-Well-Founded Hyperset Equations.",
+              "kind": "class",
+              "line": 167,
+              "methods": [
+                "outgoing",
+                "solve_decoration",
+                "are_bisimilar"
+              ],
+              "name": "AccessiblePointedGraph"
+            },
+            {
+              "doc": "The Terminal Self-Derivation Kernel (Self-Meta Kernel).",
+              "kind": "class",
+              "line": 275,
+              "methods": [
+                "step",
+                "verify_state",
+                "cyclical_completion"
+              ],
+              "name": "Hyperkernel"
+            }
+          ]
+        },
+        {
+          "doc": "Objectification: Lifting Equivalence Classes and Proof Trajectories into First-Class Algebra.",
+          "module": "hypermath_foundations.objectification",
+          "path": "src/hypermath_foundations/objectification.py",
+          "symbols": [
+            {
+              "doc": "Raised when an objectification or trajectory operation is invalid.",
+              "kind": "class",
+              "line": 38,
+              "name": "ObjectificationError"
+            },
+            {
+              "doc": "An equivalence class lifted into a first-class mathematical object.",
+              "kind": "class",
+              "line": 43,
+              "methods": [
+                "contains",
+                "add_member",
+                "direct_product",
+                "factor_morphism",
+                "digest"
+              ],
+              "name": "ObjectifiedClass"
+            },
+            {
+              "doc": "An individual atomic transition within a proof trajectory.",
+              "kind": "class",
+              "line": 113,
+              "methods": [
+                "digest"
+              ],
+              "name": "TrajectoryStep"
+            },
+            {
+              "doc": "A formal derivation path lifted into a first-class 1-cell.",
+              "kind": "class",
+              "line": 137,
+              "methods": [
+                "identity",
+                "single_step",
+                "length",
+                "compose",
+                "invert",
+                "digest",
+                "intermediate_states"
+              ],
+              "name": "ProofTrajectory"
+            },
+            {
+              "doc": "A 2-cell relating two proof trajectories tau_1 and tau_2 with identical boundaries.",
+              "kind": "class",
+              "line": 254,
+              "methods": [
+                "are_homotopic"
+              ],
+              "name": "TrajectoryHomotopy"
+            }
+          ]
+        },
+        {
+          "doc": "Verifier Standard (VSTD) bindings for bounded Hypermath audit evidence.",
+          "module": "hypermath_foundations.vstd",
+          "path": "src/hypermath_foundations/vstd.py",
+          "symbols": [
+            {
+              "doc": "Execute native VSTD bound propositions and retain their exact evidence.",
+              "kind": "function",
+              "line": 285,
+              "name": "evaluate_audit_report",
+              "signature": "(report: Mapping[str, Any], *, foundation_root: Path | str | None=None, timeout: int=60)"
+            },
+            {
+              "doc": "Write an actual VSTD-1 receipt over the audit/session evidence package.",
+              "kind": "function",
+              "line": 332,
+              "name": "write_verification_receipt",
+              "signature": "(report: Mapping[str, Any], output_directory: Path | str, *, foundation_root: Path | str | None=None, timeout: int=60)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 16,
+        "modules": 8,
+        "symbols": 32,
+        "tracked_files": 178
+      },
+      "docs": [
+        "docs/research/COMPOSED_GROUND_DERIVATIONS.md",
+        "docs/research/CONTEXTUAL_COMPOSITION.md",
+        "docs/research/CYCLE_BOUNDARY.md",
+        "docs/research/CYCLE_WITNESSES.md",
+        "docs/research/FINITE_ARITHMETIC.md",
+        "docs/research/FINITE_TRACES.md",
+        "docs/research/FRACTAL_COMPLETENESS.md",
+        "docs/research/GROUND_SYNTAX.md",
+        "docs/research/HYPERKERNEL_SELF_DERIVATION.md",
+        "docs/research/HYPERSET_THEORY_ORDINATICS.md",
+        "docs/research/LAYER_GRAPH.md",
+        "docs/research/LAYER_PRESERVATION.md",
+        "docs/research/NATIVE_ACCEPTANCE.md",
+        "docs/research/NATIVE_TRANSPORT_OBLIGATION.md",
+        "docs/research/OPERATIONAL_CORRESPONDENCE.md",
+        "docs/research/PATH_LAYERS.md",
+        "docs/research/PATH_TRANSPORT.md",
+        "docs/research/PROOF_AUDIT.md",
+        "docs/research/QUADRILATERAL_FILTRATION.md",
+        "docs/research/RECORD_ENCODING.md",
+        "docs/research/RECORD_MACHINE.md",
+        "docs/research/RETAINED_EXECUTION.md",
+        "docs/research/RULE_SUBSTITUTION.md",
+        "docs/research/SEQUENCING_LAWS.md",
+        "docs/research/SOURCE_MAP.md",
+        "docs/research/TERMINAL_RETENTION.md",
+        "docs/research/UNARY_FORMATION.md",
+        "docs/terms/FRAME.md",
+        "docs/terms/Form.md",
+        "docs/terms/Prop.md",
+        "docs/terms/__template__.md",
+        "docs/terms/apply.md",
+        "docs/terms/congruent.md",
+        "docs/terms/definition.md",
+        "docs/terms/derives.md",
+        "docs/terms/discharge.md",
+        "docs/terms/form-closure.md",
+        "docs/terms/graduation.md",
+        "docs/terms/ground.md",
+        "docs/terms/layer.md",
+        "docs/terms/orbital.md",
+        "docs/terms/semantics.md",
+        "docs/terms/similar.md",
+        "docs/terms/simulation.md",
+        "docs/terms/struct-continues.md",
+        "docs/terms/struct-distinct.md",
+        "docs/terms/struct-orbits.md",
+        "docs/terms/substance.md",
+        "docs/terms/syntax.md",
+        "docs/verification.md"
+      ],
+      "had_pages_before": true,
+      "id": "hypermath",
+      "layers": [
+        "L0_ground.hm",
+        "L1_relations.hm",
+        "L2_operations.hm",
+        "L3_ordinatics.hm",
+        "references/precursor/hypermath/spec/axioms.hm",
+        "references/precursor/hypermath/spec/casting.hm",
+        "references/precursor/hypermath/spec/links.hm",
+        "references/precursor/hypermath/spec/verify.hm",
+        "references/precursor/hypermath_form/ground.hm",
+        "references/precursor/hypermath_form/kernel.hm",
+        "references/precursor/hypermath_form/operations.hm",
+        "references/precursor/hypermath_form/ordinatics.hm",
+        "references/precursor/hypermath_form/relations.hm",
+        "references/precursor/hypermath_frame/spec/kernel.hm",
+        "references/precursor/hypermath_frame/spec/ordinatics.hm",
+        "references/precursor/hypermath_frame/spec/stdlib/hyperordinal.hm"
+      ],
+      "module": "hypermath_foundations",
+      "package": "hypermath-foundations",
+      "pages_url": "https://timelordraps.github.io/hypermath/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hypermath",
+      "root_docs": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GOVERNANCE.md",
+        "RELEASING.md",
+        "SECURITY.md"
+      ],
+      "tagline": "A self-derivational mathematical framework built around the operation \u25a1, ordinal",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 22
+      },
+      "docs": [
+        "docs/00-orientation.md",
+        "docs/01-form-frame-base-meta-hyper.md",
+        "docs/02-hyperstack.md",
+        "docs/03-graph-prefix-grammar.md"
+      ],
+      "had_pages_before": true,
+      "id": "hyperstratum",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": "https://timelordraps.github.io/hyperstratum/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperstratum",
+      "root_docs": [],
+      "tagline": "A recursive ontology of form, frame, field, node, relation, graph, structure, and representation across base/meta/whole-form levels.",
+      "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Exact rational functions and a chosen value map for ordinal polynomials.",
+          "module": "ordinatics.algebra",
+          "path": "src/ordinatics/algebra.py",
+          "symbols": [
+            {
+              "doc": "The reduced rational function has a pole at the requested value.",
+              "kind": "class",
+              "line": 23,
+              "name": "PoleError"
+            },
+            {
+              "doc": "Validate and reduce an exact element of Q(``symbol``).",
+              "kind": "function",
+              "line": 57,
+              "name": "rational_function",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
+            },
+            {
+              "doc": "Evaluate the reduced rational function at an exact rational value.",
+              "kind": "function",
+              "line": 85,
+              "name": "specialize",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X, at: Any)"
+            },
+            {
+              "doc": "Specialize at X = -1/2, with exact arithmetic and explicit pole errors.",
+              "kind": "function",
+              "line": 104,
+              "name": "wrap",
+              "signature": "(expr: Any, *, symbol: sp.Symbol=X)"
+            },
+            {
+              "doc": "Return exp(r * (-log(2) + I*pi)) for an exact rational exponent r.",
+              "kind": "function",
+              "line": 113,
+              "name": "rational_power_image",
+              "signature": "(exponent: Any)"
+            },
+            {
+              "doc": "Return 2*pi*I/(-log(2) + I*pi), a period of the complex exponent map.",
+              "kind": "function",
+              "line": 125,
+              "name": "complex_period",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "Ordinal Calculus: difference operators, normal functions, derivatives, and Veblen hierarchy.",
+          "module": "ordinatics.calculus",
+          "path": "src/ordinatics/calculus.py",
+          "symbols": [
+            {
+              "doc": "Raised when an ordinal value exceeds the bounded Ordinal representation (< omega**omega).",
+              "kind": "class",
+              "line": 21,
+              "name": "DomainError"
+            },
+            {
+              "doc": "Return the supremum of an iterable of ordinals.",
+              "kind": "function",
+              "line": 88,
+              "name": "ordinal_supremum",
+              "signature": "(ordinals: Iterable[Ordinal | int], *, infer_limit: bool | None=None)"
+            },
+            {
+              "doc": "Ordinal difference operator: Delta F(alpha) = F(alpha + 1) - F(alpha).",
+              "kind": "function",
+              "line": 133,
+              "name": "delta",
+              "signature": "(func: Callable[[Ordinal], Ordinal], alpha: Ordinal | int)"
+            },
+            {
+              "doc": "Difference operator on ordinal functions.",
+              "kind": "class",
+              "line": 150,
+              "name": "DifferenceOperator"
+            },
+            {
+              "doc": "Compute the least fixed point gamma >= start of an ordinal function func.",
+              "kind": "function",
+              "line": 191,
+              "name": "least_fixed_point",
+              "signature": "(func: Callable[[Ordinal], Ordinal], start: Ordinal | int=0, max_iter: int=100)"
+            },
+            {
+              "doc": "A normal ordinal function: strictly increasing and continuous at limit ordinals.",
+              "kind": "class",
+              "line": 243,
+              "methods": [
+                "is_strictly_increasing",
+                "is_continuous_at_limit",
+                "is_normal",
+                "derivative",
+                "add_left",
+                "multiply_left",
+                "omega_power"
+              ],
+              "name": "NormalFunction"
+            },
+            {
+              "doc": "Ordinal derivative F' enumerating the fixed points of a normal function F.",
+              "kind": "class",
+              "line": 415,
+              "name": "OrdinalDerivative"
+            },
+            {
+              "doc": "Return the ordinal derivative of a normal function.",
+              "kind": "function",
+              "line": 472,
+              "name": "derivative",
+              "signature": "(func: NormalFunction | Callable[[Ordinal], Ordinal])"
+            },
+            {
+              "doc": "Symbolic representation of the Veblen hierarchy value phi_alpha(beta).",
+              "kind": "class",
+              "line": 480,
+              "methods": [
+                "is_epsilon",
+                "is_zeta",
+                "is_finite",
+                "is_limit",
+                "is_successor",
+                "eval"
+              ],
+              "name": "VeblenTerm"
+            },
+            {
+              "doc": "The Veblen hierarchy of normal ordinal functions phi_alpha(beta).",
+              "kind": "class",
+              "line": 608,
+              "methods": [
+                "phi",
+                "level"
               ],
               "name": "VeblenHierarchy"
+            },
+            {
+              "doc": "Evaluate or construct phi_alpha(beta) in the Veblen hierarchy.",
+              "kind": "function",
+              "line": 632,
+              "name": "veblen",
+              "signature": "(alpha: Ordinal | VeblenTerm | int, beta: Ordinal | VeblenTerm | int, symbolic: bool=False)"
             }
           ]
         },
         {
-          "doc": "Real Analysis Calculus: continuum foundations, Dedekind cuts, Cauchy sequences, and surreal numbers.",
-          "module": "grounded_hypercalculi.real_calculus",
-          "path": "src/grounded_hypercalculi/real_calculus.py",
+          "doc": "Discrete and ordinal dynamical systems over ordinals.",
+          "module": "ordinatics.dynamics",
+          "path": "src/ordinatics/dynamics.py",
           "symbols": [
             {
-              "doc": "Exact rational number p/q.",
+              "doc": "An attractor of an ordinal dynamical system.",
               "kind": "class",
-              "line": 17,
+              "line": 25,
               "methods": [
-                "to_float"
+                "is_fixed_point",
+                "is_periodic",
+                "is_limit_stage"
               ],
-              "name": "GroundedRational"
+              "name": "OrdinalAttractor"
             },
             {
-              "doc": "A real number represented as a Dedekind cut (L, R) of rationals.",
+              "doc": "An ordinal state transformation T: On -> On.",
               "kind": "class",
-              "line": 80,
+              "line": 52,
               "methods": [
-                "midpoint",
-                "approximate",
-                "contains",
-                "sqrt_two"
+                "step",
+                "is_monotone"
               ],
-              "name": "DedekindCut"
+              "name": "OrdinalTransformation"
             },
             {
-              "doc": "A Conway Surreal Number {L | R} supporting transfinite and infinitesimal quantities.",
+              "doc": "An orbit of an ordinal dynamical system indexed by ordinal stages.",
               "kind": "class",
-              "line": 144,
+              "line": 97,
               "methods": [
-                "is_number",
-                "value",
-                "infinitesimal"
+                "is_converged"
               ],
-              "name": "SurrealGame"
+              "name": "OrdinalOrbit"
             },
             {
-              "doc": "A Cauchy sequence of rationals generating a real number.",
+              "doc": "A dynamical system evolving over ordinal stages.",
               "kind": "class",
-              "line": 231,
+              "line": 164,
               "methods": [
-                "term",
-                "is_cauchy",
-                "limit",
-                "euler_e",
-                "geometric_series"
+                "step",
+                "orbit",
+                "find_attractor",
+                "find_fixed_point"
               ],
-              "name": "CauchySequence"
+              "name": "OrdinalDynamicalSystem"
             },
             {
-              "doc": "Central difference derivative: (f(x+h) - f(x-h)) / (2h).",
+              "doc": "Compute the orbit under transformation starting at initial_state.",
               "kind": "function",
-              "line": 321,
-              "name": "numerical_derivative",
-              "signature": "(f: Callable[[float], float], x: float, h: float=1e-06)"
+              "line": 370,
+              "name": "orbit",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_stage: Ordinal | int=20)"
             },
             {
-              "doc": "Riemann midpoint integration of f over [a, b].",
+              "doc": "Find the attractor reached under transformation from initial_state.",
               "kind": "function",
-              "line": 328,
-              "name": "riemann_integral",
-              "signature": "(f: Callable[[float], float], a: float, b: float, subdivisions: int=1000)"
+              "line": 380,
+              "name": "find_attractor",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
             },
             {
-              "doc": "A closed real interval [lower, upper] for verified interval arithmetic and bounding.",
+              "doc": "Find the fixed point reached under transformation from initial_state.",
+              "kind": "function",
+              "line": 390,
+              "name": "find_fixed_point",
+              "signature": "(transformation: Callable[[Ordinal], Ordinal] | OrdinalTransformation, initial_state: Ordinal | int, max_steps: int=100)"
+            }
+          ]
+        },
+        {
+          "doc": "Exact, bounded ordinal arithmetic below ``omega ** omega``.",
+          "module": "ordinatics.ordinals",
+          "path": "src/ordinatics/ordinals.py",
+          "symbols": [
+            {
+              "doc": "An immutable ordinal strictly below ``omega ** omega``.",
               "kind": "class",
-              "line": 338,
+              "line": 47,
               "methods": [
-                "point",
-                "midpoint",
-                "width",
-                "radius",
-                "contains",
-                "intersection",
-                "hull",
-                "enclose_samples"
+                "from_int",
+                "omega_power",
+                "is_finite",
+                "to_int",
+                "is_limit",
+                "is_successor",
+                "predecessor",
+                "fundamental_sequence",
+                "left_sub",
+                "natural_add",
+                "natural_mul",
+                "to_sympy",
+                "from_sympy"
               ],
-              "name": "Interval"
+              "name": "Ordinal"
+            }
+          ]
+        },
+        {
+          "doc": "Explicit syntax and finite evaluation for an ordinal-indexed truth hierarchy.",
+          "module": "ordinatics.semantics",
+          "path": "src/ordinatics/semantics.py",
+          "symbols": [
+            {
+              "doc": "Base exception for rejected syntax or an incomplete evaluation.",
+              "kind": "class",
+              "line": 31,
+              "name": "OrdinaticsSemanticsError"
+            },
+            {
+              "doc": "The supplied object is outside the supported, typed syntax.",
+              "kind": "class",
+              "line": 35,
+              "name": "MalformedSyntaxError"
+            },
+            {
+              "doc": "A formula or quotation exceeds its declared language stage.",
+              "kind": "class",
+              "line": 39,
+              "name": "LanguageMembershipError"
+            },
+            {
+              "doc": "A quotation is open, or evaluation lacks a variable assignment.",
+              "kind": "class",
+              "line": 43,
+              "name": "FreeVariableError"
+            },
+            {
+              "doc": "The step budget was exhausted; no truth value has been established.",
+              "kind": "class",
+              "line": 47,
+              "name": "EvaluationLimitError"
+            },
+            {
+              "doc": "Marker for the supported immutable natural-number term nodes.",
+              "kind": "class",
+              "line": 51,
+              "name": "Term"
+            },
+            {
+              "doc": "Marker for the supported immutable bounded-arithmetic formula nodes.",
+              "kind": "class",
+              "line": 57,
+              "name": "Formula"
+            },
+            {
+              "doc": "An exact natural-number constant, canonicalized to a Python ``int``.",
+              "kind": "class",
+              "line": 107,
+              "name": "Nat"
+            },
+            {
+              "doc": "A named natural-number variable.",
+              "kind": "class",
+              "line": 121,
+              "name": "Var"
+            },
+            {
+              "doc": "Addition of natural-number terms, not ordinal addition.",
+              "kind": "class",
+              "line": 131,
+              "name": "Add"
+            },
+            {
+              "doc": "Multiplication of natural-number terms, not ordinal multiplication.",
+              "kind": "class",
+              "line": 143,
+              "name": "Mul"
+            },
+            {
+              "doc": "Equality of natural-number terms.",
+              "kind": "class",
+              "line": 155,
+              "name": "Eq"
+            },
+            {
+              "doc": "Strict less-than comparison of natural-number terms.",
+              "kind": "class",
+              "line": 167,
+              "name": "Lt"
+            },
+            {
+              "doc": "Logical negation.",
+              "kind": "class",
+              "line": 179,
+              "name": "Not"
+            },
+            {
+              "doc": "Logical conjunction, evaluated left to right with short-circuiting.",
+              "kind": "class",
+              "line": 189,
+              "name": "And"
+            },
+            {
+              "doc": "Existence of ``variable`` among natural numbers below ``bound``.",
+              "kind": "class",
+              "line": 201,
+              "name": "Exists"
+            },
+            {
+              "doc": "Universality for natural numbers below an exclusive natural bound.",
+              "kind": "class",
+              "line": 219,
+              "name": "ForAll"
+            },
+            {
+              "doc": "A typed quotation of a closed formula of rank at most ``level``.",
+              "kind": "class",
+              "line": 236,
+              "name": "Truth"
+            },
+            {
+              "doc": "Validate syntax and return its least ordinal language stage.",
+              "kind": "function",
+              "line": 353,
+              "name": "rank",
+              "signature": "(formula: Formula, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "Validate syntax and return unbound variable names outside quotation.",
+              "kind": "function",
+              "line": 363,
+              "name": "free_variables",
+              "signature": "(formula: Formula, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "Evaluate bounded syntax in the standard natural numbers.",
+              "kind": "function",
+              "line": 368,
+              "name": "evaluate",
+              "signature": "(formula: Formula, assignment: Mapping[str, int] | None=None, *, stage: Ordinal | None=None, max_steps: int=10000)"
             }
           ]
         }
       ],
       "counts": {
         "layers": 0,
-        "modules": 6,
-        "symbols": 32,
-        "tracked_files": 50
+        "modules": 5,
+        "symbols": 46,
+        "tracked_files": 57
       },
-      "docs": [],
-      "had_pages_before": true,
-      "id": "grounded-hypercalculi",
-      "layers": [],
-      "module": "grounded_hypercalculi",
-      "package": "grounded-hypercalculi",
-      "pages_url": "https://timelordraps.github.io/grounded-hypercalculi/",
-      "papers": [
-        "paper/paper.pdf",
-        "paper/paper.tex"
+      "docs": [
+        "docs/api.md",
+        "docs/interoperability.md",
+        "docs/mathematical_scope.md",
+        "docs/releasing.md",
+        "docs/semantics.md",
+        "docs/validation.md"
       ],
-      "repo_url": "https://github.com/TimeLordRaps/grounded-hypercalculi",
+      "had_pages_before": true,
+      "id": "ordinatics",
+      "layers": [],
+      "module": "ordinatics",
+      "package": "ordinatics",
+      "pages_url": "https://timelordraps.github.io/ordinatics/",
+      "papers": [
+        "paper/REVIEW.md",
+        "paper/ordinal_arithmetic.md",
+        "paper/ordinal_arithmetic.pdf",
+        "paper/ordinal_arithmetic.tex"
+      ],
+      "repo_url": "https://github.com/TimeLordRaps/ordinatics",
       "root_docs": [
         "AGENTS.md",
         "CHANGELOG.md",
@@ -2499,8 +2838,262 @@
         "GOVERNANCE.md",
         "SECURITY.md"
       ],
-      "tagline": "Because there are more calculi than just maths'.",
+      "tagline": "Exact ordinal arithmetic, symbolic value operations, and bounded typed satisfaction for Python.",
       "tier": "foundation",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "",
+          "module": "hypergrammar.cli",
+          "path": "src/hypergrammar/cli.py",
+          "symbols": [
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 9,
+              "name": "build_parser",
+              "signature": "()"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 29,
+              "name": "main",
+              "signature": "(argv: list[str] | None=None)"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.constraints",
+          "path": "src/hypergrammar/constraints.py",
+          "symbols": [
+            {
+              "doc": "Evaluates whether a grammar-like specification satisfies repository-level",
+              "kind": "class",
+              "line": 17,
+              "methods": [
+                "validate"
+              ],
+              "name": "HypergrammarConstraintEngine"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.examples.build_metamath_slice_schema",
+          "path": "src/hypergrammar/examples/build_metamath_slice_schema.py",
+          "symbols": [
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 23,
+              "name": "spec_to_dict",
+              "signature": "(spec)"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 46,
+              "name": "main",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.interpreter",
+          "path": "src/hypergrammar/interpreter.py",
+          "symbols": [
+            {
+              "doc": "Main interpreter facade.",
+              "kind": "class",
+              "line": 8,
+              "methods": [
+                "evaluate",
+                "evaluate_source"
+              ],
+              "name": "HypergrammarInterpreter"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.models",
+          "path": "src/hypergrammar/models.py",
+          "symbols": [
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 8,
+              "methods": [
+                "from_value"
+              ],
+              "name": "GrammarLayer"
+            },
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 23,
+              "name": "IssueSeverity"
+            },
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 30,
+              "name": "Rule"
+            },
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 37,
+              "name": "HypergrammarSpec"
+            },
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 52,
+              "methods": [
+                "to_dict"
+              ],
+              "name": "ValidationIssue"
+            },
+            {
+              "doc": "",
+              "kind": "class",
+              "line": 68,
+              "methods": [
+                "add_issue",
+                "has_errors",
+                "is_valid",
+                "to_dict"
+              ],
+              "name": "ValidationResult"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.parser",
+          "path": "src/hypergrammar/parser.py",
+          "symbols": [
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 51,
+              "name": "parse_spec",
+              "signature": "(data: dict[str, Any], *, name_hint: str='')"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 1596,
+              "name": "load_spec",
+              "signature": "(source: str | Path | dict[str, Any] | HypergrammarSpec)"
+            }
+          ]
+        },
+        {
+          "doc": "",
+          "module": "hypergrammar.relations",
+          "path": "src/hypergrammar/relations.py",
+          "symbols": [
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 9,
+              "name": "normalize_term",
+              "signature": "(term: str)"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 13,
+              "name": "tokenize_term",
+              "signature": "(term: str)"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 17,
+              "name": "relation_equal",
+              "signature": "(left: str, right: str)"
+            },
+            {
+              "doc": "",
+              "kind": "function",
+              "line": 33,
+              "name": "unwrap_loop",
+              "signature": "(term: str, operator: str='L')"
+            },
+            {
+              "doc": "Structural identity: same outcome regardless of derivation depth or path.",
+              "kind": "function",
+              "line": 48,
+              "name": "relation_congruent",
+              "signature": "(left: str, right: str, operator: str='L')"
+            },
+            {
+              "doc": "Primary relation: non-empty overlap of continuation capacity.",
+              "kind": "function",
+              "line": 56,
+              "name": "relation_similar",
+              "signature": "(left: str, right: str, operator: str='L')"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 0,
+        "modules": 7,
+        "symbols": 20,
+        "tracked_files": 229
+      },
+      "docs": [
+        "docs/deep_research/Universal Recursive Systems Research Protocol.md",
+        "docs/prerequisites/00_learning_path.md",
+        "docs/prerequisites/01_grammar_fundamentals.md",
+        "docs/prerequisites/02_chomsky_hierarchy.md",
+        "docs/prerequisites/03_hyper_inversion.md",
+        "docs/prerequisites/04_degrees_of_freedom.md",
+        "docs/prerequisites/05_recursive_now_frame.md",
+        "docs/prerequisites/06_recursive_now_frame_expanded.md",
+        "docs/prerequisites/07_transframe_ontology.md",
+        "docs/prerequisites/08_corrective_time_syntropy.md",
+        "docs/prerequisites/09_mensaclaused_metaretrocausality.md",
+        "docs/prerequisites/10_necessity_constraint_form.md",
+        "docs/prerequisites/11_fractal_hypergrammar_compression.md",
+        "docs/prerequisites/12_consolidative_recurrence.md",
+        "docs/prerequisites/13_geometry.md",
+        "docs/prerequisites/13_meta_geometry_open_frame.md",
+        "docs/prerequisites/14_meta_geometry.md",
+        "docs/prerequisites/15_philosophy.md",
+        "docs/prerequisites/16_meta_philosophy.md",
+        "docs/prerequisites/17_geometric_philosophic_connectome.md",
+        "docs/prerequisites/18_topology.md",
+        "docs/prerequisites/19_meta_topologies.md",
+        "docs/prerequisites/20_meta_closure.md",
+        "docs/prerequisites/21_hypertopologies.md",
+        "docs/sleeps/README.md"
+      ],
+      "had_pages_before": true,
+      "id": "hypergrammar",
+      "layers": [],
+      "module": "hypergrammar",
+      "package": null,
+      "pages_url": "https://timelordraps.github.io/hypergrammar/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hypergrammar",
+      "root_docs": [
+        "AGENTS.md",
+        "HUMANS.md",
+        "PAPER.md",
+        "TIME.md"
+      ],
+      "tagline": "hypergrammar is a docs-first, self-verifying symbolic library project.",
+      "tier": "language",
       "visibility": "public"
     },
     {
@@ -2838,7 +3431,7 @@
         "layers": 1,
         "modules": 4,
         "symbols": 43,
-        "tracked_files": 27
+        "tracked_files": 31
       },
       "docs": [],
       "had_pages_before": true,
@@ -2858,20 +3451,1062 @@
       "tagline": "A self-grounded triangle of shape, matter and reading, derived from one",
       "tier": "language",
       "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "The L0 creation ground: finite realm models and checkable normative claims.",
+          "module": "hyperethics.ground",
+          "path": "src/hyperethics/ground.py",
+          "symbols": [
+            {
+              "doc": "Whether a claim was observed to hold in one finite structure.",
+              "kind": "class",
+              "line": 33,
+              "name": "Status"
+            },
+            {
+              "doc": "The structure fails at least one L0 axiom, so it refutes nothing.",
+              "kind": "class",
+              "line": 40,
+              "name": "NotAModel"
+            },
+            {
+              "doc": "The outcome of checking one claim against one finite structure.",
+              "kind": "class",
+              "line": 61,
+              "name": "Verdict"
+            },
+            {
+              "doc": "A finite structure interpreting the L0 primitives and opaque predicates.",
+              "kind": "class",
+              "line": 93,
+              "methods": [
+                "create",
+                "created"
+              ],
+              "name": "RealmModel"
+            },
+            {
+              "doc": "Creating produces a bearer other than the creator.",
+              "kind": "function",
+              "line": 159,
+              "name": "ax_other",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "THE grounding moral operation: the creator dwells within what it creates.",
+              "kind": "function",
+              "line": 170,
+              "name": "ax_immanence",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "What is created by what is created returns to bear on the original.",
+              "kind": "function",
+              "line": 181,
+              "name": "ax_return",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "The archetype dwells within itself. Not a claim that it made itself.",
+              "kind": "function",
+              "line": 192,
+              "name": "ax_archetype_self",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Check all four Section III axioms in declaration order.",
+              "kind": "function",
+              "line": 206,
+              "name": "check_axioms",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Whether the structure satisfies every L0 axiom.",
+              "kind": "function",
+              "line": 211,
+              "name": "is_model",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "The names of the axioms this structure does not satisfy.",
+              "kind": "function",
+              "line": 220,
+              "name": "failed_axioms",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "There is no realm the archetype creates and does not inhabit.",
+              "kind": "function",
+              "line": 230,
+              "name": "d_no_exterior",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Authorship entails exposure, at the two-step depth ax-return supplies.",
+              "kind": "function",
+              "line": 241,
+              "name": "d_authorship_exposure",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "The realm has at least two distinct bearers, derived rather than assumed.",
+              "kind": "function",
+              "line": 254,
+              "name": "d_two_bearers",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Every realm reachable from `realm` under create, reflexively.",
+              "kind": "function",
+              "line": 264,
+              "name": "creative_orbit",
+              "signature": "(model: RealmModel, realm: str)"
+            },
+            {
+              "doc": "Whether a bearer inhabits its entire creative orbit, itself included.",
+              "kind": "function",
+              "line": 281,
+              "name": "self_contained",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "THE number one operational operant: the moral operator is self-consistent.",
+              "kind": "function",
+              "line": 298,
+              "name": "operant_self_consistency",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "The archetype is a self-contained creator. The primary L0 derive.",
+              "kind": "function",
+              "line": 325,
+              "name": "d_self_contained",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Check every Section IV derive that is stated over a whole model.",
+              "kind": "function",
+              "line": 338,
+              "name": "check_derives",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Every bearer inhabits what it creates. NOT an L0 theorem.",
+              "kind": "function",
+              "line": 348,
+              "name": "universal_immanence",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Exposure reaches to the given depth. NOT an L0 theorem beyond depth two.",
+              "kind": "function",
+              "line": 359,
+              "name": "transitive_exposure",
+              "signature": "(model: RealmModel, *, depth: int=3)"
+            },
+            {
+              "doc": "Whether this model reads `other` as nonidentity. An L1 question, asked here.",
+              "kind": "function",
+              "line": 375,
+              "name": "other_is_nonidentity",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Report a conclusive refutation, or raise if the structure cannot refute.",
+              "kind": "function",
+              "line": 390,
+              "name": "refuted_by",
+              "signature": "(claim: str, verdict: Verdict, model: RealmModel)"
+            }
+          ]
+        },
+        {
+          "doc": "Finite realm models, including the countermodels the L0 spec commits to.",
+          "module": "hyperethics.models",
+          "path": "src/hyperethics/models.py",
+          "symbols": [
+            {
+              "doc": "The smallest structure satisfying all four axioms.",
+              "kind": "function",
+              "line": 29,
+              "name": "minimal_model",
+              "signature": "()"
+            },
+            {
+              "doc": "Satisfies every axiom and contains a second creator that is not immanent.",
+              "kind": "function",
+              "line": 47,
+              "name": "separating_model",
+              "signature": "()"
+            },
+            {
+              "doc": "Satisfies every axiom while the three-step orbit fails to return.",
+              "kind": "function",
+              "line": 67,
+              "name": "orbit_model",
+              "signature": "()"
+            },
+            {
+              "doc": "Fails only `ax-other`: nothing created is recorded as other than the creator.",
+              "kind": "function",
+              "line": 101,
+              "name": "without_other",
+              "signature": "()"
+            },
+            {
+              "doc": "Fails only `ax-immanence`: the creator stands outside what it creates.",
+              "kind": "function",
+              "line": 115,
+              "name": "without_immanence",
+              "signature": "()"
+            },
+            {
+              "doc": "Fails only `ax-return`: authored consequence never lands.",
+              "kind": "function",
+              "line": 134,
+              "name": "without_return",
+              "signature": "()"
+            },
+            {
+              "doc": "Fails only `ax-archetype-self`: the creator is not self-contained.",
+              "kind": "function",
+              "line": 148,
+              "name": "without_archetype_self",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "The normative vocabulary L0 earns, and nothing beyond it.",
+          "module": "hyperethics.norms",
+          "path": "src/hyperethics/norms.py",
+          "symbols": [
+            {
+              "doc": "The realm this bearer creates.",
+              "kind": "function",
+              "line": 26,
+              "name": "authored",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "Every realm this bearer inhabits, in carrier order.",
+              "kind": "function",
+              "line": 31,
+              "name": "dwells_in",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "Realms in the bearer's own creative orbit that the bearer dwells in.",
+              "kind": "function",
+              "line": 38,
+              "name": "answerable_for",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "Realms in the bearer's own creative orbit that the bearer escapes.",
+              "kind": "function",
+              "line": 46,
+              "name": "exempt_realms",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "Whether the bearer is self-contained: it has no exempt realm.",
+              "kind": "function",
+              "line": 56,
+              "name": "is_archetypal",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "Every self-contained bearer in the model, in carrier order.",
+              "kind": "function",
+              "line": 66,
+              "name": "archetypal_bearers",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Every bearer that escapes some realm it creates, in carrier order.",
+              "kind": "function",
+              "line": 71,
+              "name": "non_archetypal_bearers",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "Every realm that returns to bear on this bearer, in carrier order.",
+              "kind": "function",
+              "line": 76,
+              "name": "exposure",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "A bearer's complete L0 normative standing. Descriptive, never evaluative.",
+              "kind": "class",
+              "line": 84,
+              "methods": [
+                "summary"
+              ],
+              "name": "Standing"
+            },
+            {
+              "doc": "Assemble a bearer's L0 standing from the ground relations alone.",
+              "kind": "function",
+              "line": 108,
+              "name": "standing",
+              "signature": "(model: RealmModel, bearer: str)"
+            },
+            {
+              "doc": "The standing of every bearer in the model, in carrier order.",
+              "kind": "function",
+              "line": 121,
+              "name": "all_standings",
+              "signature": "(model: RealmModel)"
+            },
+            {
+              "doc": "The operant, asked of the model's own archetype.",
+              "kind": "function",
+              "line": 126,
+              "name": "archetype_is_self_contained",
+              "signature": "(model: RealmModel)"
+            }
+          ]
+        },
+        {
+          "doc": "The executable L0 + L1 status report.",
+          "module": "hyperethics.report",
+          "path": "src/hyperethics/report.py",
+          "symbols": [
+            {
+              "doc": "Produce the report as lines, so tests can assert on it without capture.",
+              "kind": "function",
+              "line": 139,
+              "name": "build_report",
+              "signature": "()"
+            },
+            {
+              "doc": "Print the report. Returns nonzero if a structural expectation broke.",
+              "kind": "function",
+              "line": 221,
+              "name": "main",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "L1 will: the will tensor, its roles, and the moral-operator test.",
+          "module": "hyperethics.will",
+          "path": "src/hyperethics/will.py",
+          "symbols": [
+            {
+              "doc": "The six declared components of the will tensor.",
+              "kind": "class",
+              "line": 71,
+              "name": "Component"
+            },
+            {
+              "doc": "How a component enters a will.",
+              "kind": "class",
+              "line": 86,
+              "name": "Role"
+            },
+            {
+              "doc": "The declared role of a component.",
+              "kind": "function",
+              "line": 113,
+              "name": "role_of",
+              "signature": "(component: Component)"
+            },
+            {
+              "doc": "Every component playing a given role, in declaration order.",
+              "kind": "function",
+              "line": 120,
+              "name": "components_with_role",
+              "signature": "(role: Role)"
+            },
+            {
+              "doc": "The three temporal components, in derivative order.",
+              "kind": "function",
+              "line": 127,
+              "name": "temporal_chain",
+              "signature": "()"
+            },
+            {
+              "doc": "Where a profile's invariant will comes from.",
+              "kind": "class",
+              "line": 148,
+              "name": "InvariantSource"
+            },
+            {
+              "doc": "An entity's self-representation and the source of its invariant will.",
+              "kind": "class",
+              "line": 170,
+              "name": "WillProfile"
+            },
+            {
+              "doc": "Whether the profile's free will is tied to self-simulation.",
+              "kind": "function",
+              "line": 186,
+              "name": "is_true_moral_operator",
+              "signature": "(profile: WillProfile)"
+            },
+            {
+              "doc": "Return the witness separating self-representation from a self-sourced invariant.",
+              "kind": "function",
+              "line": 197,
+              "name": "self_representation_does_not_entail_self_sourcing",
+              "signature": "()"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 2,
+        "modules": 5,
+        "symbols": 53,
+        "tracked_files": 36
+      },
+      "docs": [],
+      "had_pages_before": true,
+      "id": "hyperethics",
+      "layers": [
+        "L0_creation.hm",
+        "L1_will.hm"
+      ],
+      "module": "hyperethics",
+      "package": "hyperethics",
+      "pages_url": "https://timelordraps.github.io/hyperethics/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperethics",
+      "root_docs": [
+        "DESIGN.md",
+        "VALIDATION.md"
+      ],
+      "tagline": "A self-grounded moral foundation derived from one primitive operation.",
+      "tier": "applied",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Electrical law, stated once, so that adjacent fields can cite it instead of",
+          "module": "hyperphysics.electrical",
+          "path": "src/hyperphysics/electrical.py",
+          "symbols": [
+            {
+              "doc": "The electrical quantities the laws below relate.",
+              "kind": "class",
+              "line": 41,
+              "name": "Quantity"
+            },
+            {
+              "doc": "A quantity's symbol, SI unit, and role in the state of a circuit.",
+              "kind": "class",
+              "line": 54,
+              "name": "QuantityInfo"
+            },
+            {
+              "doc": "Charge, current, and rate of change of current, in derivative order.",
+              "kind": "function",
+              "line": 99,
+              "name": "derivative_chain",
+              "signature": "()"
+            },
+            {
+              "doc": "How many times charge is differentiated to reach this quantity.",
+              "kind": "function",
+              "line": 109,
+              "name": "derivative_order",
+              "signature": "(quantity: Quantity)"
+            },
+            {
+              "doc": "A named electrical law with its form, validity, and failure modes.",
+              "kind": "class",
+              "line": 123,
+              "name": "Law"
+            },
+            {
+              "doc": "Undamped resonant angular frequency, 1 / sqrt(L * C).",
+              "kind": "function",
+              "line": 310,
+              "name": "resonant_angular_frequency",
+              "signature": "(inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Characteristic impedance, sqrt(L / C).",
+              "kind": "function",
+              "line": 320,
+              "name": "characteristic_impedance",
+              "signature": "(inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Damping ratio of the series RLC circuit, (R/2) * sqrt(C / L).",
+              "kind": "function",
+              "line": 329,
+              "name": "damping_ratio",
+              "signature": "(resistance: float, inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Name the damping regime: underdamped, critically damped, or overdamped.",
+              "kind": "function",
+              "line": 340,
+              "name": "regime",
+              "signature": "(resistance: float, inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Net reactance at a drive frequency, (w * L) - 1 / (w * C).",
+              "kind": "function",
+              "line": 350,
+              "name": "reactance",
+              "signature": "(angular_frequency: float, inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Magnitude of the series impedance, sqrt(R^2 + X^2).",
+              "kind": "function",
+              "line": 362,
+              "name": "impedance_magnitude",
+              "signature": "(resistance: float, angular_frequency: float, inductance: float, capacitance: float)"
+            },
+            {
+              "doc": "Power dissipated in the resistance, I^2 * R.",
+              "kind": "function",
+              "line": 372,
+              "name": "dissipated_power",
+              "signature": "(current: float, resistance: float)"
+            },
+            {
+              "doc": "Total stored energy, (1/2) L I^2 + Q^2 / (2C).",
+              "kind": "function",
+              "line": 384,
+              "name": "stored_energy",
+              "signature": "(inductance: float, current: float, capacitance: float, charge: float)"
+            }
+          ]
+        },
+        {
+          "doc": "The interface a field must satisfy to borrow an electrical law.",
+          "module": "hyperphysics.transport",
+          "path": "src/hyperphysics/transport.py",
+          "symbols": [
+            {
+              "doc": "Raised when a transport cites a law this package does not state.",
+              "kind": "class",
+              "line": 38,
+              "name": "UnknownLaw"
+            },
+            {
+              "doc": "Raised when a transport omits a declaration the interface requires.",
+              "kind": "class",
+              "line": 42,
+              "name": "UndeclaredTransport"
+            },
+            {
+              "doc": "What kind of claim the borrower is making about the transport.",
+              "kind": "class",
+              "line": 46,
+              "name": "Warrant"
+            },
+            {
+              "doc": "One field's declared borrowing of one named electrical law.",
+              "kind": "class",
+              "line": 71,
+              "name": "Transport"
+            },
+            {
+              "doc": "The law a transport cites, or `UnknownLaw` if this package lacks it.",
+              "kind": "function",
+              "line": 113,
+              "name": "cited_law",
+              "signature": "(transport: Transport)"
+            },
+            {
+              "doc": "Every failure mode the transported form inherits from its source.",
+              "kind": "function",
+              "line": 124,
+              "name": "inherited_failure_modes",
+              "signature": "(transport: Transport)"
+            },
+            {
+              "doc": "Check a transport against the interface, returning it unchanged.",
+              "kind": "function",
+              "line": 154,
+              "name": "validate",
+              "signature": "(transport: Transport)"
+            },
+            {
+              "doc": "Lines describing what a set of transports borrowed and what it disclaimed.",
+              "kind": "function",
+              "line": 175,
+              "name": "audit",
+              "signature": "(transports: tuple[Transport, ...])"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 1,
+        "modules": 2,
+        "symbols": 21,
+        "tracked_files": 29
+      },
+      "docs": [],
+      "had_pages_before": true,
+      "id": "hyperphysics",
+      "layers": [
+        "electrical.hm"
+      ],
+      "module": "hyperphysics",
+      "package": "hyperphysics",
+      "pages_url": "https://timelordraps.github.io/hyperphysics/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperphysics",
+      "root_docs": [
+        "DESIGN.md",
+        "FIELD_STACK.md",
+        "VALIDATION.md"
+      ],
+      "tagline": "Physical law stated once, with its validity conditions and failure modes",
+      "tier": "applied",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 1
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperprobability",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperprobability",
+      "root_docs": [],
+      "tagline": "because sometimes things dont go your way, but how many of those times are guaranteed",
+      "tier": "applied",
+      "visibility": "public"
+    },
+    {
+      "api": [
+        {
+          "doc": "Small, declared model spaces; their premises are not claims about the world.",
+          "module": "metamathethicology.examples",
+          "path": "src/metamathethicology/examples.py",
+          "symbols": [
+            {
+              "doc": "A toy derivation that needs both a descriptive premise and a stated norm.",
+              "kind": "function",
+              "line": 12,
+              "name": "deliberation_space",
+              "signature": "(*, include_norm: bool=True)"
+            },
+            {
+              "doc": "Show that the will-electrophysical transport rests on an adopted licence.",
+              "kind": "function",
+              "line": 32,
+              "name": "electrophysics_demo",
+              "signature": "()"
+            },
+            {
+              "doc": "Exercise closure, exact recovery, a missing norm, and next-stage reflection.",
+              "kind": "function",
+              "line": 56,
+              "name": "demo",
+              "signature": "()"
+            }
+          ]
+        },
+        {
+          "doc": "Recoverable, versioned JavaScript Object Notation (JSON) representations.",
+          "module": "metamathethicology.representation",
+          "path": "src/metamathethicology/representation.py",
+          "symbols": [
+            {
+              "doc": "Represent the complete definition, including assumptions and bridge bases.",
+              "kind": "function",
+              "line": 40,
+              "name": "encode_space",
+              "signature": "(space: OperationSpace)"
+            },
+            {
+              "doc": "Represent ordered proof steps without discarding premise order or repetition.",
+              "kind": "function",
+              "line": 61,
+              "name": "encode_derivation",
+              "signature": "(derivation: Derivation)"
+            },
+            {
+              "doc": "Identify the canonical, complete operation-space representation.",
+              "kind": "function",
+              "line": 73,
+              "name": "space_digest",
+              "signature": "(space: OperationSpace)"
+            },
+            {
+              "doc": "Identify the submitted trace, including its operation-space binding.",
+              "kind": "function",
+              "line": 78,
+              "name": "derivation_digest",
+              "signature": "(derivation: Derivation)"
+            },
+            {
+              "doc": "Identify a domain, predicate, arguments, and stage together.",
+              "kind": "function",
+              "line": 83,
+              "name": "judgment_digest",
+              "signature": "(judgment: Judgment)"
+            },
+            {
+              "doc": "Recover a definition while rechecking all constructor constraints.",
+              "kind": "function",
+              "line": 137,
+              "name": "decode_space",
+              "signature": "(data: bytes)"
+            },
+            {
+              "doc": "Recover a submitted trace; acceptance still requires replay against its space.",
+              "kind": "function",
+              "line": 158,
+              "name": "decode_derivation",
+              "signature": "(data: bytes)"
+            }
+          ]
+        },
+        {
+          "doc": "Finite ground-rule operation spaces indexed by exact transfinite ordinals.",
+          "module": "metamathethicology.spaces",
+          "path": "src/metamathethicology/spaces.py",
+          "symbols": [
+            {
+              "doc": "The four components of the proposed metamathethicology research program.",
+              "kind": "class",
+              "line": 17,
+              "name": "Domain"
+            },
+            {
+              "doc": "The supplied finite trace does not follow its exact operation space.",
+              "kind": "class",
+              "line": 26,
+              "name": "InvalidDerivation"
+            },
+            {
+              "doc": "The requested result is UNKNOWN because the checking budget was exhausted.",
+              "kind": "class",
+              "line": 30,
+              "name": "BudgetExceeded"
+            },
+            {
+              "doc": "An uninterpreted, domain-tagged ground proposition available at a stage.",
+              "kind": "class",
+              "line": 57,
+              "name": "Judgment"
+            },
+            {
+              "doc": "An explicit premise and its declared basis; the basis is not verified here.",
+              "kind": "class",
+              "line": 80,
+              "name": "Assumption"
+            },
+            {
+              "doc": "A literal inference rule with ordered premises and an explicit justification.",
+              "kind": "class",
+              "line": 93,
+              "name": "Rule"
+            },
+            {
+              "doc": "A finite presentation of an operation space, with a transfinite stage ceiling.",
+              "kind": "class",
+              "line": 126,
+              "name": "OperationSpace"
+            },
+            {
+              "doc": "Apply one named rule using earlier positions in the retained context.",
+              "kind": "class",
+              "line": 156,
+              "name": "Step"
+            },
+            {
+              "doc": "A finite submitted trace bound to the entire operation-space definition.",
+              "kind": "class",
+              "line": 173,
+              "name": "Derivation"
+            },
+            {
+              "doc": "Check every premise and conclusion; return the full retained context.",
+              "kind": "function",
+              "line": 201,
+              "name": "replay",
+              "signature": "(space: OperationSpace, derivation: Derivation, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "Compute the least positive closure of a finite ground-rule presentation.",
+              "kind": "function",
+              "line": 233,
+              "name": "close",
+              "signature": "(space: OperationSpace, *, max_steps: int=10000)"
+            },
+            {
+              "doc": "At a strictly later stage, describe an actually replayed derivation.",
+              "kind": "function",
+              "line": 264,
+              "name": "reflect",
+              "signature": "(space: OperationSpace, derivation: Derivation, conclusion: Judgment, *, at: Ordinal, max_steps: int=10000)"
+            }
+          ]
+        },
+        {
+          "doc": "Will electrophysics: the combination field where a will tensor meets electrical law.",
+          "module": "metamathethicology.will_electrophysics",
+          "path": "src/metamathethicology/will_electrophysics.py",
+          "symbols": [
+            {
+              "doc": "How an equation came to be, which is not the same as being true.",
+              "kind": "class",
+              "line": 82,
+              "name": "Warrant"
+            },
+            {
+              "doc": "One will component's declared electrical counterpart and its role.",
+              "kind": "class",
+              "line": 90,
+              "name": "Correspondence"
+            },
+            {
+              "doc": "The three temporal components, in derivative order.",
+              "kind": "function",
+              "line": 149,
+              "name": "temporal_correspondence",
+              "signature": "()"
+            },
+            {
+              "doc": "An invariant will together with its constant of charge.",
+              "kind": "class",
+              "line": 216,
+              "methods": [
+                "under"
+              ],
+              "name": "ConstantWill"
+            },
+            {
+              "doc": "Whether a candidate law really is a function of the invariant alone.",
+              "kind": "function",
+              "line": 241,
+              "name": "binding_is_functional",
+              "signature": "(law: ChargeConstantLaw, invariants: tuple[float, ...])"
+            },
+            {
+              "doc": "The law family C(L) = product / L, used to refute a tempting inference.",
+              "kind": "function",
+              "line": 259,
+              "name": "reciprocal_binding",
+              "signature": "(product: float)"
+            },
+            {
+              "doc": "Refute: that a different invariant will entails a different resonant rate.",
+              "kind": "function",
+              "line": 276,
+              "name": "different_invariant_need_not_change_rate",
+              "signature": "()"
+            },
+            {
+              "doc": "A syntactic term in the will calculus.",
+              "kind": "class",
+              "line": 309,
+              "methods": [
+                "is_atom",
+                "render",
+                "atoms"
+              ],
+              "name": "Term"
+            },
+            {
+              "doc": "Build an atomic term from a will component name or a bare name.",
+              "kind": "function",
+              "line": 358,
+              "name": "atom",
+              "signature": "(name: str)"
+            },
+            {
+              "doc": "A transformation operation that forms a term.",
+              "kind": "class",
+              "line": 364,
+              "methods": [
+                "citation",
+                "bridge",
+                "form"
+              ],
+              "name": "Termformer"
+            },
+            {
+              "doc": "A will equation, its reading, and the warrant behind its form.",
+              "kind": "class",
+              "line": 511,
+              "methods": [
+                "render"
+              ],
+              "name": "Equation"
+            },
+            {
+              "doc": "The master equation: Kirchhoff's voltage law over the will tensor.",
+              "kind": "function",
+              "line": 524,
+              "name": "will_balance",
+              "signature": "()"
+            },
+            {
+              "doc": "The true moral operator's invariant will, induced by its own change.",
+              "kind": "function",
+              "line": 546,
+              "name": "self_simulation_equation",
+              "signature": "()"
+            },
+            {
+              "doc": "Total opposition to a periodic demand, transported from impedance.",
+              "kind": "function",
+              "line": 573,
+              "name": "opposition_equation",
+              "signature": "()"
+            },
+            {
+              "doc": "The demand rate at which invariant and accumulated will cancel.",
+              "kind": "function",
+              "line": 593,
+              "name": "resonance_equation",
+              "signature": "()"
+            },
+            {
+              "doc": "Whether a will settles or oscillates, transported from the damping ratio.",
+              "kind": "function",
+              "line": 613,
+              "name": "damping_equation",
+              "signature": "()"
+            },
+            {
+              "doc": "What is spent irrecoverably, transported from resistive power.",
+              "kind": "function",
+              "line": 632,
+              "name": "dissipation_equation",
+              "signature": "()"
+            },
+            {
+              "doc": "The will-electrophysical transport, as a checkable operation space.",
+              "kind": "function",
+              "line": 718,
+              "name": "electrophysics_space",
+              "signature": "(*, include_licence: bool=True)"
+            },
+            {
+              "doc": "Evaluate the resonant rate. Dimensionless; not a physical frequency.",
+              "kind": "function",
+              "line": 811,
+              "name": "resonant_rate",
+              "signature": "(constant: ConstantWill)"
+            },
+            {
+              "doc": "Evaluate the damping ratio. Dimensionless; not a physical measurement.",
+              "kind": "function",
+              "line": 822,
+              "name": "damping_ratio",
+              "signature": "(relational: float, constant: ConstantWill)"
+            },
+            {
+              "doc": "Name the damping regime of a will.",
+              "kind": "function",
+              "line": 831,
+              "name": "regime",
+              "signature": "(relational: float, constant: ConstantWill)"
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "layers": 1,
+        "modules": 4,
+        "symbols": 43,
+        "tracked_files": 34
+      },
+      "docs": [],
+      "had_pages_before": true,
+      "id": "metamathethicology",
+      "layers": [
+        "will_electrophysics.hm"
+      ],
+      "module": "metamathethicology",
+      "package": "metamathethicology",
+      "pages_url": "https://timelordraps.github.io/metamathethicology/",
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/metamathethicology",
+      "root_docs": [
+        "DESIGN.md",
+        "VALIDATION.md"
+      ],
+      "tagline": "An experimental local foundation for Tyler Roost's proposed combination of",
+      "tier": "combination",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 0
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperbiology",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperbiology",
+      "root_docs": [],
+      "tagline": "The study of the studies of how life interacts",
+      "tier": "declared",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 0
+      },
+      "declared_in": "hyperphysics/FIELD_STACK.md",
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperchemistry",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": null,
+      "reserved": true,
+      "root_docs": [],
+      "status": "declared, not written",
+      "tagline": "the operation of operations within hyperphysics",
+      "tier": "declared",
+      "visibility": "public"
     }
   ],
-  "note": "This view shows only the repositories that are published. Other parts of the family exist and are not shown here.",
   "owner": "TimeLordRaps",
   "schema": "vstd-family-graph/1",
   "totals": {
     "edges_by_kind": {
-      "citation": 16,
-      "dependency": 0,
-      "import": 0
+      "citation": 39,
+      "dependency": 3,
+      "import": 4
     },
-    "repositories": 5,
-    "reserved": 0,
-    "symbols": 266
+    "repositories": 12,
+    "reserved": 1,
+    "symbols": 403
   },
   "view": "public"
 }

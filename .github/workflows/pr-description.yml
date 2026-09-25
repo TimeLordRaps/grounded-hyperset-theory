@@ -1,0 +1,90 @@
+name: pull-request-description
+
+# A description is what a reviewer reads instead of the tree, so it is held to the
+# head on every event that can separate them. verifier's pr-description.yml, run
+# from the trusted side.
+#
+# changed-since-last-push: every push must come with a revised description. A push
+# whose description is word for word the one in force when the previous head was
+# pushed fails here. A workflow runs after the push it judges, so it cannot stop
+# one; it can only fail, and it blocks the merge once it is a required check. It
+# runs on every event, not only on pushes: a job skipped on an edit reports
+# success, and a required check reads the latest report on the head, so a
+# push-only job would let any edit clear a failed push. Every event judges the
+# same push the same way, from the runs and revisions GitHub recorded, so an edit
+# can neither clear the verdict nor spoil it. Only another push can.
+#
+# describes-head: the description must name the head it describes, and any
+# tracked-file count it states must be the head's.
+#
+# pull_request_target, not pull_request: under pull_request the pull request's own
+# copy of this file and of its helpers would run, and a push could rewrite the
+# gate that judges it. Here both come from the base branch. Nothing from the pull
+# request is checked out or executed; the helpers read platform metadata, and the
+# description reaches them as a file, never spliced into a command.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  changed-since-last-push:
+    # A later event may cancel an earlier one: both judge the push of the head they
+    # carry, and the later carries the current head. Each job has its own group; a
+    # shared one would let either job cancel the other's verdict.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: pull-request-description-changed-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Refuse a push whose description is word for word unchanged
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python .github/check_pr_description_changed.py --repo "$REPOSITORY" \
+            --pr "$NUMBER" --pushed "$HEAD_SHA"
+
+  describes-head:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: pull-request-description-head-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Require the description to name the head it describes
+        env:
+          DESCRIPTION: ${{ github.event.pull_request.body }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s' "$DESCRIPTION" > "$RUNNER_TEMP/description.md"
+          python .github/check_pr_description_head.py --repo "$REPOSITORY" \
+            --commit "$HEAD_SHA" --body "$RUNNER_TEMP/description.md"

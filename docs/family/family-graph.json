@@ -1,5 +1,5 @@
 {
-  "digest": "ea01a93138b6e67572fa901544e92150b748bac7e707597a5ba917fa263cf290",
+  "digest": "4e39902413e9f723e93321074544958f5e413d648ae5faefd0c490b29a51bd22",
   "edges": [
     {
       "evidence": [
@@ -62,6 +62,26 @@
       "source": "grounded-hyperset-theory",
       "target": "ordinatics",
       "weight": 2
+    },
+    {
+      "evidence": [
+        "COMPOSITION_CONTRACT.md"
+      ],
+      "kind": "citation",
+      "source": "hyperchemistry",
+      "target": "hyperbiology",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "COMPOSITION_CONTRACT.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "kind": "citation",
+      "source": "hyperchemistry",
+      "target": "hyperphysics",
+      "weight": 3
     },
     {
       "evidence": [
@@ -262,12 +282,40 @@
     },
     {
       "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperobjectivity",
+      "target": "hyperstratum",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md"
+      ],
+      "kind": "citation",
+      "source": "hyperobjectivity",
+      "target": "hypersubjectivity",
+      "weight": 1
+    },
+    {
+      "evidence": [
         "README.md",
         "FIELD_STACK.md"
       ],
       "kind": "citation",
       "source": "hyperphysics",
       "target": "hyperbiology",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_STACK.md"
+      ],
+      "kind": "citation",
+      "source": "hyperphysics",
+      "target": "hyperchemistry",
       "weight": 2
     },
     {
@@ -307,12 +355,80 @@
     },
     {
       "evidence": [
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperspace",
+      "target": "hyperstratum",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "README.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperspace",
+      "target": "hypertime",
+      "weight": 2
+    },
+    {
+      "evidence": [
         "README.md"
       ],
       "kind": "citation",
       "source": "hyperstratum",
       "target": "hypergrammar",
       "weight": 1
+    },
+    {
+      "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hypersubjectivity",
+      "target": "hyperethics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hypersubjectivity",
+      "target": "hyperobjectivity",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hypersubjectivity",
+      "target": "hyperstratum",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hypertime",
+      "target": "hyperspace",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hypertime",
+      "target": "hyperstratum",
+      "weight": 2
     },
     {
       "evidence": [
@@ -4476,9 +4592,8 @@
         "layers": 0,
         "modules": 0,
         "symbols": 0,
-        "tracked_files": 0
+        "tracked_files": 8
       },
-      "declared_in": "hyperphysics/FIELD_STACK.md",
       "docs": [],
       "had_pages_before": false,
       "id": "hyperchemistry",
@@ -4487,12 +4602,122 @@
       "package": null,
       "pages_url": null,
       "papers": [],
-      "repo_url": null,
-      "reserved": true,
-      "root_docs": [],
-      "status": "declared, not written",
-      "tagline": "the operation of operations within hyperphysics",
-      "tier": "declared",
+      "repo_url": "https://github.com/TimeLordRaps/hyperchemistry",
+      "root_docs": [
+        "COMPOSITION_CONTRACT.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "Status, 2026-09-27: [FRAME] first public research candidate. This is an",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 8
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperobjectivity",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperobjectivity",
+      "root_docs": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "Hyperobjectivity asks how a hyperform can have identifiable hyperobject instances across situated presentations without confusing an object with its appearance, a name, or a subject's account of it. Tyler proposed this separate field while developing a forms \u2192",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 11
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperspace",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperspace",
+      "root_docs": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "GRID_SEAM.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "Where observable realities appear beside one another. Hyperspace studies",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 8
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hypersubjectivity",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hypersubjectivity",
+      "root_docs": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "Hypersubjectivity asks when a subject's actual situated perspective relates hyperobjects and realities, and what further mechanism would make that linkage a source of genuine novelty. Tyler proposed this as a separate field alongside Hyperobjectivity while dev",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 10
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hypertime",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hypertime",
+      "root_docs": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "Where reality branches can be ordered without borrowing a clock from",
+      "tier": "unplaced",
       "visibility": "public"
     }
   ],
@@ -4500,12 +4725,12 @@
   "schema": "vstd-family-graph/1",
   "totals": {
     "edges_by_kind": {
-      "citation": 39,
+      "citation": 51,
       "dependency": 3,
       "import": 4
     },
-    "repositories": 12,
-    "reserved": 1,
+    "repositories": 17,
+    "reserved": 0,
     "symbols": 403
   },
   "view": "public"

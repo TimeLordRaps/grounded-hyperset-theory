@@ -15,12 +15,22 @@ name: pull-request-policy
 # do not exist elsewhere, and asserting them here would be a check that
 # cannot fail. What is kept is what can be answered anywhere: the gate that
 # passed, the commit it passed on, and whether the request can land.
+#
+# Conformance finishing is a wakeup too, and the one every push needs. Its
+# run starts on the same push as this file's `pull_request_target` run, so
+# that run usually finds it unfinished. Refusing then was wrong twice over:
+# nothing evaluated the head again once conformance passed, and the refused
+# check stayed on the head. So an unfinished conformance run is recorded as
+# waiting, `evaluate` is skipped rather than failed, and the wakeup that
+# conformance sends when it finishes publishes the verdict.
 
 on:
   pull_request_target:
     types: [opened, reopened, synchronize, edited, ready_for_review, converted_to_draft]
   workflow_run:
-    workflows: [pull-request-policy-notification]
+    # Each entry is the `name:` a workflow declares, not its file name.
+    # Renaming `conformance` in ci.yml would silently stop this wakeup.
+    workflows: [conformance, pull-request-policy-notification]
     types: [completed]
 
 permissions:
@@ -29,20 +39,34 @@ permissions:
   pull-requests: read
   statuses: write
 
+# A pull request's own events are grouped by its number and a wakeup by the
+# head it names, and the two never share a group. That is deliberate: a
+# `pull_request_target` run's checks sit on the pull request's head, while a
+# `workflow_run` run's checks sit on the default branch's latest commit. A
+# wakeup that cancelled a pull-request run would leave a cancelled check on
+# the head with nothing newer there to replace it. Runs in the two groups may
+# overlap, which is harmless: each reads the head's record as it stands and
+# publishes that. The one status that could go stale, waiting, is written
+# only while conformance is unfinished, so it precedes the wakeup that
+# conformance sends when it finishes.
 concurrency:
   group: pull-request-policy-${{ github.event.pull_request.number || github.event.workflow_run.head_sha }}
   cancel-in-progress: true
 
 jobs:
-  evaluate:
+  resolve:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      skip: ${{ steps.resolve.outputs.skip }}
+      number: ${{ steps.resolve.outputs.number }}
+      head_sha: ${{ steps.resolve.outputs.head_sha }}
+      conformance: ${{ steps.conformance.outputs.state }}
     steps:
       - name: Resolve the pull request from platform metadata, never from the notification
         id: resolve
         env:
           GH_TOKEN: ${{ github.token }}
-          EVENT_NAME: ${{ github.event_name }}
           PR_NUMBER: ${{ github.event.pull_request.number || '' }}
           WAKEUP_SHA: ${{ github.event.workflow_run.head_sha || '' }}
         shell: bash
@@ -51,37 +75,34 @@ jobs:
           number="$PR_NUMBER"
           if [ -z "$number" ]; then
             # A wakeup carries a head SHA and nothing this workflow will trust.
-            # The pull request is re-derived from the API, not read out of it.
-            number=$(gh api "repos/$GITHUB_REPOSITORY/commits/$WAKEUP_SHA/pulls" \
-              --jq '[.[] | select(.state == "open")] | first | .number // empty' \
-              -H "Accept: application/vnd.github+json")
+            # The pull request is re-derived from the API, not read out of it:
+            # the open one whose head is that commit. `commits/<sha>/pulls`
+            # never returns a pull request opened from a fork, so it would
+            # leave every fork waiting. A head that has moved on since matches
+            # nothing, which is right: the newer head has wakeups of its own.
+            if ! [[ "$WAKEUP_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "[pr-policy] the wakeup names no commit; nothing to publish"
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            number=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
+              --jq '.[] | "\(.number) \(.head.sha)"' |
+              awk -v sha="$WAKEUP_SHA" '$2 == sha && !found { print $1; found = 1 }')
           fi
           if [ -z "$number" ]; then
             echo "[pr-policy] no open pull request to evaluate; nothing to publish"
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          gh api "repos/$GITHUB_REPOSITORY/pulls/$number" > pull-request.json
+          head_sha=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$number" --jq .head.sha)
           {
             echo "skip=false"
             echo "number=$number"
-            echo "head_sha=$(jq -r .head.sha pull-request.json)"
+            echo "head_sha=$head_sha"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Record that the policy is being evaluated
-        if: steps.resolve.outputs.skip == 'false'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ steps.resolve.outputs.head_sha }}
-        shell: bash
-        run: |
-          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA" \
-            -f state=pending -f context=pr-policy \
-            -f description="Evaluating the promotion record for this head" \
-            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
-
-      - name: Require a complete promotion record for the exact head
-        id: evaluate
+      - name: Find whether conformance has finished on this head
+        id: conformance
         if: steps.resolve.outputs.skip == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -89,10 +110,65 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Not yet known is not a refusal, for the reason a null `mergeable`
+          # is not one in `evaluate`. A run awaiting approval reports
+          # `completed` with conclusion `action_required`: it has not run. A
+          # head with no run at all has not been reached yet.
+          state=$(gh api \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$HEAD_SHA&per_page=20" \
+            --jq 'if any(.workflow_runs[]; .conclusion == "success") then "finished"
+                  elif (.workflow_runs | length) == 0
+                    or any(.workflow_runs[]; .status != "completed" or .conclusion == "action_required")
+                  then "running"
+                  else "finished" end')
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+          echo "[pr-policy] conformance on $HEAD_SHA: $state"
+
+      - name: Record where the evaluation stands
+        # Never after a cancellation: the run that cancelled this one publishes
+        # for the same head, and a late write from here could land after it.
+        if: ${{ !cancelled() && steps.resolve.outputs.skip == 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.resolve.outputs.head_sha }}
+          CONFORMANCE: ${{ steps.conformance.outputs.state }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$CONFORMANCE" in
+            finished) state=pending; description="Evaluating the promotion record for this head" ;;
+            running)  state=pending; description="Waiting for conformance to finish on this head" ;;
+            *)        state=failure; description="The conformance record could not be read for this head" ;;
+          esac
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA" \
+            -f "state=$state" -f context=pr-policy \
+            -f "description=$description" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
+          echo "[pr-policy] recorded $state for $HEAD_SHA: $description"
+
+  evaluate:
+    # Skipped, not failed, while conformance has not finished. A failed check
+    # here would stay on the head after conformance passed, because the
+    # wakeup that then evaluates the head runs on the default branch.
+    needs: resolve
+    if: needs.resolve.outputs.skip == 'false' && needs.resolve.outputs.conformance == 'finished'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Require a complete promotion record for the exact head
+        id: evaluate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ needs.resolve.outputs.number }}
+          HEAD_SHA: ${{ needs.resolve.outputs.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
           failures=0
           note() { echo "  $1"; }
           refuse() { echo "  REFUSED: $1"; failures=$((failures + 1)); }
 
+          gh api "repos/$GITHUB_REPOSITORY/pulls/$NUMBER" > pull-request.json
           default_branch=$(gh api "repos/$GITHUB_REPOSITORY" --jq .default_branch)
           base_ref=$(jq -r .base.ref pull-request.json)
           if [ "$base_ref" = "$default_branch" ]; then
@@ -134,21 +210,23 @@ jobs:
           fi
 
           if [ "$failures" -ne 0 ]; then
+            echo "verdict=refused" >> "$GITHUB_OUTPUT"
             echo "pr-policy refuses: $failures condition(s) unmet for $HEAD_SHA"
-            exit 1
+          else
+            echo "verdict=complete" >> "$GITHUB_OUTPUT"
+            echo "pr-policy: the promotion record is complete for $HEAD_SHA"
           fi
-          echo "pr-policy: the promotion record is complete for $HEAD_SHA"
 
       - name: Publish the policy verdict
-        if: always() && steps.resolve.outputs.skip == 'false'
+        if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ steps.resolve.outputs.head_sha }}
-          OUTCOME: ${{ steps.evaluate.outcome }}
+          HEAD_SHA: ${{ needs.resolve.outputs.head_sha }}
+          VERDICT: ${{ steps.evaluate.outputs.verdict }}
         shell: bash
         run: |
           set -euo pipefail
-          if [ "$OUTCOME" = "success" ]; then
+          if [ "$VERDICT" = "complete" ]; then
             state=success
             description="The promotion record is complete for this head"
           else
@@ -160,3 +238,15 @@ jobs:
             -f "description=$description" \
             -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
           echo "[pr-policy] published $state for $HEAD_SHA"
+
+      - name: Fail this check too where it sits on the head it refused
+        # A `pull_request_target` run's checks sit on the pull request's head,
+        # so a refusal shows there as well as in the status. A wakeup's checks
+        # sit on the default branch's latest commit: failing there would mark
+        # that commit red for every refused pull request, so there the status
+        # alone carries the verdict.
+        if: ${{ !cancelled() && github.event_name == 'pull_request_target' && steps.evaluate.outputs.verdict != 'complete' }}
+        shell: bash
+        run: |
+          echo "pr-policy refused this head; the evaluation step lists each unmet condition"
+          exit 1

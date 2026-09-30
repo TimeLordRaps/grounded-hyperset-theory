@@ -1,0 +1,17 @@
+name: pull-request-policy-notification
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+# This workflow may come from candidate code. It has no repository authority,
+# checks out nothing, and supplies no artifacts or verdict to the trusted gate.
+permissions: {}
+
+jobs:
+  wakeup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Wake the protected default-branch policy consumer
+        run: ":"

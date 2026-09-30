@@ -18,6 +18,7 @@
   --tier-applied: #cf222e;
   --tier-combination: #8250df;
   --tier-declared: #8c959f;
+  --tier-unplaced: #bc4c00;
   --panel-hi: #eaeef2;
   --stage: #fbfcfd;
   --accent: #0550ae;
@@ -43,6 +44,7 @@
     --tier-applied: #ff7b72;
     --tier-combination: #d2a8ff;
     --tier-declared: #6e7681;
+    --tier-unplaced: #ffa657;
     --panel-hi: #1c2230;
     --stage: #0b0f15;
     --accent: #4493f8;

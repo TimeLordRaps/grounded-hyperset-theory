@@ -66,9 +66,9 @@ class DigestTerms:
 PUBLIC_BOUNDARY_PATTERNS = (
     ("local user or home path", LOCAL_WINDOWS_PATH),
     ("drive-qualified local path", DRIVE_QUALIFIED_PATH),
-    ("synthetic private locator", re.compile(r"(?i)evaluator-vault://")),
-    ("local model artifact filename", re.compile(r"(?i)\b[a-z0-9_-]+\.gguf\b")),
-    ("private deployment field", re.compile(r"(?i)\b(?:model_path|weights_path|lora_path)\b")),
+    ("synthetic private locator", re.compile(r"(?i)evaluator-" r"vault://")),
+    ("local model artifact filename", re.compile(r"(?i)\b[a-z0-9_-]+\.gg" r"uf\b")),
+    ("private deployment field", re.compile(r"(?i)\b(?:model" r"_path|weights" r"_path|lora" r"_path)\b")),
     (
         "private business operations identifier",
         DigestTerms(

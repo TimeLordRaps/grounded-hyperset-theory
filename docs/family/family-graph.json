@@ -1,5 +1,5 @@
 {
-  "digest": "4e39902413e9f723e93321074544958f5e413d648ae5faefd0c490b29a51bd22",
+  "digest": "b56f1a3c61d95fb3ee00170ec09120f826b0f0ba05ae29edaef6ba502f013217",
   "edges": [
     {
       "evidence": [
@@ -129,11 +129,30 @@
     },
     {
       "evidence": [
-        "README.md"
+        "README.md",
+        "DEFINITIONAL_SPACE.md"
       ],
       "kind": "citation",
       "source": "hypergrammar",
       "target": "grounded-hyperset-theory",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "DEFINITIONAL_SPACE.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hyperethics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "DEFINITIONAL_SPACE.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hyperlogic",
       "weight": 1
     },
     {
@@ -141,6 +160,7 @@
         "README.md",
         "PAPER.md",
         "AGENTS.md",
+        "DEFINITIONAL_SPACE.md",
         "TIME.md",
         "docs/prerequisites/00_learning_path.md",
         "docs/prerequisites/21_hypertopologies.md",
@@ -149,17 +169,58 @@
       "kind": "citation",
       "source": "hypergrammar",
       "target": "hypermath",
-      "weight": 7
+      "weight": 8
+    },
+    {
+      "evidence": [
+        "PAPER.md",
+        "TIME.md",
+        "docs/prerequisites/00_learning_path.md",
+        "docs/prerequisites/21_hypertopologies.md",
+        "docs/prerequisites/scaffolds/21_hypertopologies/21_hypertopologies_hyperstructure.txt"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hyperorder",
+      "weight": 5
+    },
+    {
+      "evidence": [
+        "DEFINITIONAL_SPACE.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hyperphysics",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "DEFINITIONAL_SPACE.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "hyperstratum",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "DEFINITIONAL_SPACE.md"
+      ],
+      "kind": "citation",
+      "source": "hypergrammar",
+      "target": "metamathethicology",
+      "weight": 1
     },
     {
       "evidence": [
         "README.md",
+        "DEFINITIONAL_SPACE.md",
         "TIME.md"
       ],
       "kind": "citation",
       "source": "hypergrammar",
       "target": "ordinatics",
-      "weight": 2
+      "weight": 3
     },
     {
       "evidence": [
@@ -282,6 +343,15 @@
     },
     {
       "evidence": [
+        "FIELD_SPEC.md"
+      ],
+      "kind": "citation",
+      "source": "hyperobjectivity",
+      "target": "hyperemergence",
+      "weight": 1
+    },
+    {
+      "evidence": [
         "PROVENANCE.md"
       ],
       "kind": "citation",
@@ -359,6 +429,87 @@
         "PROVENANCE.md"
       ],
       "kind": "citation",
+      "source": "hyperreality",
+      "target": "hyperethics",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hyperobjectivity",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "FIELD_SPEC.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hyperprobability",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hyperspace",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hyperstratum",
+      "weight": 3
+    },
+    {
+      "evidence": [
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hypersubjectivity",
+      "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_SPEC.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "hypertime",
+      "weight": 2
+    },
+    {
+      "evidence": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "kind": "citation",
+      "source": "hyperreality",
+      "target": "metamathethicology",
+      "weight": 4
+    },
+    {
+      "evidence": [
+        "FIELD_SPEC.md",
+        "PROVENANCE.md"
+      ],
+      "kind": "citation",
       "source": "hyperspace",
       "target": "hyperstratum",
       "weight": 2
@@ -381,6 +532,16 @@
       "source": "hyperstratum",
       "target": "hypergrammar",
       "weight": 1
+    },
+    {
+      "evidence": [
+        "README.md",
+        "FIELD_SPEC.md"
+      ],
+      "kind": "citation",
+      "source": "hypersubjectivity",
+      "target": "hyperemergence",
+      "weight": 2
     },
     {
       "evidence": [
@@ -532,7 +693,7 @@
     },
     {
       "evidence": [
-        "grounded-hypercalculi @ git+https://github.com/TimeLordRaps/grounded-hypercalculi.git@e3fd9f803d11b355b257fb7c8270bec414827930"
+        "grounded-hypercalculi @ git+https://github.com/TimeLordRaps/grounded-hypercalculi.git@4018ac3086dc6ee1a223697711fb322e30cd0417"
       ],
       "kind": "dependency",
       "source": "metamathethicology",
@@ -541,7 +702,7 @@
     },
     {
       "evidence": [
-        "grounded-hyperset-theory @ git+https://github.com/TimeLordRaps/grounded-hyperset-theory.git@0e1d836dba07975ce6319ab459ec88ab53564e3a"
+        "grounded-hyperset-theory @ git+https://github.com/TimeLordRaps/grounded-hyperset-theory.git@9a86434450416cf135ca1e23aa5c04b511fdbee8"
       ],
       "kind": "dependency",
       "source": "metamathethicology",
@@ -550,7 +711,7 @@
     },
     {
       "evidence": [
-        "ordinatics @ git+https://github.com/TimeLordRaps/ordinatics.git@1564656fc5a740b595c018e96b904781954a85c8"
+        "ordinatics @ git+https://github.com/TimeLordRaps/ordinatics.git@ded754dd7b64410ee5c1ec0b0c47688c78fdcca1"
       ],
       "kind": "dependency",
       "source": "metamathethicology",
@@ -2415,7 +2576,7 @@
         }
       ],
       "counts": {
-        "layers": 16,
+        "layers": 4,
         "modules": 8,
         "symbols": 32,
         "tracked_files": 178
@@ -2478,19 +2639,7 @@
         "L0_ground.hm",
         "L1_relations.hm",
         "L2_operations.hm",
-        "L3_ordinatics.hm",
-        "references/precursor/hypermath/spec/axioms.hm",
-        "references/precursor/hypermath/spec/casting.hm",
-        "references/precursor/hypermath/spec/links.hm",
-        "references/precursor/hypermath/spec/verify.hm",
-        "references/precursor/hypermath_form/ground.hm",
-        "references/precursor/hypermath_form/kernel.hm",
-        "references/precursor/hypermath_form/operations.hm",
-        "references/precursor/hypermath_form/ordinatics.hm",
-        "references/precursor/hypermath_form/relations.hm",
-        "references/precursor/hypermath_frame/spec/kernel.hm",
-        "references/precursor/hypermath_frame/spec/ordinatics.hm",
-        "references/precursor/hypermath_frame/spec/stdlib/hyperordinal.hm"
+        "L3_ordinatics.hm"
       ],
       "module": "hypermath_foundations",
       "package": "hypermath-foundations",
@@ -3165,7 +3314,7 @@
         "layers": 0,
         "modules": 7,
         "symbols": 20,
-        "tracked_files": 229
+        "tracked_files": 230
       },
       "docs": [
         "docs/deep_research/Universal Recursive Systems Research Protocol.md",
@@ -3204,6 +3353,7 @@
       "repo_url": "https://github.com/TimeLordRaps/hypergrammar",
       "root_docs": [
         "AGENTS.md",
+        "DEFINITIONAL_SPACE.md",
         "HUMANS.md",
         "PAPER.md",
         "TIME.md"
@@ -4592,6 +4742,28 @@
         "layers": 0,
         "modules": 0,
         "symbols": 0,
+        "tracked_files": 1
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperchaos",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperchaos",
+      "root_docs": [],
+      "tagline": "",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
         "tracked_files": 8
       },
       "docs": [],
@@ -4608,6 +4780,28 @@
         "TECHNICAL_DEBT.md"
       ],
       "tagline": "Status, 2026-09-27: [FRAME] first public research candidate. This is an",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 1
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperemergence",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperemergence",
+      "root_docs": [],
+      "tagline": "",
       "tier": "unplaced",
       "visibility": "public"
     },
@@ -4635,6 +4829,55 @@
         "TECHNICAL_DEBT.md"
       ],
       "tagline": "Hyperobjectivity asks how a hyperform can have identifiable hyperobject instances across situated presentations without confusing an object with its appearance, a name, or a subject's account of it. Tyler proposed this separate field while developing a forms \u2192",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 1
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperorder",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperorder",
+      "root_docs": [],
+      "tagline": "",
+      "tier": "unplaced",
+      "visibility": "public"
+    },
+    {
+      "api": [],
+      "counts": {
+        "layers": 0,
+        "modules": 0,
+        "symbols": 0,
+        "tracked_files": 10
+      },
+      "docs": [],
+      "had_pages_before": false,
+      "id": "hyperreality",
+      "layers": [],
+      "module": null,
+      "package": null,
+      "pages_url": null,
+      "papers": [],
+      "repo_url": "https://github.com/TimeLordRaps/hyperreality",
+      "root_docs": [
+        "AGENT_HANDOFF.md",
+        "FIELD_SPEC.md",
+        "PROVENANCE.md",
+        "TECHNICAL_DEBT.md"
+      ],
+      "tagline": "What a reality is, and which kinds of reality there are. Tyler Roost /",
       "tier": "unplaced",
       "visibility": "public"
     },
@@ -4725,11 +4968,11 @@
   "schema": "vstd-family-graph/1",
   "totals": {
     "edges_by_kind": {
-      "citation": 51,
+      "citation": 67,
       "dependency": 3,
       "import": 4
     },
-    "repositories": 17,
+    "repositories": 21,
     "reserved": 0,
     "symbols": 403
   },
